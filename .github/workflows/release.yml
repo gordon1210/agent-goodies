@@ -1,0 +1,55 @@
+name: Release plugin
+
+on:
+  workflow_dispatch:
+    inputs:
+      plugin:
+        description: Plugin directory name, for example idea-workbench
+        required: true
+        type: string
+      version:
+        description: Semantic version already present in both plugin manifests
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ inputs.plugin }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Release ${{ inputs.plugin }} v${{ inputs.version }}
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository and tags
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Validate and prepare release
+        id: release
+        env:
+          PLUGIN_NAME: ${{ inputs.plugin }}
+          PLUGIN_VERSION: ${{ inputs.version }}
+        run: >-
+          python3 scripts/prepare_release.py
+          "$PLUGIN_NAME"
+          "$PLUGIN_VERSION"
+          --github-output "$GITHUB_OUTPUT"
+          --notes-file "$RUNNER_TEMP/release-notes.md"
+
+      - name: Create tag and GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ steps.release.outputs.tag }}
+          RELEASE_TITLE: ${{ steps.release.outputs.title }}
+        run: >-
+          gh release create "$RELEASE_TAG"
+          --repo "$GITHUB_REPOSITORY"
+          --target "$GITHUB_SHA"
+          --title "$RELEASE_TITLE"
+          --notes-file "$RUNNER_TEMP/release-notes.md"

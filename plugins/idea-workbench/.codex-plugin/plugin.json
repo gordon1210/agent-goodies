@@ -3,8 +3,18 @@
   "version": "0.1.0",
   "description": "Shape a rough idea into a reviewed design and implementation-ready plan.",
   "author": {
-    "name": "gordon1210"
+    "name": "gordon1210",
+    "url": "https://github.com/gordon1210"
   },
+  "homepage": "https://github.com/gordon1210/agent-goodies/tree/main/plugins/idea-workbench",
+  "repository": "https://github.com/gordon1210/agent-goodies",
+  "license": "MIT",
+  "keywords": [
+    "ideation",
+    "design-doc",
+    "planning",
+    "product-development"
+  ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Idea Workbench",
@@ -12,6 +22,7 @@
     "longDescription": "A composable workflow for shaping a vision, comparing solution directions, writing and reviewing a design, and planning verifiable implementation slices.",
     "developerName": "gordon1210",
     "category": "Productivity",
+    "websiteURL": "https://github.com/gordon1210/agent-goodies/tree/main/plugins/idea-workbench",
     "capabilities": [
       "Interactive",
       "Write"

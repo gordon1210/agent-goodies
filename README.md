@@ -2,6 +2,9 @@
 
 Portable agent plugins packaged for both Codex/ChatGPT and Claude Code.
 
+[![Validate](https://github.com/gordon1210/agent-goodies/actions/workflows/validate.yml/badge.svg)](https://github.com/gordon1210/agent-goodies/actions/workflows/validate.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 ## Plugins
 
 ### Idea Workbench
@@ -76,12 +79,12 @@ Keep shared skills portable:
 - Put genuinely host-specific behavior in host-specific configuration instead
   of branching throughout a shared skill.
 
-## Local installation
+## Installation
 
 For Codex/ChatGPT:
 
 ```bash
-codex plugin marketplace add .
+codex plugin marketplace add gordon1210/agent-goodies
 ```
 
 Then install `idea-workbench` from the `agent-goodies` marketplace in the
@@ -90,19 +93,39 @@ Plugins browser and start a new task.
 For Claude Code:
 
 ```bash
-claude plugin marketplace add .
+claude plugin marketplace add gordon1210/agent-goodies
 claude plugin install idea-workbench@agent-goodies
 ```
 
-During development, Claude Code can also load the plugin directly:
+## Local development
+
+Clone the repository, then add the local checkout as a marketplace:
+
+```bash
+codex plugin marketplace add .
+claude plugin marketplace add .
+```
+
+Claude Code can also load the plugin directly while iterating:
 
 ```bash
 claude --plugin-dir ./plugins/idea-workbench
 ```
 
-## Release checklist
+Run the repository validator before committing:
 
-1. Keep both plugin manifests on the same semantic version.
-2. Validate every `SKILL.md` and all referenced relative paths.
-3. Validate the Codex plugin manifest and the Claude marketplace/plugin.
-4. Test installation in both hosts before publishing a release.
+```bash
+python3 scripts/validate_repo.py
+```
+
+## Contributing and releases
+
+Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for the
+authoring and validation workflow.
+
+Plugins are versioned independently. See [RELEASING.md](RELEASING.md) for the
+versioning, changelog, tag, and GitHub Release process.
+
+## License
+
+MIT. See [LICENSE](LICENSE).

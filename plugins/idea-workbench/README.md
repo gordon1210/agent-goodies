@@ -48,6 +48,17 @@ you stay in control of the workflow.
 
 ## Start using it
 
+Install the `gordon1210/agent-goodies` marketplace first:
+
+```bash
+# Codex/ChatGPT
+codex plugin marketplace add gordon1210/agent-goodies
+
+# Claude Code
+claude plugin marketplace add gordon1210/agent-goodies
+claude plugin install idea-workbench@agent-goodies
+```
+
 Ask your agent to use the skill by name. For example:
 
 ### Start a new project
@@ -99,3 +110,7 @@ not its filename or template.
 
 For the full path, start with `develop-idea` or `shape-idea`. For focused work,
 invoke the stage that matches the artifact you already have.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
