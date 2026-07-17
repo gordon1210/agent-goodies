@@ -22,6 +22,11 @@ rough vision
 Use `develop-idea` when the right starting stage is unclear. It routes to one
 of the five artifact-producing skills without owning another document.
 
+The workflow adapts to greenfield projects, changes to existing systems, and
+hybrid work that connects something new to an established system. See the
+[Idea Workbench guide](plugins/idea-workbench/README.md) for usage examples and
+entry points.
+
 ## Repository layout
 
 ```text

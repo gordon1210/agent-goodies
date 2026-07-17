@@ -2,6 +2,7 @@
 
 **Status:** Draft  
 **Scope slice:** [the single coherent slice being shaped]
+**Project context:** Greenfield / Existing system / Hybrid / Unclear — [evidence]
 
 ## Vision
 

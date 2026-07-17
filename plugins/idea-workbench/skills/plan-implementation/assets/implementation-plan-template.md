@@ -5,6 +5,7 @@
 - **Status:** Draft — awaiting approval
 - **Source design:** [Approved design artifact]
 - **Design approval:** [Who approved it and where]
+- **Project context:** Greenfield / Existing system / Hybrid — [evidence]
 - **Plan owner:** [Owner]
 
 ## Outcome and boundaries
@@ -55,8 +56,10 @@ the sequence. Do not reopen the approved design.]
 
 **Expected changes:**
 
-- `[Confirmed path]` — [Responsibility and intended change]
-- [Responsibility or area to locate] — [Discovery required before editing]
+- `[Confirmed existing path or approved planned path]` — [Basis,
+  responsibility, and intended change]
+- [Responsibility or area to create or locate] — [Evidence needed to establish
+  its path]
 
 **Implementation work:**
 
@@ -65,7 +68,7 @@ the sequence. Do not reopen the approved design.]
 
 **Verification:**
 
-- Automated: `[Confirmed command]` — [Expected result]
+- Automated: `[Grounded existing or planned command]` — [Basis and expected result]
 - Behavioral: [Observable scenario and expected result]
 - Operational, when applicable: [Telemetry, migration, rollback, or recovery evidence]
 
@@ -86,6 +89,7 @@ the sequence. Do not reopen the approved design.]
 
 - **Coverage:** [Evidence that every in-scope item maps to work and verification]
 - **Dependency check:** [Evidence that ordering and parallel work are sound]
-- **Grounding check:** [Evidence that named paths and commands were inspected]
+- **Grounding check:** [Evidence that existing details were inspected and
+  greenfield details follow approved decisions or authoritative scaffolding]
 - **Blocking decisions:** None
 - **Plan approval:** Pending

@@ -12,12 +12,21 @@ Create the smallest design document that lets a reviewer understand the decision
 1. Read the conversation, linked briefs, research, decision records, and relevant project material.
 2. Synthesize settled context. Do not restart the discovery interview or ask the user to repeat information already available.
 3. Inspect the existing system where the proposal must fit. Confirm paths, interfaces, constraints, and conventions before relying on them.
-4. Separate the input into:
+4. Confirm the project context and design accordingly:
+   - **Greenfield:** Distinguish proposed foundations from observed facts and
+     settle the platform, structure, ownership, and bootstrap decisions needed
+     for planning.
+   - **Existing system:** Make current behavior, integration points,
+     conventions, compatibility, migration, and preserved behavior explicit.
+   - **Hybrid:** Define the new and existing sides separately, then make their
+     boundary, contract, ownership, and failure behavior concrete.
+   Do not infer `Greenfield` from missing repository access alone.
+5. Separate the input into:
    - **Known facts:** supported by evidence.
    - **Decisions:** choices already made, with their rationale.
    - **Assumptions:** beliefs that still require validation and the consequence if wrong.
    - **Open questions:** unresolved choices, marked as blocking or non-blocking.
-5. Investigate discoverable facts directly. Ask the user only for consequential decisions that cannot be inferred safely.
+6. Investigate discoverable facts directly. Ask the user only for consequential decisions that cannot be inferred safely.
 
 ## Scale the depth to risk
 

@@ -13,7 +13,9 @@ Judge whether a capable reader can safely act on the document as written. Treat 
 2. Summarize the problem, chosen direction, boundaries, and validation approach using only what the document communicates.
 3. Record ambiguities rather than silently resolving them from your own knowledge.
 4. Then read linked briefs, research, decision records, and relevant project material to verify alignment and factual claims.
-5. Label any inference that is not stated or evidenced by the source.
+5. Verify the stated project context. Do not treat missing repository access as
+   proof that the work is greenfield.
+6. Label any inference that is not stated or evidenced by the source.
 
 ## Set the review depth
 
@@ -36,6 +38,11 @@ Act as a capable implementer who was absent from prior discussions. Determine wh
 ### Challenge the design
 
 Try to make the proposal fail. Walk realistic success, failure, recovery, misuse, migration, concurrency, and boundary scenarios through it. Look for contradictions across sections and linked artifacts, hidden dependencies, unsupported claims, irreversible steps, unowned operational work, and validation that proves only the happy path.
+
+For greenfield work, challenge undecided foundations and unsupported bootstrap
+assumptions. For an existing system, challenge integration evidence,
+compatibility, migration, and preserved behavior. For hybrid work, test the
+contract, ownership, and failure modes at the new-to-existing seam.
 
 Do not manufacture issues to appear thorough. Prefer a few consequential findings over a catalogue of stylistic preferences.
 

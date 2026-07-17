@@ -5,6 +5,7 @@
 | Reviewed document | [Link, path, or version] |
 | Review date | [Date] |
 | Reviewer | [Name or role] |
+| Project context | Greenfield / Existing system / Hybrid — [evidence] |
 | Assessed risk | Low / Medium / High — [reason] |
 | Verdict | Ready / Ready with follow-ups / Not ready |
 | Planning approval | Pending / Approved by [person] on [date] / Not requested |

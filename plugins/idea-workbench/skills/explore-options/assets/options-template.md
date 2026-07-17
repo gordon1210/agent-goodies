@@ -6,6 +6,7 @@
 
 - **Decision to make:**
 - **Desired outcome:**
+- **Project context and evidence:**
 - **Appetite and boundaries:**
 - **Constraints and non-goals:**
 - **Evaluation criteria, in priority order:**

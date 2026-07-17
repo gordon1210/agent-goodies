@@ -15,6 +15,23 @@ Create shared understanding before exploring solutions. Keep the work at problem
 - Scale the depth to the idea. Preserve useful ambiguity while the idea is young, but make every uncertainty visible.
 - Keep facts, assumptions, hypotheses, decisions, and open questions separate. Do not promote one category into another without new evidence or explicit agreement.
 
+## Classify the project context
+
+Classify the work before shaping its boundaries:
+
+- **Greenfield:** No implementation baseline exists. Treat proposed platforms,
+  structure, and conventions as choices or assumptions rather than facts.
+- **Existing system:** The idea changes a running product or established
+  codebase. Ground the brief in current behavior, constraints, integration
+  points, and behavior that must be preserved.
+- **Hybrid:** A new component or product must connect to an existing system.
+  State which side is new, which side is established, and where the seam lies.
+
+Do not infer `Greenfield` merely because a repository is unavailable. Use
+`Unclear` when the evidence is insufficient and resolve the classification only
+when it could change scope, constraints, or the next decision. Carry the
+classification and its evidence into the brief.
+
 ## Shape the brief
 
 1. **Ground the idea.** Summarize the starting vision and inspect relevant context. Record what is known, where it came from, and what remains uncertain.

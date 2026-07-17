@@ -9,6 +9,7 @@
 | Reviewers | [Required reviewers] |
 | Last updated | [Date] |
 | Source brief | [Link or reference] |
+| Project context | Greenfield / Existing system / Hybrid — [evidence] |
 | Risk | Low / Medium / High — [reason] |
 
 ## Summary
@@ -16,6 +17,12 @@
 [Explain the problem, chosen direction, and expected result in a short paragraph.]
 
 ## Context
+
+### Project context and baseline
+
+[State whether the work is greenfield, changes an existing system, or is
+hybrid. Describe the implementation baseline that exists—or explicitly state
+that none exists—and identify the evidence for that classification.]
 
 ### Problem and evidence
 

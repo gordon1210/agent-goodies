@@ -29,11 +29,22 @@ into facts.
 
 ## Ground the plan
 
-Inspect the project before naming files, components, commands, or test targets.
-Use exact paths and commands only when the available project proves them. When
-the location is unknown, name the responsibility or area to locate and include
-the discovery in the relevant slice. Describe the intended verification when an
-exact command is not known; never fabricate command syntax.
+Confirm the project context before naming files, components, commands, or test
+targets. Do not infer `Greenfield` merely because a repository is unavailable.
+
+- **Existing system:** Inspect the project and use exact paths and commands only
+  when the available project proves them.
+- **Greenfield:** Distinguish observed facts from planned structure. Name a
+  planned path or initialization command only when the approved design or an
+  authoritative scaffold establishes it, and label that basis. Otherwise name
+  the responsibility to create and the evidence that will confirm its location.
+- **Hybrid:** Apply the corresponding rule to each side and identify work at the
+  seam explicitly.
+
+When an existing location is unknown or inaccessible, name the responsibility
+or area to locate and include that discovery in the relevant slice.
+Describe the intended verification when an exact command is not grounded;
+never fabricate command syntax.
 
 Assign stable local identifiers to unnumbered requirements, acceptance criteria,
 and design decisions. Preserve existing identifiers when present.
@@ -46,9 +57,10 @@ and design decisions. Preserve existing identifiers when present.
    migration, observability, security, compatibility, and rollout work.
 3. Keep each slice coherent enough for one focused implementation session and
    independently verifiable at a meaningful boundary.
-4. Embed supporting layer work in the first slice that consumes it. Create a
-   separate foundation slice only when it delivers independently useful,
-   verifiable value.
+4. Embed supporting layer work in the first slice that consumes it. In
+   greenfield work, include the necessary bootstrap in the first end-to-end
+   slice. Create a separate foundation slice only when it delivers independently
+   useful, verifiable value.
 5. Give every slice an outcome, traceability links, scope, expected changes,
    implementation work, dependencies, and verification evidence.
 
@@ -75,7 +87,8 @@ Complete the template and remove all unused guidance. Run the quality checks in
 - no in-scope requirement is orphaned;
 - no slice exists without a justified outcome;
 - each slice has observable completion evidence;
-- all paths and commands are grounded in inspected context;
+- all paths and commands are grounded in inspected or explicitly approved
+  context;
 - dependencies form a workable order; and
 - no blocking decision or placeholder remains.
 

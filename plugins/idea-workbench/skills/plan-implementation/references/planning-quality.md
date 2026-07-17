@@ -63,11 +63,19 @@ blocker.
 Inspect the project before asserting paths, package names, commands, or tooling.
 Match detail to confidence:
 
-- Name an exact path only after locating it.
+- Name an exact existing path only after locating it.
 - Name a component or responsibility when its path is not yet established.
 - Include a bounded discovery action when ownership must be found during a slice.
-- Copy command syntax only from confirmed project configuration or documentation.
+- Copy existing-project command syntax only from confirmed project
+  configuration or documentation.
 - State the verification intent without a command when no command is known.
+
+For greenfield work, distinguish **planned** detail from **observed** detail. A
+path, package, or initialization command may be planned when the approved design
+or an authoritative scaffold fixes it; cite that basis and do not present it as
+an existing fact. Otherwise name the responsibility to create and let the first
+consuming slice establish its location. Include necessary bootstrapping in that
+slice instead of building an unverifiable setup phase.
 
 Do not use plausible-looking detail as a substitute for evidence. A concise,
 accurate plan is more executable than a precise fiction.

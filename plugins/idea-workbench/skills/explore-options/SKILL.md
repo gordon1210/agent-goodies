@@ -11,6 +11,11 @@ Compare genuinely different ways to achieve the same outcome before committing t
 
 - Inspect the conversation, repository, current system, and existing artifacts first. Locate the approved idea brief when one exists.
 - Confirm the decision question, desired outcome, appetite, boundaries, constraints, and non-goals. If any of these are too weak to compare options honestly, stop and recommend `shape-idea`.
+- Carry forward the brief's project-context classification and verify it against
+  available evidence. For greenfield work, treat foundational platform and
+  structure choices as decisions. For an existing system, favor options that
+  account for reuse, conventions, compatibility, and migration. For hybrid
+  work, compare the new-to-existing seam explicitly.
 - Derive evaluation criteria from the brief instead of applying a generic scorecard. Ask one high-leverage question at a time when a priority or tradeoff belongs to the user; include a recommendation with the question.
 - Keep facts, assumptions, hypotheses, decisions, and open questions separate. Investigate accessible facts rather than asking the user to recall them.
 

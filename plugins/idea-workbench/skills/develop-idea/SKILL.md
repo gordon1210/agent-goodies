@@ -13,9 +13,12 @@ the recommended work, or invoke another skill.
 
 1. Inspect the conversation and existing project artifacts only far enough to
    identify the latest decisions and their approval status.
-2. Judge substance rather than filenames. Treat an artifact as approved only
+2. Classify the project context as `Greenfield`, `Existing system`, `Hybrid`,
+   or `Unclear`, and record the evidence. Do not infer `Greenfield` merely
+   because no repository or current system is accessible.
+3. Judge substance rather than filenames. Treat an artifact as approved only
    when the user has explicitly approved it.
-3. Select the earliest unmet gate in this canonical flow:
+4. Select the earliest unmet gate in this canonical flow:
 
 | Gate | Evidence required | Recommend |
 | --- | --- | --- |
@@ -48,6 +51,7 @@ Return only:
 
 - the current maturity stage;
 - the evidence used to classify it;
+- the project context and the evidence for it;
 - one recommended next skill, or `workflow complete`;
 - a short reason;
 - the artifact or context to carry forward; and
