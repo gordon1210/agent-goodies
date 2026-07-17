@@ -1,0 +1,20 @@
+{
+  "name": "agent-goodies",
+  "interface": {
+    "displayName": "Agent Goodies"
+  },
+  "plugins": [
+    {
+      "name": "agent-goodies",
+      "source": {
+        "source": "local",
+        "path": "./plugins/agent-goodies"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

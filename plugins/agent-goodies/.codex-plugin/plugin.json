@@ -1,0 +1,20 @@
+{
+  "name": "agent-goodies",
+  "version": "0.1.0",
+  "description": "A portable collection of reusable agent skills.",
+  "author": {
+    "name": "gordon1210"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Agent Goodies",
+    "shortDescription": "Portable reusable workflows for agents.",
+    "longDescription": "A collection of reusable skills designed to work across Codex, ChatGPT, and Claude Code.",
+    "developerName": "gordon1210",
+    "category": "Productivity",
+    "capabilities": [],
+    "defaultPrompt": [
+      "Show me the skills available in Agent Goodies."
+    ]
+  }
+}

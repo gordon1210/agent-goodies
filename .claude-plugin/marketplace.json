@@ -1,0 +1,19 @@
+{
+  "name": "agent-goodies",
+  "owner": {
+    "name": "gordon1210"
+  },
+  "description": "Portable agent skills for Codex, ChatGPT, and Claude Code.",
+  "plugins": [
+    {
+      "name": "agent-goodies",
+      "source": "./plugins/agent-goodies",
+      "description": "A portable collection of reusable agent skills.",
+      "version": "0.1.0",
+      "author": {
+        "name": "gordon1210"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
