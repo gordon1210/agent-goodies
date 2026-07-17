@@ -1,6 +1,26 @@
 # Agent Goodies
 
-Portable agent skills packaged for both Codex/ChatGPT and Claude Code.
+Portable agent plugins packaged for both Codex/ChatGPT and Claude Code.
+
+## Plugins
+
+### Idea Workbench
+
+`idea-workbench` turns a rough vision into a reviewed design and an
+implementation-ready plan. Its skills form one composable path, but each can
+also start from an existing artifact:
+
+```text
+rough vision
+    -> shape-idea -> idea brief
+    -> explore-options -> chosen direction
+    -> write-design-doc -> design document
+    -> review-design-doc -> readiness review
+    -> plan-implementation -> delivery plan
+```
+
+Use `develop-idea` when the right starting stage is unclear. It routes to one
+of the five artifact-producing skills without owning another document.
 
 ## Repository layout
 
@@ -12,12 +32,10 @@ Portable agent skills packaged for both Codex/ChatGPT and Claude Code.
 ├── .claude-plugin/
 │   └── marketplace.json
 └── plugins/
-    └── agent-goodies/
+    └── idea-workbench/
         ├── .codex-plugin/plugin.json
         ├── .claude-plugin/plugin.json
-        ├── skills/
-        ├── scripts/
-        └── assets/
+        └── skills/
 ```
 
 The repository has independent marketplace catalogs for Codex/ChatGPT and
@@ -29,10 +47,11 @@ directories.
 - `.agents/plugins/marketplace.json`: Codex/ChatGPT marketplace bucket
 - `.claude-plugin/marketplace.json`: Claude Code marketplace bucket
 
-## Add a portable skill
+## Add a portable plugin or skill
 
-Create a directory at `plugins/agent-goodies/skills/<skill-name>/` containing a
-`SKILL.md` file:
+Create each plugin in `plugins/<plugin-name>/`, then add its independent entry
+to one or both marketplace catalogs. Put shared skills in
+`plugins/<plugin-name>/skills/<skill-name>/SKILL.md`:
 
 ```markdown
 ---
@@ -60,20 +79,20 @@ For Codex/ChatGPT:
 codex plugin marketplace add .
 ```
 
-Then install `agent-goodies` from the `agent-goodies` marketplace in the
+Then install `idea-workbench` from the `agent-goodies` marketplace in the
 Plugins browser and start a new task.
 
 For Claude Code:
 
 ```bash
 claude plugin marketplace add .
-claude plugin install agent-goodies@agent-goodies
+claude plugin install idea-workbench@agent-goodies
 ```
 
 During development, Claude Code can also load the plugin directly:
 
 ```bash
-claude --plugin-dir ./plugins/agent-goodies
+claude --plugin-dir ./plugins/idea-workbench
 ```
 
 ## Release checklist

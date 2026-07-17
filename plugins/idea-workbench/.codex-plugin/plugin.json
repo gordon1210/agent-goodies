@@ -1,0 +1,25 @@
+{
+  "name": "idea-workbench",
+  "version": "0.1.0",
+  "description": "Shape a rough idea into a reviewed design and implementation-ready plan.",
+  "author": {
+    "name": "gordon1210"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Idea Workbench",
+    "shortDescription": "Turn ideas into implementation-ready plans.",
+    "longDescription": "A composable workflow for shaping a vision, comparing solution directions, writing and reviewing a design, and planning verifiable implementation slices.",
+    "developerName": "gordon1210",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Help me turn this rough idea into a grounded brief.",
+      "Compare viable directions for this product idea.",
+      "Review this design and turn it into an implementation plan."
+    ]
+  }
+}

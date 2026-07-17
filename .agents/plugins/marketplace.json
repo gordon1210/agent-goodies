@@ -5,10 +5,10 @@
   },
   "plugins": [
     {
-      "name": "agent-goodies",
+      "name": "idea-workbench",
       "source": {
         "source": "local",
-        "path": "./plugins/agent-goodies"
+        "path": "./plugins/idea-workbench"
       },
       "policy": {
         "installation": "AVAILABLE",

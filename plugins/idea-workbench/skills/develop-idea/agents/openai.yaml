@@ -1,0 +1,4 @@
+interface:
+  display_name: "Develop an Idea"
+  short_description: "Route an idea to its next useful stage."
+  default_prompt: "Use $develop-idea to move my idea to the next useful artifact."

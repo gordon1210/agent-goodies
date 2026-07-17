@@ -1,0 +1,4 @@
+interface:
+  display_name: "Write a Design Doc"
+  short_description: "Turn a chosen direction into a design doc."
+  default_prompt: "Use $write-design-doc to turn this chosen direction into an implementable design."

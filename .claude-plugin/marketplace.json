@@ -6,9 +6,9 @@
   "description": "Portable agent skills for Codex, ChatGPT, and Claude Code.",
   "plugins": [
     {
-      "name": "agent-goodies",
-      "source": "./plugins/agent-goodies",
-      "description": "A portable collection of reusable agent skills.",
+      "name": "idea-workbench",
+      "source": "./plugins/idea-workbench",
+      "description": "Shape a rough idea into a reviewed design and implementation-ready plan.",
       "version": "0.1.0",
       "author": {
         "name": "gordon1210"

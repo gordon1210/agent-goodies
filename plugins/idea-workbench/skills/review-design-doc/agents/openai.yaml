@@ -1,0 +1,4 @@
+interface:
+  display_name: "Review a Design Doc"
+  short_description: "Test a design doc for implementation readiness."
+  default_prompt: "Use $review-design-doc to find blockers and ambiguity in this design."

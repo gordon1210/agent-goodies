@@ -1,0 +1,4 @@
+interface:
+  display_name: "Explore Options"
+  short_description: "Compare solution directions before committing."
+  default_prompt: "Use $explore-options to compare credible directions for this idea."

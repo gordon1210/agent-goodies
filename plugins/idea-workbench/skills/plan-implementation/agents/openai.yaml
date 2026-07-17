@@ -1,0 +1,4 @@
+interface:
+  display_name: "Plan Implementation"
+  short_description: "Break an approved design into verifiable slices."
+  default_prompt: "Use $plan-implementation to create a grounded delivery plan from this design."
