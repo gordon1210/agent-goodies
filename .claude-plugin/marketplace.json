@@ -13,6 +13,19 @@
         "name": "gordon1210"
       },
       "category": "Productivity"
+    },
+    {
+      "name": "handoff",
+      "source": "./skills/handoff",
+      "strict": false,
+      "skills": [
+        "./"
+      ],
+      "description": "Maintain repo-local handoff context across agents and sessions.",
+      "author": {
+        "name": "gordon1210"
+      },
+      "category": "Productivity"
     }
   ]
 }

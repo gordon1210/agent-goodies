@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   validate:
-    name: Validate marketplaces and plugins
+    name: Validate marketplaces, plugins, and skills
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -20,3 +20,6 @@ jobs:
 
       - name: Run repository validator
         run: python3 scripts/validate_repo.py
+
+      - name: Run Handoff tests
+        run: python3 -m unittest tests/test_handoff.py -v

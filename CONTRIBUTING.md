@@ -8,18 +8,21 @@ Thanks for helping improve Agent Goodies.
    rules.
 2. Keep shared skills provider-neutral. Put host-specific behavior in the
    corresponding manifest or configuration.
-3. Keep each plugin self-contained under `plugins/<plugin-name>/`.
-4. Add a plugin independently to each marketplace that should expose it.
+3. Keep multi-skill plugins self-contained under `plugins/<plugin-name>/` and
+   standalone skills under `skills/<skill-name>/`.
+4. Add a package independently to each marketplace that supports its layout.
 5. Run:
 
    ```bash
    python3 scripts/validate_repo.py
+   python3 -m unittest tests/test_handoff.py -v
    ```
 
 6. If Claude Code is installed, also run:
 
    ```bash
    claude plugin validate ./plugins/<plugin-name>
+   claude plugin validate .
    ```
 
 Keep pull requests focused and explain any user-visible behavior change. Do not

@@ -194,12 +194,53 @@ class Validator:
                     path,
                     f"{label} name does not match source directory",
                 )
-                manifest_path = plugin_dir / ".claude-plugin/plugin.json"
+                strict = entry.get("strict", True)
                 self.require(
-                    manifest_path.is_file(),
+                    isinstance(strict, bool),
                     path,
-                    f"{label} points to a plugin without a Claude manifest",
+                    f"{label}.strict must be a boolean",
                 )
+                if strict is False:
+                    skill_paths = entry.get("skills")
+                    if not isinstance(skill_paths, list) or not skill_paths:
+                        self.error(
+                            path,
+                            f"{label} must declare at least one skill when strict is false",
+                        )
+                    else:
+                        for skill_path in skill_paths:
+                            if (
+                                not isinstance(skill_path, str)
+                                or not skill_path.startswith("./")
+                            ):
+                                self.error(
+                                    path,
+                                    f"{label}.skills paths must start with './'",
+                                )
+                                continue
+                            skill_dir = (plugin_dir / skill_path[2:]).resolve()
+                            try:
+                                skill_dir.relative_to(plugin_dir.resolve())
+                            except ValueError:
+                                self.error(
+                                    path,
+                                    f"{label}.skills path escapes its source: {skill_path}",
+                                )
+                                continue
+                            self.require(
+                                skill_dir.is_dir(),
+                                path,
+                                f"{label}.skills path is not a directory: {skill_path}",
+                            )
+                            if skill_dir.is_dir():
+                                self.validate_skill(skill_dir)
+                else:
+                    manifest_path = plugin_dir / ".claude-plugin/plugin.json"
+                    self.require(
+                        manifest_path.is_file(),
+                        path,
+                        f"{label} points to a plugin without a Claude manifest",
+                    )
 
     def validate_manifest_metadata(
         self, path: Path, data: dict[str, Any], plugin_name: str
@@ -412,6 +453,19 @@ class Validator:
         self.validate_codex_marketplace()
         self.validate_claude_marketplace()
 
+        skills_dir = ROOT / "skills"
+        self.require(skills_dir.is_dir(), skills_dir, "skills directory is missing")
+        if skills_dir.is_dir():
+            skill_dirs = sorted(path for path in skills_dir.iterdir() if path.is_dir())
+            self.require(bool(skill_dirs), skills_dir, "repository has no standalone skills")
+            for skill_dir in skill_dirs:
+                self.require(
+                    not skill_dir.is_symlink(),
+                    skill_dir,
+                    "top-level skills must be real directories for skills.sh discovery",
+                )
+                self.validate_skill(skill_dir)
+
         plugins_dir = ROOT / "plugins"
         self.require(plugins_dir.is_dir(), plugins_dir, "plugins directory is missing")
         plugin_dirs = (
@@ -480,7 +534,15 @@ def main() -> int:
             or (path / ".claude-plugin/plugin.json").is_file()
         )
     )
-    print(f"Validated {plugin_count} plugin(s) and both marketplaces.")
+    skill_count = sum(
+        1
+        for path in (ROOT / "skills").iterdir()
+        if path.is_dir() and (path / "SKILL.md").is_file()
+    )
+    print(
+        f"Validated {plugin_count} plugin(s), {skill_count} standalone skill(s), "
+        "and both marketplaces."
+    )
     return 0
 
 

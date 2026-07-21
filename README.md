@@ -1,11 +1,22 @@
 # Agent Goodies
 
-Portable agent plugins packaged for both Codex/ChatGPT and Claude Code.
+Portable agent skills and plugins for skills.sh, Codex/ChatGPT, and Claude
+Code.
 
 [![Validate](https://github.com/gordon1210/agent-goodies/actions/workflows/validate.yml/badge.svg)](https://github.com/gordon1210/agent-goodies/actions/workflows/validate.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-## Plugins
+## Skills and plugins
+
+### Handoff
+
+`handoff` keeps compact, repo-local continuity state so substantial work can
+survive agent and session changes. Its canonical package lives at
+`skills/handoff`, which makes it directly discoverable by the skills CLI while
+Claude Code's marketplace references that same directory directly. Codex users
+install this standalone skill through the skills CLI. It activates for existing
+handoff repositories, explicit continuity requests, and agent/session
+transitions; initializing handoff state in a new repository remains opt-in.
 
 ### Idea Workbench
 
@@ -39,27 +50,37 @@ entry points.
 │       └── marketplace.json
 ├── .claude-plugin/
 │   └── marketplace.json
-└── plugins/
-    └── idea-workbench/
-        ├── .codex-plugin/plugin.json
-        ├── .claude-plugin/plugin.json
-        └── skills/
+├── plugins/
+│   └── idea-workbench/
+│       ├── .codex-plugin/plugin.json
+│       ├── .claude-plugin/plugin.json
+│       └── skills/
+└── skills/
+    └── handoff/
+        └── SKILL.md
 ```
 
 The repository has independent marketplace catalogs for Codex/ChatGPT and
-Claude Code. This lets each catalog expose a different set or order of plugins
-and use host-specific marketplace metadata. Each host also keeps its own plugin
-manifest, while both load the same `skills/`, `scripts/`, and `assets/`
-directories.
+Claude Code. This lets each catalog expose a different set or order of
+packages and use host-specific marketplace metadata. Standalone skills remain
+installable through the skills CLI even when they are not wrapped as a plugin
+for a host marketplace.
 
 - `.agents/plugins/marketplace.json`: Codex/ChatGPT marketplace bucket
 - `.claude-plugin/marketplace.json`: Claude Code marketplace bucket
 
 ## Add a portable plugin or skill
 
-Create each plugin in `plugins/<plugin-name>/`, then add its independent entry
-to one or both marketplace catalogs. Put shared skills in
-`plugins/<plugin-name>/skills/<skill-name>/SKILL.md`:
+Use `skills/<skill-name>/SKILL.md` for a standalone skill. This is the canonical
+layout discovered by the skills CLI. Claude Code can expose that directory as
+a manifestless marketplace entry by setting `strict` to `false` and declaring
+the skill path in the entry.
+
+Use `plugins/<plugin-name>/skills/<skill-name>/SKILL.md` for a plugin that
+bundles several skills, needs a Codex marketplace entry, or includes other
+components. Codex plugin archives currently need a real `skills/` subtree;
+do not depend on symlinks inside that archive. Add each package only to the
+catalogs that can load its layout:
 
 ```markdown
 ---
@@ -81,6 +102,18 @@ Keep shared skills portable:
 
 ## Installation
 
+With the skills CLI, install the standalone `handoff` skill globally so it is
+available in every repository:
+
+```bash
+npx skills add gordon1210/agent-goodies --skill handoff --global
+```
+
+Omit `--global` for a project-scoped installation. The bundled helper stays
+inside the installed skill and requires no `package.json` script or launcher
+configuration. Running the helper requires Python 3.9 or newer; it has no
+third-party Python dependencies.
+
 For Codex/ChatGPT:
 
 ```bash
@@ -88,13 +121,14 @@ codex plugin marketplace add gordon1210/agent-goodies
 ```
 
 Then install `idea-workbench` from the `agent-goodies` marketplace in the
-Plugins browser and start a new task.
+Plugins browser. Install `handoff` with the skills CLI shown above.
 
 For Claude Code:
 
 ```bash
 claude plugin marketplace add gordon1210/agent-goodies
 claude plugin install idea-workbench@agent-goodies
+claude plugin install handoff@agent-goodies
 ```
 
 ## Local development
@@ -116,6 +150,7 @@ Run the repository validator before committing:
 
 ```bash
 python3 scripts/validate_repo.py
+python3 -m unittest tests/test_handoff.py -v
 ```
 
 ## Contributing and releases

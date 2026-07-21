@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "agent": {
+      "additionalProperties": true,
+      "properties": {
+        "model": { "minLength": 1, "type": "string" },
+        "name": { "minLength": 1, "type": "string" },
+        "session": { "minLength": 1, "type": "string" }
+      },
+      "type": "object"
+    },
+    "context_status": {
+      "enum": ["active", "closed", "merged", "abandoned"],
+      "type": "string"
+    },
+    "git": {
+      "additionalProperties": true,
+      "properties": {
+        "branch": { "minLength": 1, "type": "string" },
+        "commit": { "minLength": 1, "type": "string" },
+        "detached": { "type": "boolean" },
+        "worktree": { "minLength": 1, "type": "string" }
+      },
+      "type": "object"
+    },
+    "details": { "minLength": 1, "type": "string" },
+    "files": { "items": { "minLength": 1, "type": "string" }, "type": "array" },
+    "id": {
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+      "type": "string"
+    },
+    "next_actions": { "items": { "minLength": 1, "type": "string" }, "type": "array" },
+    "resolves": { "items": { "minLength": 1, "type": "string" }, "type": "array" },
+    "scope": { "items": { "minLength": 1, "type": "string" }, "type": "array" },
+    "status": { "minLength": 1, "type": "string" },
+    "summary": { "minLength": 1, "type": "string" },
+    "supersedes": { "items": { "minLength": 1, "type": "string" }, "type": "array" },
+    "tags": { "items": { "minLength": 1, "type": "string" }, "type": "array" },
+    "ts": { "format": "date-time", "type": "string" },
+    "type": { "minLength": 1, "type": "string" },
+    "v": { "const": 1, "type": "integer" }
+  },
+  "required": ["v", "id", "ts", "type", "summary"],
+  "title": "HandoffEvent",
+  "type": "object"
+}
