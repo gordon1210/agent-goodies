@@ -8,6 +8,15 @@ Code.
 
 ## Skills and plugins
 
+### Add Tauri Native Window Effects
+
+`add-tauri-native-window-effects` implements and diagnoses native window
+materials in Tauri 2 apps. It covers macOS vibrancy and Liquid Glass, Windows
+Mica and Acrylic, the shared WebView transparency stack, and a safe opaque
+fallback for unsupported platforms. Its canonical package lives at
+`skills/add-tauri-native-window-effects` and is installable through the skills
+CLI.
+
 ### Handoff
 
 `handoff` keeps compact, repo-local continuity state so substantial work can
@@ -56,6 +65,8 @@ entry points.
 │       ├── .claude-plugin/plugin.json
 │       └── skills/
 └── skills/
+    ├── add-tauri-native-window-effects/
+    │   └── SKILL.md
     └── handoff/
         └── SKILL.md
 ```
@@ -102,10 +113,11 @@ Keep shared skills portable:
 
 ## Installation
 
-With the skills CLI, install the standalone `handoff` skill globally so it is
+With the skills CLI, install either standalone skill globally so it is
 available in every repository:
 
 ```bash
+npx skills add gordon1210/agent-goodies --skill add-tauri-native-window-effects --global
 npx skills add gordon1210/agent-goodies --skill handoff --global
 ```
 

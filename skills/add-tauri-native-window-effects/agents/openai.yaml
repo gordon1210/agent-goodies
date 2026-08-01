@@ -1,0 +1,4 @@
+interface:
+  display_name: "Add Tauri Native Window Effects"
+  short_description: "Build native Tauri materials across desktop OSes."
+  default_prompt: "Use $add-tauri-native-window-effects to add a native macOS or Windows material to this Tauri app."
