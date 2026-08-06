@@ -62,10 +62,11 @@ The skill deliberately avoids several common failure modes:
 
 ## Validation
 
-Validate the package with the Agent Skills reference validator when available:
+From the repository root, validate the package with the Agent Skills reference
+validator when available:
 
 ```bash
-skills-ref validate ./rust-codebase-excellence
+skills-ref validate ./skills/rust-codebase-excellence
 ```
 
 Also run the scenario checks in `EVALUATION.md` when materially changing the skill.

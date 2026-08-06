@@ -27,6 +27,14 @@ install this standalone skill through the skills CLI. It activates for existing
 handoff repositories, explicit continuity requests, and agent/session
 transitions; initializing handoff state in a new repository remains opt-in.
 
+### Rust Codebase Excellence
+
+`rust-codebase-excellence` guides production-grade Rust design, implementation,
+review, testing, security, performance, and release work while preserving
+repository contracts and avoiding speculative complexity. Its canonical package
+lives at `skills/rust-codebase-excellence` and is installable through the
+skills CLI.
+
 ### Idea Workbench
 
 `idea-workbench` turns a rough vision into a reviewed design and an
@@ -67,7 +75,9 @@ entry points.
 └── skills/
     ├── add-tauri-native-window-effects/
     │   └── SKILL.md
-    └── handoff/
+    ├── handoff/
+    │   └── SKILL.md
+    └── rust-codebase-excellence/
         └── SKILL.md
 ```
 
@@ -113,18 +123,19 @@ Keep shared skills portable:
 
 ## Installation
 
-With the skills CLI, install either standalone skill globally so it is
+With the skills CLI, install a standalone skill globally so it is
 available in every repository:
 
 ```bash
 npx skills add gordon1210/agent-goodies --skill add-tauri-native-window-effects --global
 npx skills add gordon1210/agent-goodies --skill handoff --global
+npx skills add gordon1210/agent-goodies --skill rust-codebase-excellence --global
 ```
 
-Omit `--global` for a project-scoped installation. The bundled helper stays
-inside the installed skill and requires no `package.json` script or launcher
-configuration. Running the helper requires Python 3.9 or newer; it has no
-third-party Python dependencies.
+Omit `--global` for a project-scoped installation. A bundled helper, when
+present, stays inside the installed skill and requires no `package.json` script
+or launcher configuration. Running the helper requires Python 3.9 or newer; it
+has no third-party Python dependencies.
 
 For Codex/ChatGPT:
 
