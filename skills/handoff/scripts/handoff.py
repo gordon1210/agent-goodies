@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import hashlib
 import json
 import os
 import re
@@ -126,10 +127,36 @@ def safe_slug(value: str, fallback: str = "event") -> str:
     return value[:48] or fallback
 
 
+# Encoded branch tokens longer than this use a stable prefix+hash form so the
+# day/agent/type/branch/commit filename stays well under filesystem NAME_MAX.
+BRANCH_FILENAME_MAX = 50
+
+
 def branch_filename_token(value: str, fallback: str = "no-branch") -> str:
-    """Encode a branch name without collapsing distinct Git ref names."""
+    """Encode a branch name without collapsing distinct Git ref names.
+
+    Short names stay fully percent-encoded. Encoded names longer than
+    BRANCH_FILENAME_MAX become ``<prefix>~<sha256[:12]>`` of the original
+    branch string so tokens remain injective, stable for batching, and short
+    enough for a single path component.
+    """
     value = value.strip()
-    return quote(value, safe="-._~") if value else fallback
+    if not value:
+        return fallback
+    encoded = quote(value, safe="-._~")
+    if len(encoded) <= BRANCH_FILENAME_MAX:
+        return encoded
+    digest = hashlib.sha256(value.encode("utf-8")).hexdigest()[:12]
+    prefix_budget = BRANCH_FILENAME_MAX - 1 - len(digest)
+    prefix = encoded[:prefix_budget]
+    # Avoid truncating a percent-escape mid-sequence (e.g. "%2" of "%2F").
+    pct = prefix.rfind("%")
+    if pct != -1 and pct > len(prefix) - 3:
+        prefix = prefix[:pct]
+    prefix = prefix.rstrip("-._~")
+    if not prefix:
+        return f"b~{digest}"
+    return f"{prefix}~{digest}"
 
 
 def find_repo_root(start: Path | None = None) -> Path:
@@ -170,7 +197,7 @@ Repo-local continuity journal for humans and AI agents.
 - `HANDOFF.md` is the compact human-readable current-state summary.
 - `.handoff/events/**.jsonl` is the append-only machine-readable event journal.
 - New event batches append to contextual files named like `YYYYMMDDZ-<agent>-<type>-<branch>-<commit>.jsonl`.
-- Branch names are encoded losslessly in filenames. Detached worktrees use their Git worktree name instead.
+- Branch names are encoded for filenames without collapsing distinct refs. Short names stay fully encoded; longer names use a stable prefix+hash token. Detached worktrees use their Git worktree name instead.
 - Existing one-event `.jsonl` files remain valid; the reader supports mixed history.
 - Generated `handoff-ref` comments identify active events and next actions. Resolve or supersede them through a new event; never rewrite their source line.
 - Mark completed branch/worktree contexts `closed`, `merged`, or `abandoned` so they leave active state.

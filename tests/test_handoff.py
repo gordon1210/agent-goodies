@@ -63,6 +63,31 @@ class HandoffPathTests(unittest.TestCase):
         self.assertEqual(hyphen, "feature-foo")
         self.assertNotEqual(slash, hyphen)
 
+    def test_branch_token_at_limit_stays_fully_encoded(self) -> None:
+        name = "b" * HANDOFF.BRANCH_FILENAME_MAX
+        self.assertEqual(HANDOFF.branch_filename_token(name), name)
+
+    def test_long_branch_token_is_stable_bounded_and_injective(self) -> None:
+        long_a = "b" * 240
+        long_b = "b" * 239 + "c"
+        token_a = HANDOFF.branch_filename_token(long_a)
+        token_b = HANDOFF.branch_filename_token(long_b)
+
+        self.assertLessEqual(len(token_a), HANDOFF.BRANCH_FILENAME_MAX)
+        self.assertLessEqual(len(token_b), HANDOFF.BRANCH_FILENAME_MAX)
+        self.assertIn("~", token_a)
+        self.assertEqual(token_a, HANDOFF.branch_filename_token(long_a))
+        self.assertNotEqual(token_a, token_b)
+
+    def test_long_branch_batch_filename_fits_name_max(self) -> None:
+        path = HANDOFF.event_batch_path(
+            None,
+            self.event(branch="b" * 240),
+        )
+        # Single path component limit on common filesystems (APFS, ext4).
+        self.assertLessEqual(len(path.name.encode("utf-8")), 255)
+        self.assertTrue(path.name.endswith(".jsonl"))
+
     def test_attached_worktrees_at_same_commit_use_distinct_branch_batches(self) -> None:
         slash = HANDOFF.event_batch_path(None, self.event(branch="feature/foo"))
         hyphen = HANDOFF.event_batch_path(None, self.event(branch="feature-foo"))

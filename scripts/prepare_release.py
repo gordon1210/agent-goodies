@@ -15,7 +15,10 @@ from validate_repo import NAME_RE, ROOT, SEMVER_RE, Validator, extract_changelog
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("plugin", help="lowercase kebab-case plugin name")
-    parser.add_argument("version", help="semantic version already present in both manifests")
+    parser.add_argument(
+        "version",
+        help="semantic version already present in every host manifest",
+    )
     parser.add_argument("--github-output", type=Path)
     parser.add_argument("--notes-file", type=Path)
     return parser.parse_args()
@@ -24,6 +27,26 @@ def parse_args() -> argparse.Namespace:
 def fail(message: str) -> int:
     print(f"Release preparation failed: {message}", file=sys.stderr)
     return 1
+
+
+def release_title_name(manifests: list[dict], fallback: str) -> str:
+    """Pick a human title from host manifests that are actually present.
+
+    Prefer Codex ``interface.displayName``, then Claude top-level ``displayName``,
+    then the plugin directory name. Callers should pass manifests in host priority
+    order (Codex before Claude).
+    """
+    for data in manifests:
+        interface = data.get("interface")
+        if isinstance(interface, dict):
+            name = interface.get("displayName")
+            if isinstance(name, str) and name.strip():
+                return name.strip()
+    for data in manifests:
+        name = data.get("displayName")
+        if isinstance(name, str) and name.strip():
+            return name.strip()
+    return fallback
 
 
 def main() -> int:
@@ -44,15 +67,20 @@ def main() -> int:
     if not plugin_dir.is_dir():
         return fail(f"unknown plugin: {args.plugin}")
 
-    manifests = (
+    manifest_paths = (
         plugin_dir / ".codex-plugin/plugin.json",
         plugin_dir / ".claude-plugin/plugin.json",
     )
+    loaded_manifests: list[dict] = []
     found_versions: list[str] = []
-    for path in manifests:
-        if path.is_file():
-            data = json.loads(path.read_text(encoding="utf-8"))
-            found_versions.append(data.get("version", ""))
+    for path in manifest_paths:
+        if not path.is_file():
+            continue
+        data = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(data, dict):
+            return fail(f"manifest is not a JSON object: {path.relative_to(ROOT)}")
+        loaded_manifests.append(data)
+        found_versions.append(data.get("version", ""))
     if not found_versions or any(version != args.version for version in found_versions):
         return fail("requested version does not match every host manifest")
 
@@ -71,8 +99,7 @@ def main() -> int:
     if tag_check.returncode not in (0, 1):
         return fail("could not inspect existing git tags")
 
-    codex_manifest = json.loads(manifests[0].read_text(encoding="utf-8"))
-    title_name = codex_manifest.get("interface", {}).get("displayName", args.plugin)
+    title_name = release_title_name(loaded_manifests, args.plugin)
     title = f"{title_name} v{args.version}".replace("\n", " ")
 
     if args.notes_file:

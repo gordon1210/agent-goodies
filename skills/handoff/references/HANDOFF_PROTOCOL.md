@@ -27,7 +27,7 @@ SQLite can still be useful as a generated local cache, but not as the repo sourc
 
 JSONL is append-friendly, diffable, grep-friendly, streamable, and easy for any agent/tool to parse.
 
-Shard event files by month and contextual day/agent/type/branch/commit filenames. Encode branch names losslessly so distinct refs cannot collapse to the same filename. For detached HEADs, substitute Git's worktree administrative name for the branch. This keeps parallel worktrees in separate append-only batches while still allowing multiple event lines per file.
+Shard event files by month and contextual day/agent/type/branch/commit filenames. Encode branch names so distinct refs cannot collapse to the same filename: short names stay fully percent-encoded; encoded names longer than 50 characters use a stable prefix+hash token. The full branch name always remains in event metadata. For detached HEADs, substitute Git's worktree administrative name for the branch. This keeps parallel worktrees in separate append-only batches while still allowing multiple event lines per file.
 
 Legacy one-event `.jsonl` files remain valid. Readers should support mixed history without requiring a rewrite.
 

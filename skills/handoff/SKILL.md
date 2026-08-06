@@ -42,7 +42,7 @@ Design rules:
 
 - `.handoff/events/**` is append-only.
 - New events should append to a contextual JSONL batch keyed by UTC day + agent + type + branch + commit.
-- Record the full branch name in each event and encode it losslessly in the filename so names such as `feature/foo` and `feature-foo` remain distinct.
+- Record the full branch name in each event. Encode it for the filename without collapsing distinct refs (`feature/foo` vs `feature-foo`). Short names stay fully encoded; names that would make the token longer than 50 characters use a stable prefix+hash form.
 - For detached HEADs, use Git's worktree administrative name in place of the branch so detached worktrees at the same commit remain distinct.
 - Existing one-event JSONL files remain valid and should be read without migration.
 - Avoid central mutable JSON files for active state.
