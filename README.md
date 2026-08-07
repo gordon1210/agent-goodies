@@ -14,8 +14,9 @@ Code.
 materials in Tauri 2 apps. It covers macOS vibrancy and Liquid Glass, Windows
 Mica and Acrylic, the shared WebView transparency stack, and a safe opaque
 fallback for unsupported platforms. Its canonical package lives at
-`skills/add-tauri-native-window-effects` and is installable through the skills
-CLI.
+`skills/add-tauri-native-window-effects`, which makes it directly discoverable
+by the skills CLI while Claude Code's marketplace references that same
+directory directly.
 
 ### Handoff
 
@@ -32,8 +33,9 @@ transitions; initializing handoff state in a new repository remains opt-in.
 `rust-codebase-excellence` guides production-grade Rust design, implementation,
 review, testing, security, performance, and release work while preserving
 repository contracts and avoiding speculative complexity. Its canonical package
-lives at `skills/rust-codebase-excellence` and is installable through the
-skills CLI.
+lives at `skills/rust-codebase-excellence`, which makes it directly discoverable
+by the skills CLI while Claude Code's marketplace references that same
+directory directly.
 
 ### Idea Workbench
 
@@ -151,7 +153,9 @@ For Claude Code:
 ```bash
 claude plugin marketplace add gordon1210/agent-goodies
 claude plugin install idea-workbench@agent-goodies
+claude plugin install add-tauri-native-window-effects@agent-goodies
 claude plugin install handoff@agent-goodies
+claude plugin install rust-codebase-excellence@agent-goodies
 ```
 
 ## Local development
