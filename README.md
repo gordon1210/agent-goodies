@@ -151,7 +151,9 @@ For Claude Code:
 ```bash
 claude plugin marketplace add gordon1210/agent-goodies
 claude plugin install idea-workbench@agent-goodies
+claude plugin install add-tauri-native-window-effects@agent-goodies
 claude plugin install handoff@agent-goodies
+claude plugin install rust-codebase-excellence@agent-goodies
 ```
 
 ## Local development
