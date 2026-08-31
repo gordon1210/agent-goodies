@@ -23,3 +23,6 @@ jobs:
 
       - name: Run Handoff tests
         run: python3 -m unittest tests/test_handoff.py -v
+
+      - name: Run Grok ACP client tests
+        run: python3 -m unittest tests/test_grok_acp.py -v

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Grok CLI"
+  short_description: "Orchestrate Grok Build through headless CLI or ACP."
+  default_prompt: "Use $grok-cli to get a bounded, read-only second opinion from Grok Build on this task."

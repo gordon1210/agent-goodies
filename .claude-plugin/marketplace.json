@@ -52,6 +52,19 @@
         "name": "gordon1210"
       },
       "category": "Productivity"
+    },
+    {
+      "name": "grok-cli",
+      "source": "./skills/grok-cli",
+      "strict": false,
+      "skills": [
+        "./"
+      ],
+      "description": "Orchestrate Grok Build through headless CLI or ACP for bounded collaboration, review, and implementation.",
+      "author": {
+        "name": "gordon1210"
+      },
+      "category": "Productivity"
     }
   ]
 }

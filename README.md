@@ -28,6 +28,18 @@ install this standalone skill through the skills CLI. It activates for existing
 handoff repositories, explicit continuity requests, and agent/session
 transitions; initializing handoff state in a new repository remains opt-in.
 
+### Grok CLI
+
+`grok-cli` orchestrates xAI Grok Build as a bounded coding collaborator. It
+covers the interactive CLI, headless `grok -p` automation, structured output,
+sessions, ACP through `grok agent`, configuration, permissions, sandboxing, and
+extensions, with detailed patterns for delegation, agent pairing, consulting,
+rubber-duck dialogue, and independent review. A dependency-free Python bridge
+adds live ACP status, steering, cancellation, and permission handling. Its
+canonical package lives at `skills/grok-cli`, which makes it directly
+discoverable by the skills CLI while Claude Code's marketplace references that
+same directory directly.
+
 ### Rust Codebase Excellence
 
 `rust-codebase-excellence` guides production-grade Rust design, implementation,
@@ -78,6 +90,8 @@ entry points.
     ├── add-tauri-native-window-effects/
     │   └── SKILL.md
     ├── handoff/
+    │   └── SKILL.md
+    ├── grok-cli/
     │   └── SKILL.md
     └── rust-codebase-excellence/
         └── SKILL.md
@@ -131,6 +145,7 @@ available in every repository:
 ```bash
 npx skills add gordon1210/agent-goodies --skill add-tauri-native-window-effects --global
 npx skills add gordon1210/agent-goodies --skill handoff --global
+npx skills add gordon1210/agent-goodies --skill grok-cli --global
 npx skills add gordon1210/agent-goodies --skill rust-codebase-excellence --global
 ```
 
@@ -146,7 +161,8 @@ codex plugin marketplace add gordon1210/agent-goodies
 ```
 
 Then install `idea-workbench` from the `agent-goodies` marketplace in the
-Plugins browser. Install `handoff` with the skills CLI shown above.
+Plugins browser. Install standalone skills such as `handoff` and `grok-cli`
+with the skills CLI shown above.
 
 For Claude Code:
 
@@ -155,6 +171,7 @@ claude plugin marketplace add gordon1210/agent-goodies
 claude plugin install idea-workbench@agent-goodies
 claude plugin install add-tauri-native-window-effects@agent-goodies
 claude plugin install handoff@agent-goodies
+claude plugin install grok-cli@agent-goodies
 claude plugin install rust-codebase-excellence@agent-goodies
 ```
 
@@ -178,6 +195,7 @@ Run the repository validator before committing:
 ```bash
 python3 scripts/validate_repo.py
 python3 -m unittest tests/test_handoff.py -v
+python3 -m unittest tests/test_grok_acp.py -v
 ```
 
 ## Contributing and releases
