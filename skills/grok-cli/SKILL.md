@@ -3,7 +3,7 @@ name: grok-cli
 description: Operate and orchestrate the xAI Grok Build CLI as a bounded coding collaborator. Use when invoking `grok`, especially `grok -p` for headless prompts, `grok agent` for ACP integrations, exact session continuation, delegated implementation or review, agent pairing, consulting, rubber-duck dialogue, structured output, or CLI configuration and diagnostics. Do not use for the Grok web app or direct xAI API integration unless Grok Build CLI behavior is involved.
 license: MIT
 metadata:
-  version: "1.0.0"
+  version: "1.0.1"
   last-reviewed: "2026-08-31"
   tested-cli-version: "1.0.13"
   compatibility: "Grok Build CLI; verify commands against the installed version because the CLI and documentation evolve quickly."
@@ -133,13 +133,22 @@ Use the ready-made packets and command shapes in
    same `--tools`, `--no-subagents`, or permission-mode flags, so use an audited
    effective configuration or agent profile there; choose `grok -p` when a
    strict per-call read-only boundary is required.
-3. Use a fresh session for independent review. Resume the exact returned
+3. Treat sandbox application as a startup result, not as intent expressed by a
+   flag. If a requested sandbox warns, fails, or exits before the model turn,
+   never retry automatically without it. A fresh, explicit `--sandbox off`
+   tool-free consultation is allowed only when the complete bounded input is
+   supplied in the prompt and effective hooks, plugins, MCP, web, memory,
+   permissions, configuration, and subagents have been disabled or
+   independently reviewed. If Grok needs any local tool capability, or an
+   executable extension cannot be proven inactive or non-mutating, stop until
+   the intended sandbox can be enforced.
+4. Use a fresh session for independent review. Resume the exact returned
    session ID for pairing or rubber-duck continuity.
-4. Capture stderr separately from structured stdout when automating.
-5. Check the process exit code, terminal event or result object, stop reason,
+5. Capture stderr separately from structured stdout when automating.
+6. Check the process exit code, terminal event or result object, stop reason,
    incomplete-usage markers, and requested deliverable.
-6. Verify factual claims, diffs, and test results in the host environment.
-7. Treat Grok's answer as advisory until that verification passes.
+7. Verify factual claims, diffs, and test results in the host environment.
+8. Treat Grok's answer as advisory until that verification passes.
 
 An exit code of zero means the prompt completed, not that the proposed change
 is correct. An interrupted run does not roll back file changes.
@@ -162,4 +171,11 @@ State the mode, working directory, authority granted, session ID when useful,
 Grok's conclusion or changes, host-side verification performed, and any
 unresolved uncertainty. Do not claim that Grok used a tool, passed a check, or
 made no edits unless the captured events, diff, or local verification support
-that claim.
+that claim. If a tool-free call follows a failed sandbox start, report the two
+attempts separately: the requested sandbox and its startup failure; whether the
+later call explicitly used `--sandbox off`; that it was tool-free rather than
+filesystem-read-only; which extension surfaces were inspected or disabled;
+and whether a model turn occurred and which session ID belongs to it. Attribute
+conclusions and usage or cost only to the output that actually contains them;
+do not assign a conclusion, session ID, tool audit, usage, or cost to the
+failed start unless its captured output contains that field.

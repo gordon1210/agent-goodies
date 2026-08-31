@@ -64,6 +64,88 @@ For source review that genuinely needs read-only shell commands such as
 run; other unmatched operations are denied rather than prompted. Review the
 installed permissions guide because the recognized-command set can change.
 
+## When the requested sandbox refuses to start
+
+Treat sandbox startup diagnostics and the process result as enforcement
+evidence. A requested profile name is only intent. If the sandbox warns,
+fails, or exits before the model turn:
+
+1. Preserve stderr, structured stdout, the process exit status, and the elapsed
+   phase, including whether the failure occurred before a model turn.
+2. If stderr names a runtime-socket endpoint, inspect only that endpoint and
+   the installed CLI state. Adapt the path below to the path in the error:
+
+   ```bash
+   grok version --json
+   uname -s
+   ls -ld /var/run/docker.sock
+   readlink /var/run/docker.sock
+   realpath /var/run/docker.sock
+   grok update --check --json
+   ```
+
+   Do not scan arbitrary home directories or dump Grok session history while
+   diagnosing a named socket.
+3. Recognize `runtime-socket deny resolution failed` for Docker Desktop's
+   endpoint symlink on Grok Build 1.0.13/macOS as a CLI/environment
+   incompatibility. Never delete, rewrite, replace, chmod, chown, or otherwise
+   manipulate the socket, its symlink, Docker Desktop, or persistent Grok
+   configuration to make Grok start.
+4. Decide whether the complete, bounded review material can be supplied in the
+   prompt with zero local Grok tools. Separately verify that every executable
+   extension surface is disabled or proven non-mutating for this process.
+5. If it can, first review the effective configuration, then start a **fresh**
+   session with the explicit tool-free envelope below.
+6. Otherwise stop and report the sandbox incompatibility. Do not weaken the
+   boundary when Grok needs local file, search, directory, shell, edit, build,
+   validation, web, MCP, hook, plugin, or subagent capability.
+
+```bash
+GROK_MEMORY=0 grok \
+  --cwd /absolute/project/path \
+  -p "<complete bounded task packet including the material to review>" \
+  --output-format json \
+  --tools '' \
+  --no-subagents \
+  --disable-web-search \
+  --permission-mode dontAsk \
+  --deny MCPTool \
+  --sandbox off \
+  --max-turns 2 \
+  --no-auto-update
+```
+
+This is an **unsandboxed, tool-free consultation**, not filesystem read-only:
+
+- `--sandbox off` is explicit so the reduced boundary cannot be mistaken for
+  an applied `read-only` profile.
+- `--tools ''` empties the built-in tool selection, so Grok cannot fetch a
+  diff or source itself. It is not a complete MCP, hook, or plugin boundary;
+  the host must put only the necessary reviewed material in the prompt.
+- `--deny MCPTool` remains necessary because built-in tool filtering does not
+  remove always-on MCP meta-tools by itself.
+- Before the call, `grok inspect --json` must show the effective hooks,
+  plugins, MCP servers, permissions, configuration sources, and project
+  instructions. Do not use this branch if an MCP server remains reachable or
+  an executable hook or plugin cannot be disabled for the process or proven
+  non-mutating.
+- Use a host-specific hook-disable variable only after inspecting its behavior
+  and provenance. Never add a machine-specific switch such as
+  `CMUX_GROK_HOOKS_DISABLED=1` to the portable command template.
+- The prompt still goes to the remote model, project instructions and
+  configuration are still discovered, and ordinary local Grok session state
+  is still persisted. This envelope prevents model-initiated local tool use;
+  it does not reproduce OS-level filesystem confinement.
+- `--no-auto-update` is a tested Grok Build 1.0.13 compatibility flag: the
+  bundled headless guide documents it and the parser accepts it, although the
+  live top-level help does not display it. Re-check it on later versions.
+- Never resume or reuse the failed invocation. Sandbox profiles are
+  session-bound, so the tool-free call must start a fresh session.
+
+Never preserve `read_file`, `grep`, `list_dir`, `run_terminal_cmd`, edit tools,
+build or validation commands, web or external tools, MCP tools, or nested
+agents while dropping a sandbox that was selected to confine them.
+
 ## Prompt input
 
 ### Inline text

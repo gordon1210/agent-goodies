@@ -163,13 +163,55 @@ Consequences:
 - On macOS, the built-in child-network restriction is a no-op.
 - Built-in web tools, the model connection, and other in-process HTTP behavior
   are not stopped by child-process network restrictions.
-- A built-in profile that cannot be applied may warn and continue without full
-  enforcement. Check startup diagnostics; do not assume the requested label
-  proves enforcement.
+- A built-in profile can either warn and continue without full enforcement or
+  fail closed when a mandatory protection cannot be established. Treat startup
+  diagnostics and the process result as authoritative; never infer enforcement
+  from the selected profile name.
 
 The sandbox is OS-level confinement of the Grok process, not a container or
 virtual machine. A non-off profile also keeps tool execution in-process instead
 of delegating it through a shared leader.
+
+### Fail-closed startup and runtime sockets
+
+Grok Build 1.0.13 adds mandatory deny protections for known Docker, Podman,
+and containerd socket locations under every non-`off` sandbox. A container
+runtime socket can bypass filesystem confinement, so refusal is preferable to
+starting with that socket exposed. Some built-in-profile failures only warn in
+documented platform cases, but a mandatory protection failure can exit before
+the model turn. The exact stderr and process exit status decide which occurred.
+
+On macOS arm64 with Docker Desktop's documented
+`/var/run/docker.sock -> ~/.docker/run/docker.sock` endpoint symlink, Grok Build
+1.0.13 emits `runtime-socket deny resolution failed` with `endpoint is a
+symlink`, then exits with status 1. The endpoint symlink, not the ordinary
+`/var -> /private/var` parent alias, is the object named by the failure. This is
+fail-closed behavior, but it prevents the advertised `read-only` review profile
+from starting in that common environment.
+
+There is no documented Grok Build 1.0.13 per-call exception that disables only
+this protection while safely denying both the link and its resolved socket.
+Do not present a custom profile extending `read-only` as a workaround unless
+representative tests prove the mandatory socket deny remains enforced. Do not
+switch to `workspace`, `strict`, `devbox`, a permissive custom profile, or
+`always-approve` merely to make the call start: none establishes the requested
+boundary, and `devbox` is intended only for an already disposable development
+VM. Never alter a runtime socket or symlink, or stop, restart, or reconfigure
+Docker Desktop, as an incidental Grok workaround.
+
+Use one of two resolution paths:
+
+1. **Preferred product resolution:** update Grok only with explicit user
+   authorization, re-run the minimal sandbox reproduction, and verify from
+   startup diagnostics plus representative denied operations that the profile
+   applies. Remove the version-specific fallback only after host-side
+   confirmation.
+2. **Optional machine-level choice:** a user may choose to disable Docker
+   Desktop's **Allow the default Docker socket to be used** setting. This is
+   not an agent action and must never be recommended or performed as an
+   incidental Grok fix. It can break third-party clients fixed to
+   `/var/run/docker.sock`, even though the Docker CLI can use the
+   `desktop-linux` context and per-user socket.
 
 ### Custom profiles
 

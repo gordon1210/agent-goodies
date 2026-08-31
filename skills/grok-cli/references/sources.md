@@ -91,6 +91,29 @@ defines this negotiation. Robust clients must implement the live/official
 handshake and treat the bundled example as illustrative framing, not a complete
 startup sequence.
 
+### Runtime-socket sandbox startup
+
+Grok Build 1.0.13 (`5e9a58528b76`) on macOS arm64 failed closed before a model
+turn when Docker Desktop exposed its documented
+`/var/run/docker.sock -> ~/.docker/run/docker.sock` endpoint symlink. The exact
+error class was `runtime-socket deny resolution failed`, followed by `endpoint
+is a symlink`, and the process exited with status 1. Docker documents that
+**Allow the default Docker socket to be used** creates this compatibility path
+for third-party clients and targets the per-user socket; see Docker's
+[Desktop settings](https://docs.docker.com/desktop/settings-and-maintenance/settings/)
+and its
+[macOS permission requirements](https://docs.docker.com/desktop/setup/install/mac-permission-requirements/).
+
+This mandatory runtime-socket path is narrower than the general bundled
+platform statement that a failed built-in sandbox may warn and continue, and
+it is absent from the general
+[built-in-profile documentation](https://docs.x.ai/build/features/sandbox).
+The stable update check on 2026-08-31 reported 1.0.13 as both current and
+latest. Re-test the next stable Grok version with the endpoint symlink present.
+Delete this version-specific caveat only after host-side evidence shows that
+`--sandbox read-only` applies successfully and representative local read, shell,
+and edit tools remain confined.
+
 ## Bundled guide
 
 When installed in the standard location, read relevant files under
@@ -165,6 +188,14 @@ When updating this skill:
    - `-s`, `-r`, `-c`, fork, and restore semantics.
    - Permission precedence and `dontAsk` behavior.
    - Built-in sandbox paths and platform network enforcement.
+   - Non-`off` sandbox startup when known container-runtime socket paths are
+     real files, sockets, absent paths, and endpoint symlinks on each supported
+     platform.
+   - Sandbox failures neither enter a model turn nor silently retain requested
+     local tools without enforcement.
+   - The tool-free branch has an empty built-in tool set, no reachable MCP
+     tools, nested subagents, or web tools, and no unreviewed executable hooks
+     or plugins.
    - MCP retention under `--tools`.
    - Hook fail-open behavior.
    - ACP auth methods, default selection, headless authentication ordering, and
