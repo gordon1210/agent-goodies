@@ -49,6 +49,16 @@ lives at `skills/rust-codebase-excellence`, which makes it directly discoverable
 by the skills CLI while Claude Code's marketplace references that same
 directory directly.
 
+### Deep Code Review
+
+`deep-code-review` performs evidence-driven reviews of pull requests, commits,
+patches, and working-tree changes. It traces changed behavior through callers,
+state, data flows, trust boundaries, tests, configuration, and deployment
+contracts while aggressively filtering speculative findings. Its canonical
+package lives at `skills/deep-code-review`, which makes it directly discoverable
+by the skills CLI while Claude Code's marketplace references that same directory
+directly.
+
 ### Idea Workbench
 
 `idea-workbench` turns a rough vision into a reviewed design and an
@@ -92,6 +102,8 @@ entry points.
     ├── handoff/
     │   └── SKILL.md
     ├── grok-cli/
+    │   └── SKILL.md
+    ├── deep-code-review/
     │   └── SKILL.md
     └── rust-codebase-excellence/
         └── SKILL.md
@@ -146,6 +158,7 @@ available in every repository:
 npx skills add gordon1210/agent-goodies --skill add-tauri-native-window-effects --global
 npx skills add gordon1210/agent-goodies --skill handoff --global
 npx skills add gordon1210/agent-goodies --skill grok-cli --global
+npx skills add gordon1210/agent-goodies --skill deep-code-review --global
 npx skills add gordon1210/agent-goodies --skill rust-codebase-excellence --global
 ```
 
@@ -161,8 +174,8 @@ codex plugin marketplace add gordon1210/agent-goodies
 ```
 
 Then install `idea-workbench` from the `agent-goodies` marketplace in the
-Plugins browser. Install standalone skills such as `handoff` and `grok-cli`
-with the skills CLI shown above.
+Plugins browser. Install standalone skills such as `handoff`, `grok-cli`, and
+`deep-code-review` with the skills CLI shown above.
 
 For Claude Code:
 
@@ -172,6 +185,7 @@ claude plugin install idea-workbench@agent-goodies
 claude plugin install add-tauri-native-window-effects@agent-goodies
 claude plugin install handoff@agent-goodies
 claude plugin install grok-cli@agent-goodies
+claude plugin install deep-code-review@agent-goodies
 claude plugin install rust-codebase-excellence@agent-goodies
 ```
 

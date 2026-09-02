@@ -65,6 +65,19 @@
         "name": "gordon1210"
       },
       "category": "Productivity"
+    },
+    {
+      "name": "deep-code-review",
+      "source": "./skills/deep-code-review",
+      "strict": false,
+      "skills": [
+        "./"
+      ],
+      "description": "Review code changes deeply, trace affected behavior, and report evidence-backed defects with minimal false positives.",
+      "author": {
+        "name": "gordon1210"
+      },
+      "category": "Productivity"
     }
   ]
 }
