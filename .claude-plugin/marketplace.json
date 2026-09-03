@@ -78,6 +78,45 @@
         "name": "gordon1210"
       },
       "category": "Productivity"
+    },
+    {
+      "name": "design-ui-excellence",
+      "source": "./skills/design-ui-excellence",
+      "strict": false,
+      "skills": [
+        "./"
+      ],
+      "description": "Route website, product UI, marketing, brand, content, prototype, and design-audit work to focused guidance.",
+      "author": {
+        "name": "gordon1210"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "react-codebase-excellence",
+      "source": "./skills/react-codebase-excellence",
+      "strict": false,
+      "skills": [
+        "./"
+      ],
+      "description": "Guide production-grade React 18 and 19 implementation, review, testing, accessibility, security, performance, and upgrades.",
+      "author": {
+        "name": "gordon1210"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "typescript-codebase-excellence",
+      "source": "./skills/typescript-codebase-excellence",
+      "strict": false,
+      "skills": [
+        "./"
+      ],
+      "description": "Guide production-grade TypeScript design, implementation, review, testing, security, performance, packaging, and migrations.",
+      "author": {
+        "name": "gordon1210"
+      },
+      "category": "Productivity"
     }
   ]
 }

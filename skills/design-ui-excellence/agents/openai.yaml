@@ -1,0 +1,7 @@
+interface:
+  display_name: "Design & UI Excellence"
+  short_description: "Route web, product UI, and marketing design work"
+  default_prompt: "Use $design-ui-excellence to turn my brief into a coherent, distinctive, accessible, and verified web or marketing experience."
+
+policy:
+  allow_implicit_invocation: true

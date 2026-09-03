@@ -59,6 +59,34 @@ package lives at `skills/deep-code-review`, which makes it directly discoverable
 by the skills CLI while Claude Code's marketplace references that same directory
 directly.
 
+### Design & UI Excellence
+
+`design-ui-excellence` routes website, landing-page, marketing, product UI,
+design-system, content, prototyping, and audit work through focused workflows,
+guides, and reusable templates. Its canonical package lives at
+`skills/design-ui-excellence`, which makes it directly discoverable by the
+skills CLI while Claude Code's marketplace references that same directory
+directly.
+
+### React Codebase Excellence
+
+`react-codebase-excellence` guides production-grade React 18 and 19 design,
+implementation, review, testing, accessibility, security, performance, and
+upgrades while preserving exact repository and framework contracts. Its
+canonical package lives at `skills/react-codebase-excellence`, which makes it
+directly discoverable by the skills CLI while Claude Code's marketplace
+references that same directory directly.
+
+### TypeScript Codebase Excellence
+
+`typescript-codebase-excellence` guides production-grade TypeScript design,
+implementation, review, testing, security, performance, packaging, and
+TypeScript 6/7 migration work without speculative architecture or incidental
+toolchain changes. Its canonical package lives at
+`skills/typescript-codebase-excellence`, which makes it directly discoverable
+by the skills CLI while Claude Code's marketplace references that same
+directory directly.
+
 ### Idea Workbench
 
 `idea-workbench` turns a rough vision into a reviewed design and an
@@ -105,7 +133,13 @@ entry points.
     │   └── SKILL.md
     ├── deep-code-review/
     │   └── SKILL.md
-    └── rust-codebase-excellence/
+    ├── rust-codebase-excellence/
+    │   └── SKILL.md
+    ├── design-ui-excellence/
+    │   └── SKILL.md
+    ├── react-codebase-excellence/
+    │   └── SKILL.md
+    └── typescript-codebase-excellence/
         └── SKILL.md
 ```
 
@@ -160,6 +194,9 @@ npx skills add gordon1210/agent-goodies --skill handoff --global
 npx skills add gordon1210/agent-goodies --skill grok-cli --global
 npx skills add gordon1210/agent-goodies --skill deep-code-review --global
 npx skills add gordon1210/agent-goodies --skill rust-codebase-excellence --global
+npx skills add gordon1210/agent-goodies --skill design-ui-excellence --global
+npx skills add gordon1210/agent-goodies --skill react-codebase-excellence --global
+npx skills add gordon1210/agent-goodies --skill typescript-codebase-excellence --global
 ```
 
 Omit `--global` for a project-scoped installation. A bundled helper, when
@@ -174,8 +211,7 @@ codex plugin marketplace add gordon1210/agent-goodies
 ```
 
 Then install `idea-workbench` from the `agent-goodies` marketplace in the
-Plugins browser. Install standalone skills such as `handoff`, `grok-cli`, and
-`deep-code-review` with the skills CLI shown above.
+Plugins browser. Install standalone skills with the skills CLI shown above.
 
 For Claude Code:
 
@@ -187,6 +223,9 @@ claude plugin install handoff@agent-goodies
 claude plugin install grok-cli@agent-goodies
 claude plugin install deep-code-review@agent-goodies
 claude plugin install rust-codebase-excellence@agent-goodies
+claude plugin install design-ui-excellence@agent-goodies
+claude plugin install react-codebase-excellence@agent-goodies
+claude plugin install typescript-codebase-excellence@agent-goodies
 ```
 
 ## Local development
