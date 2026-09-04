@@ -1,17 +1,33 @@
 # Sources and maintenance
 
-Grok Build changes quickly. This skill records durable operating patterns and
-routes exact syntax back to the installation being controlled.
+Grok Build changes quickly. This skill records durable operating patterns for
+the current stable release and routes exact version behavior to one small note.
+Older CLI releases are intentionally unsupported.
 
 ## Review record
 
 Last full review: 2026-08-31.
+
+Focused follow-up: 2026-09-04. Rechecked built-in shell and subagent tool IDs,
+`--tools` filtering, and `dontAsk` cancellation behavior against the installed
+1.0.13 guide and binary plus concrete headless feedback. No paid model call was
+made during the follow-up.
 
 Tested installation:
 
 ```text
 grok 1.0.13 (5e9a58528b76) [stable]
 ```
+
+## Supported stable contract
+
+- [Grok Build 1.0.13](versions/1.0.13.md) contains the few exact tool-filter,
+  subagent, and cancellation details that differ from otherwise durable
+  guidance.
+
+Load only the note for the supported stable release. When stable changes,
+refresh this skill and route to the new note; do not add compatibility branches
+for older installations to the operational references.
 
 The review covered:
 
@@ -176,7 +192,8 @@ capabilities for `x.ai/*` extensions.
 
 When updating this skill:
 
-1. Record the new `grok version --json` value and release channel.
+1. Compare `grok version --json` with `grok update --check --json`; continue
+   only when installed and latest stable versions agree.
 2. Diff top-level help and recursively inspect new or changed subcommands.
 3. Enumerate and read every changed bundled-guide chapter.
 4. Compare official online docs and the changelog.
@@ -187,6 +204,10 @@ When updating this skill:
    - Headless worktree behavior.
    - `-s`, `-r`, `-c`, fork, and restore semantics.
    - Permission precedence and `dontAsk` behavior.
+   - Current `--tools` IDs for shell and subagent access, including the combined
+     requirements for intentional nested fan-out.
+   - Headless permission rejection behavior, including whether
+     `permission_cancelled` terminates the prompt before a final deliverable.
    - Built-in sandbox paths and platform network enforcement.
    - Non-`off` sandbox startup when known container-runtime socket paths are
      real files, sockets, absent paths, and endpoint symlinks on each supported
@@ -203,8 +224,9 @@ When updating this skill:
    - Agent option placement and ACP session metadata.
    - Output event names, terminal records, cost uncertainty, and structured
      output location.
-8. Update the frontmatter review date and tested version.
-9. Validate the skill package and all repository catalogs.
+8. Replace the supported-stable version route and note. Keep operational
+   references free of compatibility branches for older releases.
+9. Update the frontmatter review date and tested version.
+10. Validate the skill package and all repository catalogs.
 
-Document observed conflicts instead of silently choosing whichever source is
-more convenient.
+Keep observed release-specific conflicts in the routed version note.

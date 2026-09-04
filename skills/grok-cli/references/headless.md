@@ -59,10 +59,10 @@ Adapt only what the task needs. Important limits of this baseline:
   process or MCP server.
 
 For source review that genuinely needs read-only shell commands such as
-`git status` and `git diff`, add `run_terminal_cmd` to `--tools` while retaining
-`dontAsk` and a non-write sandbox. Built-in recognized read-only commands can
-run; other unmatched operations are denied rather than prompted. Review the
-installed permissions guide because the recognized-command set can change.
+`git status` and `git diff`, add `run_terminal_command` to `--tools` while
+retaining `dontAsk` and a non-write sandbox. Permission rules for commands use
+`Bash(...)`. See the [current stable notes](versions/1.0.13.md) for exact tool
+filtering and cancellation behavior.
 
 ## When the requested sandbox refuses to start
 
@@ -142,9 +142,9 @@ This is an **unsandboxed, tool-free consultation**, not filesystem read-only:
 - Never resume or reuse the failed invocation. Sandbox profiles are
   session-bound, so the tool-free call must start a fresh session.
 
-Never preserve `read_file`, `grep`, `list_dir`, `run_terminal_cmd`, edit tools,
-build or validation commands, web or external tools, MCP tools, or nested
-agents while dropping a sandbox that was selected to confine them.
+Never preserve `read_file`, `grep`, `list_dir`, `run_terminal_command`, edit
+tools, build or validation commands, web or external tools, MCP tools, or
+nested agents while dropping a sandbox that was selected to confine them.
 
 ## Prompt input
 
@@ -329,6 +329,11 @@ Current documented process exit codes are:
 | `130` | Interrupted by SIGINT |
 | `143` | Terminated by SIGTERM |
 
+Under `dontAsk`, a rejected shell request can end the current prompt with
+`permission_cancelled`; it is not merely skipped. Preflight every required
+command segment, treat cancellation as incomplete, and never broaden
+permissions automatically after it.
+
 On interruption, the session is saved through the last completed tool call,
 but file modifications are not rolled back. Always inspect the worktree before
 resuming or retrying.
@@ -358,6 +363,8 @@ For isolated write delegation:
 - Use exact session IDs for continuation.
 - Treat event types and optional usage fields as forward-compatible.
 - Disable nested subagents unless their fan-out is intentional.
+- For intentional fan-out under `--tools`, follow the
+  [current stable notes](versions/1.0.13.md); otherwise use `--no-subagents`.
 - Do not treat allow rules as a closed allowlist; combine `dontAsk`, narrow
   allows, deny rules, and a sandbox.
 - Verify the worktree, not merely the final prose.

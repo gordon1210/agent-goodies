@@ -3,10 +3,10 @@ name: grok-cli
 description: Operate and orchestrate the xAI Grok Build CLI as a bounded coding collaborator. Use when invoking `grok`, especially `grok -p` for headless prompts, `grok agent` for ACP integrations, exact session continuation, delegated implementation or review, agent pairing, consulting, rubber-duck dialogue, structured output, or CLI configuration and diagnostics. Do not use for the Grok web app or direct xAI API integration unless Grok Build CLI behavior is involved.
 license: MIT
 metadata:
-  version: "1.0.1"
-  last-reviewed: "2026-08-31"
+  version: "1.0.2"
+  last-reviewed: "2026-09-04"
   tested-cli-version: "1.0.13"
-  compatibility: "Grok Build CLI; verify commands against the installed version because the CLI and documentation evolve quickly."
+  compatibility: "Current stable Grok Build CLI only; update older installations before using this skill."
 ---
 
 # Grok CLI
@@ -17,15 +17,22 @@ and independently verify its result before accepting it.
 
 ## Resolve version drift first
 
-For every new environment, establish the live contract before relying on a
-flag or output field:
+This skill supports the current stable CLI, not older releases. Establish that
+contract before relying on a flag or output field:
 
 ```bash
 command -v grok
 grok version --json
+grok update --check --json
 grok --help
 grok inspect --json
 ```
+
+Proceed only when the installed version, the updater's latest stable version,
+and `metadata.tested-cli-version` agree. If the installation is older, report
+that an update is required; do not add compatibility branches. If stable has
+moved ahead of this skill, refresh the skill before using version-sensitive
+guidance. Never update the CLI without separate user authorization.
 
 Run `grok <command> --help` for every subcommand used. If present, the bundled
 guide under `~/.grok/docs/user-guide/` is normally closer to the installed
@@ -42,9 +49,9 @@ check. In particular, do not pass speculative prompt flags such as
 help advertises them. A similarly named flag can have a separate valid meaning;
 for example, the tested `grok update --check` only checks for an update.
 
-Do not install or update Grok, start an interactive login, sign out, fetch
-managed setup, or mutate configuration merely to complete a consulting call.
-Those are separate user-authorized operations. An ACP client still has to send
+Do not start an interactive login, sign out, fetch managed setup, or mutate
+configuration merely to complete a consulting call. Those are separate
+user-authorized operations. An ACP client still has to send
 the protocol's `authenticate` request when Grok advertises an existing cached
 or environment-backed method; that selects already available credentials and
 is distinct from initiating `grok login`.
@@ -163,6 +170,7 @@ is correct. An interrupted run does not roll back file changes.
 | Delegation, pairing, consulting, rubber duck, review, parallel work | [collaboration-patterns.md](references/collaboration-patterns.md) |
 | Permissions, tools, sandbox, secrets, hooks, MCP, plugins, trust | [permissions-sandbox-trust.md](references/permissions-sandbox-trust.md) |
 | TUI, sessions, agents, rules, memory, configuration, operational commands | [cli-areas.md](references/cli-areas.md) |
+| Exact behavior specific to the supported stable CLI | [Grok Build 1.0.13](references/versions/1.0.13.md) |
 | Source hierarchy, official links, version notes, maintenance | [sources.md](references/sources.md) |
 
 ## Report the outcome

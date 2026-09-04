@@ -39,9 +39,17 @@ Headless mode accepts:
 - `--no-subagents`: block Grok's child-agent spawning.
 - `--disable-web-search`: remove built-in web search and fetch behavior.
 
-Use internal tool IDs, not permission-class names. Tested examples include
-`read_file`, `search_replace`, `grep`, `list_dir`, and `run_terminal_cmd`.
-Discover the installed set rather than assuming it.
+Use the supported stable CLI's operator-facing entries. Tested examples include
+`read_file`, `search_replace`, `grep`, `list_dir`, and
+`run_terminal_command`. Under a narrow `--tools` list, enable subagents with
+the special `Agent` or `Agent(type,...)` entry; `spawn_subagent` is the
+model-facing tool name, not the operator directive. Do not infer an entry from
+permission classes such as `Bash` or `Read`. See the
+[current stable notes](versions/1.0.13.md) for the exact contract.
+
+The version note also gives a structured-output preflight for runtime
+confirmation. It starts a real remote session, so use it only within the
+caller's model-usage authority.
 
 `--tools` is not a complete capability allowlist: MCP meta-tools can remain
 available, and configured extensions or lifecycle hooks still matter. Inspect
@@ -49,8 +57,12 @@ effective MCP servers, plugins, hooks, agents, skills, rules, and config sources
 with `grok inspect --json`.
 
 When the host owns delegation, pass `--no-subagents` unless nested fan-out was
-chosen deliberately. Otherwise one Grok assignment can create child sessions,
-multiply model usage, share inherited MCP access, and complicate ownership.
+chosen deliberately. Authorized fan-out with a narrow `--tools` list also needs
+`Agent` or `Agent(type,...)` and effective settings that leave subagents
+enabled. Inspect the selected child-agent definition because its capabilities
+must fit the same authority envelope. Otherwise one assignment can create
+child sessions, multiply model usage, share inherited MCP access, and
+complicate ownership.
 
 ### ACP bridge limitations
 
@@ -114,6 +126,11 @@ Important properties:
 For deny-by-default automation, combine `dontAsk` with narrow allow rules.
 Do not pair broad `auto` behavior with a few allow rules and call the result an
 allowlist.
+
+Under `dontAsk`, a denied shell request can terminate the prompt as
+`permission_cancelled`. Ensure every required compound-command segment matches
+an exact allow rule. Treat cancellation as incomplete even after partial
+output, and never widen permissions automatically to retry it.
 
 Recognized read-only tools and shell commands can run automatically even under
 `dontAsk`. That classifier is a convenience, not a security boundary. Repository

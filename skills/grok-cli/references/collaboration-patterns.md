@@ -272,7 +272,7 @@ Adapt the paths and exact validation commands to the repository:
 GROK_MEMORY=0 grok --cwd /absolute/dedicated-worktree \
   --prompt-file /authorized/path/task-packet.md \
   --output-format streaming-json \
-  --tools "read_file,search_replace,grep,list_dir,run_terminal_cmd" \
+  --tools "read_file,search_replace,grep,list_dir,run_terminal_command" \
   --no-subagents \
   --disable-web-search \
   --permission-mode dontAsk \
@@ -293,6 +293,9 @@ network, and permits writes anywhere under the working directory; path-scoped
 permission rules and the host-created worktree are necessary additional
 layers. An unmatched operation is denied by `dontAsk`.
 
+Preflight every compound validation segment against exact `Bash(...)` rules;
+under `dontAsk`, one mismatch can cancel the prompt.
+
 Do not broaden to always-approve merely because a validation command was
 blocked. Add one reviewed exact permission or let the host run the check.
 
@@ -311,6 +314,12 @@ The host, not Grok, confirms:
 
 Use a fresh, read-only session. Let Grok inspect the actual diff and surrounding
 code rather than only a prose summary.
+
+If this review is explicitly authorized to use Grok subagents, omitting
+`--no-subagents` is not sufficient when `--tools` is present. Add `Agent` or
+`Agent(type,...)` and inspect the selected child-agent definition. Otherwise
+pass `--no-subagents`. See the [current stable notes](versions/1.0.13.md) for
+the exact behavior.
 
 ### Packet
 
