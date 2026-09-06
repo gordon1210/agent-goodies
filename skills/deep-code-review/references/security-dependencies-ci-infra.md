@@ -79,7 +79,7 @@ Cache poisoning is a finding only when a lower-trust producer can write content 
 
 ## Containers
 
-Review Dockerfiles, compose files, and runtime configuration for changed behavior:
+Review Dockerfiles, compose files, and runtime configuration for in-scope behavior:
 
 - secrets in build arguments, layers, history, environment, or image contents
 - base image identity and mutability

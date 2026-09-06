@@ -2,8 +2,8 @@
 name: godot-engineering-suite
 description: Engineering guidance and task routing for Godot 4 projects. Use when implementing, reviewing, debugging, testing, profiling, refactoring, importing assets, building UI, 2D or 3D gameplay, networking, editor tools, exports, migrations, GDScript, C#, shaders, GDExtension, XR, or platform-specific Godot work. Detect the project's exact engine version and load only the relevant bundled references.
 license: MIT
+compatibility: Agent Skills compatible coding agents; targets Godot 4.x. A matching local Godot CLI is optional for validation.
 metadata:
-  compatibility: Agent Skills compatible coding agents; targets Godot 4.x. A matching local Godot CLI is optional for validation.
   author: godot-skill-suite-contributors
   version: "1.0.0"
   context-strategy: "single-router-progressive-disclosure"

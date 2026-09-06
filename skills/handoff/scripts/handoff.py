@@ -9,11 +9,13 @@ handoff state remains diffable, reviewable, and merge-friendly.
 from __future__ import annotations
 
 import argparse
+import contextlib
 import datetime as dt
 import hashlib
 import json
 import os
 import re
+import stat
 import subprocess
 import sys
 import uuid
@@ -184,9 +186,228 @@ def paths(root: Path | None = None) -> HandoffPaths:
     )
 
 
-def write_json(path: Path, data: Any) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+def trusted_relative_path(p: HandoffPaths, path: Path) -> Path:
+    """Return a lexical repository-relative path without following symlinks."""
+    root = Path(os.path.abspath(p.root))
+    target = Path(os.path.abspath(path))
+    try:
+        relative = target.relative_to(root)
+    except ValueError as exc:
+        raise ValueError(f"Refusing handoff path outside repository: {path}") from exc
+    if not relative.parts:
+        raise ValueError(f"Refusing to use repository root as a handoff output: {path}")
+    return relative
+
+
+def require_secure_write_primitives() -> None:
+    required_dir_fd = (os.open, os.mkdir, os.stat, os.unlink, os.rename, os.link)
+    if (
+        not hasattr(os, "O_NOFOLLOW")
+        or not hasattr(os, "O_DIRECTORY")
+        or any(function not in os.supports_dir_fd for function in required_dir_fd)
+        or os.link not in os.supports_follow_symlinks
+    ):
+        raise ValueError(
+            "Secure handoff writes are unavailable on this platform: "
+            "directory-relative no-follow filesystem operations are required"
+        )
+
+
+def open_trusted_root(p: HandoffPaths) -> int:
+    require_secure_write_primitives()
+    flags = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
+    if hasattr(os, "O_CLOEXEC"):
+        flags |= os.O_CLOEXEC
+    descriptor: int | None = None
+    try:
+        before = os.stat(p.root, follow_symlinks=False)
+        if not stat.S_ISDIR(before.st_mode):
+            raise ValueError(f"Trusted repository root is not a real directory: {p.root}")
+        descriptor = os.open(p.root, flags)
+        opened = os.fstat(descriptor)
+    except OSError as exc:
+        if descriptor is not None:
+            os.close(descriptor)
+        raise ValueError(f"Unable to open trusted repository directory {p.root}: {exc}") from exc
+    assert descriptor is not None
+    if before.st_dev != opened.st_dev or before.st_ino != opened.st_ino:
+        os.close(descriptor)
+        raise ValueError(f"Trusted repository root changed while opening it: {p.root}")
+    return descriptor
+
+
+@contextlib.contextmanager
+def open_trusted_directory(
+    p: HandoffPaths,
+    path: Path,
+    *,
+    create: bool,
+) -> Iterable[int]:
+    """Open a real directory below the trusted repo root without following links.
+
+    ``p.root`` is the trust anchor selected from the resolved working directory.
+    Keeping each descendant open by descriptor prevents a later path swap from
+    redirecting the operation; replacement of the trust anchor itself is outside
+    this helper's filesystem boundary model.
+    """
+    require_secure_write_primitives()
+    relative = trusted_relative_path(p, path)
+    flags = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
+    if hasattr(os, "O_CLOEXEC"):
+        flags |= os.O_CLOEXEC
+
+    descriptors: list[int] = []
+    try:
+        current = open_trusted_root(p)
+        descriptors.append(current)
+
+        for part in relative.parts:
+            try:
+                child = os.open(part, flags, dir_fd=current)
+            except FileNotFoundError:
+                if not create:
+                    raise
+                try:
+                    os.mkdir(part, mode=0o755, dir_fd=current)
+                except FileExistsError:
+                    pass
+                try:
+                    child = os.open(part, flags, dir_fd=current)
+                except OSError as exc:
+                    raise ValueError(
+                        f"Unsafe handoff directory component '{part}' in {path}: {exc}"
+                    ) from exc
+            except OSError as exc:
+                raise ValueError(
+                    f"Unsafe handoff directory component '{part}' in {path}: {exc}"
+                ) from exc
+            descriptors.append(child)
+            current = child
+
+        yield current
+    finally:
+        for descriptor in reversed(descriptors):
+            os.close(descriptor)
+
+
+@contextlib.contextmanager
+def open_trusted_parent(
+    p: HandoffPaths,
+    path: Path,
+    *,
+    create: bool,
+) -> Iterable[tuple[int, str]]:
+    relative = trusted_relative_path(p, path)
+    parent_path = p.root.joinpath(*relative.parts[:-1])
+    if parent_path == p.root:
+        descriptor = open_trusted_root(p)
+        try:
+            yield descriptor, relative.name
+        finally:
+            os.close(descriptor)
+        return
+
+    with open_trusted_directory(p, parent_path, create=create) as descriptor:
+        yield descriptor, relative.name
+
+
+def entry_stat(parent_fd: int, name: str) -> os.stat_result | None:
+    try:
+        return os.stat(name, dir_fd=parent_fd, follow_symlinks=False)
+    except FileNotFoundError:
+        return None
+
+
+def require_regular_output(parent_fd: int, name: str, path: Path) -> os.stat_result | None:
+    existing = entry_stat(parent_fd, name)
+    if existing is not None and not stat.S_ISREG(existing.st_mode):
+        kind = "symlink" if stat.S_ISLNK(existing.st_mode) else "non-regular file"
+        raise ValueError(f"Refusing {kind} handoff output: {path}")
+    return existing
+
+
+def write_all(descriptor: int, data: bytes) -> None:
+    offset = 0
+    while offset < len(data):
+        written = os.write(descriptor, data[offset:])
+        if written <= 0:
+            raise OSError("short write while updating handoff output")
+        offset += written
+
+
+def atomic_write_text(
+    p: HandoffPaths,
+    path: Path,
+    text: str,
+    *,
+    overwrite: bool = True,
+) -> bool:
+    """Atomically replace a regular repo-local file without following links."""
+    with open_trusted_parent(p, path, create=True) as (parent_fd, name):
+        existing = require_regular_output(parent_fd, name, path)
+        if existing is not None and not overwrite:
+            return False
+
+        temporary = f".{name}.{uuid.uuid4().hex}.tmp"
+        flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW
+        if hasattr(os, "O_CLOEXEC"):
+            flags |= os.O_CLOEXEC
+        descriptor: int | None = None
+        try:
+            descriptor = os.open(temporary, flags, 0o644, dir_fd=parent_fd)
+            if existing is not None:
+                os.fchmod(descriptor, stat.S_IMODE(existing.st_mode))
+            write_all(descriptor, text.encode("utf-8"))
+            os.fsync(descriptor)
+            os.close(descriptor)
+            descriptor = None
+
+            # A target introduced after the first check is rejected. If a symlink
+            # appears after this check, atomic replacement replaces the link itself
+            # and never follows it.
+            current = require_regular_output(parent_fd, name, path)
+            if current is not None and not overwrite:
+                return False
+            if overwrite:
+                os.rename(
+                    temporary,
+                    name,
+                    src_dir_fd=parent_fd,
+                    dst_dir_fd=parent_fd,
+                )
+            else:
+                try:
+                    os.link(
+                        temporary,
+                        name,
+                        src_dir_fd=parent_fd,
+                        dst_dir_fd=parent_fd,
+                        follow_symlinks=False,
+                    )
+                except FileExistsError:
+                    return False
+                os.unlink(temporary, dir_fd=parent_fd)
+            temporary = ""
+            return True
+        except OSError as exc:
+            raise ValueError(f"Unable to atomically write {path}: {exc}") from exc
+        finally:
+            if descriptor is not None:
+                os.close(descriptor)
+            if temporary:
+                try:
+                    os.unlink(temporary, dir_fd=parent_fd)
+                except FileNotFoundError:
+                    pass
+
+
+def write_json(p: HandoffPaths, path: Path, data: Any, *, overwrite: bool) -> bool:
+    return atomic_write_text(
+        p,
+        path,
+        json.dumps(data, indent=2, sort_keys=True) + "\n",
+        overwrite=overwrite,
+    )
 
 
 def build_readme() -> str:
@@ -271,17 +492,20 @@ def validate_support_files(p: HandoffPaths) -> list[str]:
 
 def init_repo(args: argparse.Namespace) -> int:
     p = paths()
-    p.events_dir.mkdir(parents=True, exist_ok=True)
-    p.archive_dir.mkdir(parents=True, exist_ok=True)
+    with open_trusted_directory(p, p.events_dir, create=True):
+        pass
+    with open_trusted_directory(p, p.archive_dir, create=True):
+        pass
 
-    if not p.config_file.exists() or args.force:
-        write_json(p.config_file, DEFAULT_CONFIG)
-    if not p.schema_file.exists() or args.force:
-        write_json(p.schema_file, SCHEMA)
-    if not p.readme_file.exists() or args.force:
-        p.readme_file.write_text(build_readme(), encoding="utf-8")
-    if not p.handoff_md.exists() or args.force:
-        p.handoff_md.write_text(build_handoff_template(), encoding="utf-8")
+    write_json(p, p.config_file, DEFAULT_CONFIG, overwrite=args.force)
+    write_json(p, p.schema_file, SCHEMA, overwrite=args.force)
+    atomic_write_text(p, p.readme_file, build_readme(), overwrite=args.force)
+    atomic_write_text(
+        p,
+        p.handoff_md,
+        build_handoff_template(),
+        overwrite=args.force,
+    )
 
     print(f"Initialized handoff files in {p.root}")
     return 0
@@ -475,6 +699,24 @@ def link_matching_session_start(
 ) -> None:
     if event.get("type") != "session_end":
         return
+    existing_by_id = {
+        str(candidate.get("id", "")).strip(): candidate
+        for candidate in existing_events
+        if str(candidate.get("id", "")).strip()
+    }
+    explicit_targets = {
+        target.strip()
+        for relation in RELATION_FIELDS
+        for target in (
+            event.get(relation) if isinstance(event.get(relation), list) else []
+        )
+        if isinstance(target, str) and target.strip()
+    }
+    if any(
+        existing_by_id.get(target, {}).get("type") == "session_start"
+        for target in explicit_targets
+    ):
+        return
     closed = closed_references(existing_events)
     for candidate in reversed(ordered_events(existing_events)):
         candidate_id = str(candidate.get("id", "")).strip()
@@ -492,8 +734,14 @@ def link_matching_session_start(
 
 def add_event(args: argparse.Namespace) -> int:
     p = paths()
-    if not p.handoff_dir.exists():
+    try:
+        with open_trusted_directory(p, p.handoff_dir, create=False):
+            pass
+    except FileNotFoundError:
         init_repo(argparse.Namespace(force=False))
+
+    with open_trusted_directory(p, p.events_dir, create=True):
+        pass
 
     event = build_event(args, p.root)
     existing_events, parse_errors = load_events(p)
@@ -512,10 +760,7 @@ def add_event(args: argparse.Namespace) -> int:
         )
 
     event_path = p.events_dir / event_batch_path(p, event)
-    event_path.parent.mkdir(parents=True, exist_ok=True)
-    existed = event_path.exists()
-    with event_path.open("a", encoding="utf-8") as handle:
-        handle.write(json.dumps(event, sort_keys=True) + "\n")
+    existed = append_jsonl_event(p, event_path, event)
 
     rel = event_path.relative_to(p.root)
     print(f"{'Appended' if existed else 'Wrote'} {rel}")
@@ -524,6 +769,102 @@ def add_event(args: argparse.Namespace) -> int:
         render_markdown(argparse.Namespace(limit=None))
 
     return 0
+
+
+@contextlib.contextmanager
+def exclusive_file_lock(descriptor: int) -> Iterable[None]:
+    if os.name != "posix":
+        raise ValueError(
+            "Secure handoff append locking is unavailable on this platform"
+        )
+    import fcntl
+
+    fcntl.flock(descriptor, fcntl.LOCK_EX)
+    try:
+        yield
+    finally:
+        fcntl.flock(descriptor, fcntl.LOCK_UN)
+
+
+def read_descriptor(descriptor: int) -> bytes:
+    os.lseek(descriptor, 0, os.SEEK_SET)
+    chunks: list[bytes] = []
+    while True:
+        chunk = os.read(descriptor, 65536)
+        if not chunk:
+            return b"".join(chunks)
+        chunks.append(chunk)
+
+
+def validate_jsonl_bytes(path: Path, data: bytes) -> list[str]:
+    try:
+        text = data.decode("utf-8")
+    except UnicodeDecodeError as exc:
+        return [f"{path}: invalid UTF-8: {exc}"]
+
+    errors: list[str] = []
+    for line_no, line in enumerate(text.splitlines(), start=1):
+        stripped = line.strip()
+        if not stripped:
+            continue
+        try:
+            event = json.loads(stripped)
+        except json.JSONDecodeError as exc:
+            errors.append(f"{path}:{line_no}: invalid JSON: {exc}")
+            continue
+        if not isinstance(event, dict):
+            errors.append(f"{path}:{line_no}: line is not a JSON object")
+    return errors
+
+
+def append_jsonl_event(p: HandoffPaths, path: Path, event: dict[str, Any]) -> bool:
+    payload = json.dumps(event, sort_keys=True).encode("utf-8") + b"\n"
+    with open_trusted_parent(p, path, create=True) as (parent_fd, name):
+        before = require_regular_output(parent_fd, name, path)
+        flags = os.O_RDWR | os.O_CREAT | os.O_APPEND | os.O_NOFOLLOW
+        if hasattr(os, "O_CLOEXEC"):
+            flags |= os.O_CLOEXEC
+        try:
+            descriptor = os.open(name, flags, 0o644, dir_fd=parent_fd)
+        except OSError as exc:
+            raise ValueError(f"Unable to open handoff journal {path}: {exc}") from exc
+
+        try:
+            opened = os.fstat(descriptor)
+            if not stat.S_ISREG(opened.st_mode):
+                raise ValueError(f"Refusing non-regular handoff journal: {path}")
+            if before is not None and (
+                before.st_dev != opened.st_dev or before.st_ino != opened.st_ino
+            ):
+                raise ValueError(f"Handoff journal changed while opening it: {path}")
+
+            with exclusive_file_lock(descriptor):
+                existing = read_descriptor(descriptor)
+                errors = validate_jsonl_bytes(path, existing)
+                if errors:
+                    raise ValueError(
+                        "Cannot append to an invalid handoff journal:\n- "
+                        + "\n- ".join(errors)
+                    )
+                delimiter = b"" if not existing or existing.endswith(b"\n") else b"\n"
+                try:
+                    write_all(descriptor, delimiter + payload)
+                    os.fsync(descriptor)
+                except OSError as write_error:
+                    try:
+                        os.ftruncate(descriptor, len(existing))
+                        os.fsync(descriptor)
+                    except OSError as rollback_error:
+                        raise ValueError(
+                            f"Append failed and the prior journal length could not be "
+                            f"restored for {path}: {rollback_error}"
+                        ) from write_error
+                    raise
+        except OSError as exc:
+            raise ValueError(f"Unable to append handoff journal {path}: {exc}") from exc
+        finally:
+            os.close(descriptor)
+    return before is not None
 
 
 def iter_event_files(p: HandoffPaths) -> Iterable[Path]:
@@ -683,6 +1024,7 @@ def validate_event_collection(events: list[dict[str, Any]]) -> list[str]:
     for event in events:
         event_id = event.get("id")
         location = event_location(event)
+        explicit_session_starts: set[str] = set()
         for relation in RELATION_FIELDS:
             targets = event.get(relation)
             if not isinstance(targets, list):
@@ -699,6 +1041,16 @@ def validate_event_collection(events: list[dict[str, Any]]) -> list[str]:
                     errors.append(
                         f"{location}: field '{relation}' references unknown id '{normalized}'"
                     )
+                elif (
+                    event.get("type") == "session_end"
+                    and ids.get(normalized, {}).get("type") == "session_start"
+                ):
+                    explicit_session_starts.add(normalized)
+        if len(explicit_session_starts) > 1:
+            errors.append(
+                f"{location}: a session_end may resolve or supersede at most one "
+                "session_start"
+            )
 
     return errors
 
@@ -722,20 +1074,6 @@ def ordered_events(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return sorted(events, key=event_sort_key)
 
 
-def relation_targets(events: list[dict[str, Any]]) -> set[str]:
-    targets: set[str] = set()
-    for event in events:
-        for relation in RELATION_FIELDS:
-            values = event.get(relation)
-            if isinstance(values, list):
-                targets.update(
-                    value.strip()
-                    for value in values
-                    if isinstance(value, str) and value.strip()
-                )
-    return targets
-
-
 def sessions_match(start: dict[str, Any], end: dict[str, Any]) -> bool:
     if event_context_key(start) != event_context_key(end):
         return False
@@ -751,19 +1089,61 @@ def sessions_match(start: dict[str, Any], end: dict[str, Any]) -> bool:
 
 
 def closed_references(events: list[dict[str, Any]]) -> set[str]:
-    closed = relation_targets(events)
+    by_id = {
+        str(event.get("id", "")).strip(): event
+        for event in events
+        if str(event.get("id", "")).strip()
+    }
+    closed: set[str] = set()
     open_sessions: list[dict[str, Any]] = []
 
     for event in ordered_events(events):
         event_id = str(event.get("id", "")).strip()
         if not event_id:
             continue
+
+        relation_values: list[str] = []
+        for relation in RELATION_FIELDS:
+            values = event.get(relation)
+            if isinstance(values, list):
+                relation_values.extend(
+                    value.strip()
+                    for value in values
+                    if isinstance(value, str) and value.strip()
+                )
+
         if event.get("type") == "session_start":
+            closed.update(relation_values)
             if event_id not in closed:
                 open_sessions.append(event)
             continue
+
         if event.get("type") != "session_end":
+            closed.update(relation_values)
             continue
+
+        explicit_session_start = next(
+            (
+                target
+                for target in relation_values
+                if by_id.get(target, {}).get("type") == "session_start"
+            ),
+            None,
+        )
+        closed.update(
+            target
+            for target in relation_values
+            if by_id.get(target, {}).get("type") != "session_start"
+        )
+        if explicit_session_start is not None:
+            closed.add(explicit_session_start)
+            open_sessions = [
+                candidate
+                for candidate in open_sessions
+                if str(candidate.get("id", "")).strip() != explicit_session_start
+            ]
+            continue
+
         for index in range(len(open_sessions) - 1, -1, -1):
             candidate = open_sessions[index]
             candidate_id = str(candidate.get("id", "")).strip()
@@ -903,8 +1283,8 @@ def latest_state(events: list[dict[str, Any]], limit: int = 12) -> list[str]:
 
 def render_markdown(args: argparse.Namespace) -> int:
     p = paths()
-    p.handoff_dir.mkdir(parents=True, exist_ok=True)
-    p.events_dir.mkdir(parents=True, exist_ok=True)
+    with open_trusted_directory(p, p.events_dir, create=True):
+        pass
 
     events, parse_errors = load_events(p)
     errors = [
@@ -965,7 +1345,7 @@ def render_markdown(args: argparse.Namespace) -> int:
         lines.append("- None recorded.")
 
     lines.append("")
-    p.handoff_md.write_text("\n".join(lines), encoding="utf-8")
+    atomic_write_text(p, p.handoff_md, "\n".join(lines))
     print(f"Rendered {p.handoff_md.relative_to(p.root)}")
     return 0
 

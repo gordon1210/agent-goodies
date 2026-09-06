@@ -3,6 +3,7 @@
 ## Contents
 
 - Rendering contract
+- Migrate an existing static owner
 - Runtime activation result
 - Frontend activation
 - WebView transparency and cascade layers
@@ -27,10 +28,27 @@ Every layer is required. A native effect can be active but invisible because a
 WebView ancestor paints over it. A transparent frontend can also become
 unreadable when the native effect is unsupported or fails.
 
-Prefer a runtime integration when the application supports multiple operating
-systems or OS versions. It provides an observable result that can gate
-frontend transparency. Use static `windowEffects` only when the effect is
-always on and support is guaranteed by the application's minimum OS version.
+This recipe supports runtime ownership only: the native application result
+gates frontend transparency. A static `windowEffects` value or minimum OS
+version is not activation evidence and does not prove material visibility.
+Even runtime success must be followed by visual inspection of the full stack.
+
+## Migrate an existing static owner
+
+When migration is within the requested scope, remove `windowEffects` for the
+target window from the base and applicable platform configuration, preserving
+its other settings. Remove any marker or unconditional shell transparency
+derived from that configuration. Keep the normal opaque application background
+until the shared runtime command succeeds, and use only one runtime effect
+implementation per target. Recreate the window after changing its startup
+configuration so an old static effect is not left active during verification.
+
+If static ownership must be preserved, do not add the runtime application path
+or manufacture an activation marker from configuration. Static ownership is
+outside this recipe's supported activation contract; retain opaque frontend
+content and report the missing activation integration. A separate static
+integration needs its own activation evidence and supported/failure fallback
+validation before enabling transparency.
 
 ## Runtime activation result
 

@@ -83,7 +83,7 @@ Inspect untrusted data reaching:
 
 Check context-specific encoding, URL scheme restrictions, sanitizer configuration, and whether sanitized content is later mutated. Trusted authorship alone may not be sufficient when content is imported or collaborative.
 
-Do not report XSS from normal framework text interpolation unless the change bypasses or defeats escaping.
+Do not report XSS from normal framework text interpolation unless the in-scope implementation bypasses or defeats escaping.
 
 ## Paths, archives, and uploads
 

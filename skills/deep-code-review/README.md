@@ -1,6 +1,6 @@
 # Deep Code Review
 
-A portable Agent Skill for high-signal review of code changes. It is designed around progressive disclosure: the small `SKILL.md` routes the agent to focused reference files instead of loading a giant universal checklist.
+A portable Agent Skill for high-signal review of code changes and explicitly requested current-state audits. It is designed around progressive disclosure: the small `SKILL.md` routes the agent to focused reference files instead of loading a giant universal checklist.
 
 ## What it optimizes for
 
@@ -70,6 +70,10 @@ Prioritize security, data integrity, rollout compatibility, and regressions.
 
 ```text
 Review this PR with deep-code-review. Treat CRITICAL as exceptional and prove every blocking finding from the repository.
+```
+
+```text
+Use deep-code-review for a full audit of <scope>. Report reachable current defects even when they predate the latest change. Do not modify files.
 ```
 
 ## Project-specific guidance

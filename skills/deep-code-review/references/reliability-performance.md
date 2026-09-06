@@ -97,7 +97,7 @@ Do not report theoretical unboundedness when an upstream hard limit is verified 
 
 A performance finding needs all of:
 
-1. a changed path that is hot, repeated, or accepts scalable input
+1. an in-scope path that is hot, repeated, or accepts scalable input
 2. an operation whose cost grows materially in CPU, memory, I/O, locks, network calls, or external spend
 3. a plausible workload or repository evidence of scale
 4. a consequence such as latency SLO violation, resource exhaustion, contention, or cost increase

@@ -113,7 +113,7 @@ Inspect:
 
 ## Accessibility as behavior
 
-Report accessibility as a defect when the change makes a required interaction unavailable or misleading, not as generic polish.
+Report accessibility as a defect when the in-scope behavior makes a required interaction unavailable or misleading, not as generic polish.
 
 Check:
 

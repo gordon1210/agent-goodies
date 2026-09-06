@@ -155,4 +155,4 @@ Inspect:
 
 ## Verification
 
-Use the repository's Go version, build tags, race-sensitive tests, and platform targets. A clean `go test` does not prove race freedom unless relevant execution occurs; a race report requires a causal trace to changed code.
+Use the repository's Go version, build tags, race-sensitive tests, and platform targets. A clean `go test` does not prove race freedom unless relevant execution occurs; a race report requires a causal trace to the mode-appropriate in-scope cause.

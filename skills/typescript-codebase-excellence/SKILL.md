@@ -12,15 +12,15 @@ description: >-
   platform matrix, and established architecture unless the task explicitly
   changes them.
 license: MIT
+compatibility: >-
+  TypeScript 6 and TypeScript 7. Honor the repository's pinned compiler,
+  runtime, package manager, tsconfig hierarchy, module and resolution mode,
+  declaration strategy, supported platforms, framework, and CI commands.
+  Treat TypeScript 7 compiler-CLI adoption separately from compatibility with
+  tools that import the TypeScript compiler API.
 metadata:
   version: "1.0.0"
   last-reviewed: "2026-09-03"
-  compatibility: >-
-    TypeScript 6 and TypeScript 7. Honor the repository's pinned compiler,
-    runtime, package manager, tsconfig hierarchy, module and resolution mode,
-    declaration strategy, supported platforms, framework, and CI commands.
-    Treat TypeScript 7 compiler-CLI adoption separately from compatibility with
-    tools that import the TypeScript compiler API.
 ---
 
 # TypeScript Codebase Excellence

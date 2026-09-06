@@ -70,7 +70,7 @@ Check:
 
 ## Flakiness and determinism
 
-Inspect changed tests for:
+Inspect in-scope tests, starting with changed tests in `change_review`, for:
 
 - sleeps instead of waiting on an observable condition
 - real wall clock, timezone, locale, randomness, network, or external service
@@ -81,7 +81,7 @@ Inspect changed tests for:
 - exact timing thresholds with no margin
 - unordered collection comparison through ordered snapshots
 
-A potentially flaky pattern is reportable when a plausible interleaving/environment causes false pass/fail and the changed test matters to CI signal.
+A potentially flaky pattern is reportable when a plausible interleaving/environment causes false pass/fail and the in-scope test matters to CI signal.
 
 ## Safe command execution
 
@@ -89,7 +89,7 @@ Use existing repository commands when clearly safe and permitted.
 
 Prefer focused scope first:
 
-1. test directly covering changed behavior
+1. test directly covering in-scope behavior
 2. package/module test
 3. typecheck/static analyzer
 4. broader suite if cost and environment are reasonable
@@ -105,12 +105,14 @@ Do not:
 
 Follow repository instructions. Report commands and relevant results exactly.
 
+In a read-only review, run a command only when the working tree can remain unchanged. Place caches and temporary output outside the repository when the existing tool supports it. If repository writes cannot be prevented, skip the command and report it unless the user separately authorizes that mutation.
+
 ## Interpreting results
 
 Classify failures:
 
-- **Change-caused:** trace from changed code/test to failure
-- **Pre-existing:** reproduce on base or evidence clearly predates change
+- **In-scope defect:** trace from the mode-appropriate changed or current cause to failure
+- **Pre-existing:** in `change_review`, reproduce on base or establish that it clearly predates the change without being materially exposed by it
 - **Environment:** missing service/tool/config/platform capability
 - **Flaky/unknown:** non-deterministic or not enough evidence
 

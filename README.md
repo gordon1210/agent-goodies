@@ -230,6 +230,12 @@ or launcher configuration. Handoff and Grok helpers require Python 3.9 or newer;
 the Godot helpers require Python 3.10 or newer. These helpers have no third-party
 Python dependencies.
 
+Handoff writes additionally require directory-relative, no-follow filesystem
+operations and POSIX file locking. Hosts without these primitives (including
+native Windows Python) reject writes; read-only commands remain available.
+Native Windows write support is [deferred](skills/handoff/references/HANDOFF_PROTOCOL.md#filesystem-boundary-and-failures)
+for a future secure implementation and native regression testing.
+
 For Codex/ChatGPT:
 
 ```bash

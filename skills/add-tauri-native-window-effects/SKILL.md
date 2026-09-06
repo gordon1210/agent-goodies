@@ -36,12 +36,10 @@ versions already installed in the target repository.
 
 ## Choose one native effect owner
 
-Use either Tauri's static `windowEffects` configuration or a runtime
-`window-vibrancy` integration for a window. Never stack both.
-
-Use static configuration when the effect is always on and the minimum OS
-version guarantees support. Prefer runtime integration when support must be
-observed, the effect can change, or an unsupported host must fall back safely.
+The supported recipe uses runtime `window-vibrancy` ownership and its
+activation result. Never stack it with static `windowEffects` on the same
+window. Follow the shared reference's migration steps for an existing static
+owner; static configuration alone cannot satisfy the activation gate.
 
 ## Gate transparency on real activation
 

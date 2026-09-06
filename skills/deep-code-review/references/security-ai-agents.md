@@ -99,7 +99,7 @@ Cross-workspace retrieval or memory writes are normally High. Systemic cross-ten
 
 ## Data disclosure
 
-Check whether the change exposes:
+Check whether the in-scope behavior exposes:
 
 - system/developer prompts that contain actual secrets or sensitive policy data
 - unrelated conversation, tool result, file, memory, or tenant content

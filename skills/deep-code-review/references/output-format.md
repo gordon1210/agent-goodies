@@ -24,9 +24,9 @@ The prose may be shorter when trigger, impact, and evidence fit clearly in one p
 
 ## Location
 
-- Anchor to the smallest changed line that causes the defect.
-- When the cause is an omission, anchor to the changed block where the missing operation belongs.
-- Mention relevant unchanged callers or guards in Evidence, but do not pretend they were changed.
+- In `change_review`, anchor to the smallest changed line that causes the defect. In `full_audit`, anchor to the smallest current line that contains or exposes it.
+- When the cause is an omission, anchor to the in-scope block where the missing operation belongs.
+- Mention relevant callers or guards in Evidence; in `change_review`, do not pretend unchanged context was changed.
 - Use repository-relative paths and exact line ranges when available.
 
 ## Finding quality
@@ -37,7 +37,7 @@ Every finding must let a maintainer answer:
 2. Under what concrete condition does it happen?
 3. Why does existing code not prevent it?
 4. What is the user, security, data, deployment, or operational impact?
-5. Why was this introduced by the reviewed change?
+5. Why does it qualify for the active mode: introduction or material exposure in `change_review`, or presence in the stated current-state scope in `full_audit`?
 6. What is the narrow fix direction?
 
 Do not include a finding if one of the first five answers is missing.
@@ -57,17 +57,20 @@ After findings, include only useful metadata:
 ```markdown
 ## Review summary
 
-- **Verdict:** Block / Needs fixes / No blocking findings
-- **Scope:** `<base>..<head>` or the exact reviewed files
+- **Verdict:** Mode-appropriate disposition
+- **Mode:** `change_review` or `full_audit`
+- **Scope:** `<base>..<head>` for a change review, or the exact current-state audit scope
 - **Validation:** Commands run and their result
 - **Not verified:** Relevant runtime, environment, generated output, or external-contract limitations
 ```
 
-Verdict meanings:
+Verdict meanings for `change_review`:
 
 - **Block:** at least one Confirmed/Strong Critical or High finding
 - **Needs fixes:** no Critical/High, but one or more real Medium findings
 - **No blocking findings:** no Confirmed/Strong Critical or High finding; this is not a proof of correctness
+
+For `full_audit`, use **Urgent remediation** for any Confirmed/Strong Critical or High, **Remediation needed** when Medium is the highest finding, and **No high-priority findings** otherwise. The last verdict is not a proof of correctness.
 
 If there are no findings, say so directly and include scope and validation limits. Do not invent minor comments to make the review look productive.
 
@@ -87,7 +90,7 @@ Keep them separate from findings:
 - Issue, evidence that it predates the reviewed range, and whether the change materially worsens it.
 ```
 
-Omit both sections when empty or not requested.
+Use **Pre-existing issues** only in `change_review` for issues outside its eligibility gate. A `full_audit` does not classify an in-scope current defect as pre-existing merely because it predates an arbitrary baseline. Omit both sections when empty or not requested.
 
 ## Inline review comments
 

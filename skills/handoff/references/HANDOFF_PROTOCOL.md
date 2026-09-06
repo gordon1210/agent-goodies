@@ -31,6 +31,37 @@ Shard event files by month and contextual day/agent/type/branch/commit filenames
 
 Legacy one-event `.jsonl` files remain valid. Readers should support mixed history without requiring a rewrite.
 
+## Filesystem boundary and failures
+
+The helper rejects symlink output files and directory components below its
+trusted repository root. It opens directories without following links and
+uses directory-relative writes, so swapping a path for a symlink cannot
+redirect a write through that link. The resolved repository root and its
+host-managed ancestors must be trusted. These operations are not a sandbox
+against an actor who can relocate already-open directories or alter the
+mounted filesystem.
+
+Generated Markdown and support files use atomic publication from the same
+directory. Validation and pre-publication failures preserve the existing
+file. Journal append checks the existing JSONL record boundary under an
+exclusive file lock and supplies a missing final newline before the new
+record. A malformed existing batch is rejected without appending to it.
+
+Writes require directory-relative no-follow filesystem primitives and POSIX
+locking. Native Windows Python does not provide this write path; the helper
+rejects writes instead of using an unchecked fallback. Read-only commands
+remain available. Linux tests do not establish macOS, Windows, network
+filesystem, or power-loss behavior; validate the actual host before relying
+on its filesystem guarantees.
+
+**Deferred (2026-09-06): native Windows writes.** Windows write support is
+excluded from the current helper by an explicit maintainer decision; reading
+existing state remains supported. Revisit this as a separate task with a
+secure native implementation and Windows regression coverage for reparse
+points, ancestor replacement, atomic publication, append locking, and failure
+preservation. No delivery date is committed, and the deferred work does not
+authorize an unchecked path-based fallback.
+
 ## Append-only lifecycle
 
 Do not infer that historical work is still active merely because its event remains in the journal. Reduce active state through explicit references:
@@ -38,13 +69,18 @@ Do not infer that historical work is still active merely because its event remai
 - Every event has a stable `id`.
 - A next action at index `N` has reference `<event-id>#next:<N+1>`.
 - A later event lists completed targets in `resolves` and replaced targets in `supersedes`.
-- `session_end` automatically resolves the latest open `session_start` with the same Git context and agent session (or agent name when no session ID exists).
+- Each `session_end` closes at most one `session_start`. An explicit session-start resolution consumes that end's matching role; otherwise it pairs with the latest preceding open start in the same Git context and agent session (or agent name when no session ID exists). Resolving an unrelated action alone does not consume session matching.
 - `context_status` is `active`, `closed`, `merged`, or `abandoned`. Terminal contexts do not appear as active branch/worktree state; a later `active` event reopens one.
 - Terminal event statuses such as `completed`, `resolved`, `closed`, or `superseded` prevent that event and its actions from rendering as active.
 
 Generated `HANDOFF.md` lines carry `handoff-ref` HTML comments so agents can resolve items without exposing identifiers in the human-rendered summary. Preserve legacy events that lack lifecycle metadata; resolve them by their existing event/action references in a new event.
 
 ## Recommended workflow
+
+In read-only or audit mode, read existing state without running `init`, `add`,
+or `render`, generating process files, or staging changes. Report proposed
+handoff updates in the response. The write steps below apply only when those
+updates are authorized; an existing journal does not override read-only mode.
 
 Resolve `scripts/handoff.py` relative to the installed Handoff skill's `SKILL.md`. Set a task-local `HANDOFF_TOOL` variable to its absolute path, or substitute that path directly. Keep the target repository as the working directory. Do not add a package-manager wrapper or persist the installed path in the repository.
 
@@ -84,4 +120,4 @@ Record `git.branch`, `git.commit`, and Git's worktree administrative name on new
 
 Before a completed branch's final merge-bound commit, append `--context-status closed` in that branch/worktree so the merge carries its terminal state. Use `merged` only when recording from the same context after the merge is known to have completed, and use `abandoned` before preserving or otherwise integrating the final journal state of abandoned work. Do not delete journal history.
 
-Treat `HANDOFF.md` as derived output. When it conflicts, merge the branch-specific JSONL journal files first, run `python3 "$HANDOFF_TOOL" render` against the merged journal, and stage the regenerated Markdown instead of manually combining both rendered versions.
+Treat `HANDOFF.md` as derived output. When conflict repair is authorized, merge the branch-specific JSONL journal files first and run `python3 "$HANDOFF_TOOL" render` against the merged journal instead of manually combining both rendered versions. Stage the regenerated Markdown only when staging is authorized.

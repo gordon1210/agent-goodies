@@ -20,6 +20,10 @@ Expected repo-local files:
 
 The skill folder may contain scripts/templates, but project state must stay in the repo.
 
+## Read-only tasks
+
+When the active task is read-only or an audit, inspect existing handoff state without changing it. Do not initialize, append, render, repair, stage, commit, or otherwise update handoff or generated process files unless the user separately authorizes those mutations. Report the update that would otherwise be useful in the main response. This rule overrides every write or completion instruction below.
+
 Read [the protocol reference](references/HANDOFF_PROTOCOL.md) when bootstrapping a repository, repairing conflicts, or evaluating storage behavior.
 
 ## Preferred storage model
@@ -76,6 +80,9 @@ Resolve the bundled helper before running commands:
 Do not add a package-manager script, install a global binary, create another copy or wrapper outside the installed skill, or persist its machine-specific installed path. Skill installers place bundled resources alongside `SKILL.md`; resolve that installed copy at runtime.
 
 The bundled helper requires Python 3.9 or newer and has no third-party dependencies.
+Writes also require directory-relative no-follow operations and POSIX file
+locking; native Windows Python rejects writes. Read-only commands remain
+available. See the protocol reference for filesystem trust and failure limits.
 
 ```bash
 python3 "$HANDOFF_TOOL" status
@@ -86,7 +93,7 @@ If the bundled helper cannot be resolved, inspect the files directly and report 
 
 ## Required behavior during work
 
-Add handoff events when there is something future agents need to know.
+When handoff writes are authorized, add events when there is something future agents need to know.
 
 Good event moments:
 
@@ -118,7 +125,7 @@ Do not log noise:
 
 ## Required behavior before stopping
 
-Before ending a substantial turn/session in a repository that already uses handoff state, update it.
+Before ending a substantial turn/session in a repository that already uses handoff state, update it when handoff writes are authorized. In a read-only task without that separate authorization, leave the repository unchanged and report the continuity information in the response instead.
 
 Minimum end-of-session update:
 
@@ -263,7 +270,7 @@ If event volume grows too much, archive only self-contained, fully closed event 
 
 ## Conflict handling
 
-If `HANDOFF.md` conflicts:
+If `HANDOFF.md` conflicts and conflict repair is authorized:
 
 1. Merge or resolve `.handoff/events/**` first; those files are the source of truth.
 2. Do not manually combine the generated Markdown sections.

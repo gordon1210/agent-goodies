@@ -12,7 +12,7 @@
 
 ## Data classification and minimization
 
-Identify what the changed path handles:
+Identify what the in-scope path handles:
 
 - public data
 - internal operational data

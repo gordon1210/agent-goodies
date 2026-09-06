@@ -6,7 +6,7 @@
 - Configure dependencies and the window
 - Apply Mica at runtime
 - Use Acrylic deliberately
-- Use static Tauri effects when appropriate
+- Migrate static effect ownership
 - Preserve fallbacks and readable theming
 - Diagnose Windows-specific failures
 - Validate the result
@@ -110,27 +110,14 @@ Do not use legacy Blur as the default compatibility fallback. It has different
 appearance and documented resize performance limitations. Add it only for an
 explicitly supported legacy target.
 
-## Use static Tauri effects when appropriate
+## Migrate static effect ownership
 
-For an always-on Windows 11 effect with a guaranteed minimum version, Tauri can
-own Mica through the window configuration:
-
-```json
-{
-  "transparent": true,
-  "windowEffects": {
-    "effects": ["mica"]
-  }
-}
-```
-
-Merge this object into the real window entry. Remove runtime application for
-that window and do not stack multiple owners. Use `"acrylic"` only after making
-the Acrylic product and performance decision explicitly.
-
-Prefer runtime application when OS-version support must be observed, the
-effect can change, or the frontend needs a reliable success result before
-becoming transparent.
+Use the [shared static-owner migration](shared-transparency.md#migrate-an-existing-static-owner)
+when adopting this runtime recipe. Remove the target window's static
+`windowEffects` owner before runtime activation and preserve the opaque
+frontend until the command succeeds. A static setting cannot supply the
+activation marker or prove visible material; do not keep both application
+paths active.
 
 ## Preserve fallbacks and readable theming
 

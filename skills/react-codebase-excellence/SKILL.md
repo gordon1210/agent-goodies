@@ -2,10 +2,10 @@
 name: react-codebase-excellence
 description: Use this skill when designing, implementing, reviewing, refactoring, debugging, testing, securing, optimizing, upgrading, or preparing CI and releases for a small-to-medium React web application, component library, design system, embedded widget, SSR application, or React Server Components boundary. Apply production-grade React engineering for React 19, with an explicit React 18 compatibility path, without framework cargo cults, speculative abstractions, blanket memoization, unnecessary state libraries, or unrelated rewrites. Preserve the repository's exact React and renderer versions, framework contracts, public component APIs, accessibility behavior, server/client boundaries, browser support, and established architecture unless the task explicitly changes them.
 license: MIT
+compatibility: React 19 and React 18 with React DOM for web applications and libraries. Honor the installed React, renderer, framework, TypeScript, compiler, lint, test, build-tool, runtime, and browser versions; gate every version-specific API accordingly.
 metadata:
   version: "1.0.0"
   last-reviewed: "2026-09-03"
-  compatibility: React 19 and React 18 with React DOM for web applications and libraries. Honor the installed React, renderer, framework, TypeScript, compiler, lint, test, build-tool, runtime, and browser versions; gate every version-specific API accordingly.
 ---
 
 # React Codebase Excellence

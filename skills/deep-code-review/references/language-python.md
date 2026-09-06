@@ -106,7 +106,7 @@ Inspect:
 - sorting/grouping with null/NaN behavior
 - serialization of Decimal, datetime, bytes, enum, UUID, or large int across contracts
 
-Only load data-library-specific concerns when those libraries are present on the changed path.
+Only load data-library-specific concerns when those libraries are present on the in-scope path.
 
 ## Parsing, models, and serialization
 

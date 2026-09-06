@@ -1,10 +1,10 @@
 # Security Triage
 
-Apply this lightweight pass to every executable change, then load only the specialized security modules selected by the result.
+Apply this lightweight pass to every in-scope executable behavior, then load only the specialized security modules selected by the result.
 
 ## Build the threat slice
 
-For each changed behavior, identify:
+For each in-scope behavior, identify:
 
 - **Actor:** anonymous user, authenticated user, tenant member, administrator, service, CI job, local user, plugin, model, or operator
 - **Source:** request, header, token, database row, event, file, URL, environment, dependency metadata, model output

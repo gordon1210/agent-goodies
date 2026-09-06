@@ -39,7 +39,7 @@ Inspect whether the change preserves:
 - separation between access, refresh, verification, reset, and API tokens
 - one-time use and replay resistance for action links or codes
 
-A longer lifetime or missing rotation is not automatically a finding. Show the security property the change breaks and the resulting capability.
+A longer lifetime or missing rotation is not automatically a finding. Show the security property the in-scope implementation breaks and the resulting capability; in `change_review`, also prove introduction or material exposure.
 
 ## Authorization decisions
 

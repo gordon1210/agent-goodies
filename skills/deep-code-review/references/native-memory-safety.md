@@ -102,7 +102,7 @@ Never allow exceptions or unwinds to cross an ABI boundary that forbids them.
 
 ## Verification
 
-Use changed code plus callers, allocation sites, cleanup, and parser entry points. Existing sanitizer/fuzz tests can strengthen evidence. Do not run unsafe fuzzing against production or external systems.
+Use in-scope code plus callers, allocation sites, cleanup, and parser entry points. Existing sanitizer/fuzz tests can strengthen evidence. Do not run unsafe fuzzing against production or external systems.
 
 A finding should name the exact invalid state and operation: out-of-bounds read/write, use-after-free, uninitialized disclosure, double free, race, or ABI violation.
 

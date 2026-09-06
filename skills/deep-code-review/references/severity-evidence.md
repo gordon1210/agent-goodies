@@ -8,7 +8,7 @@
 - Critical gates
 - Security calibration
 - Downgrade and rejection rules
-- Merge guidance
+- Merge and remediation guidance
 
 ## Evidence threshold
 
@@ -36,11 +36,11 @@ Only Confirmed or Strong candidates are normal findings. Conditional candidates 
 
 A candidate is reportable only when all are true:
 
-1. **Introduced or exposed:** the reviewed change creates the defect, removes a control, makes a dormant defect reachable, or violates a newly changed contract.
+1. **In-scope cause:** in `change_review`, the reviewed change creates the defect, removes a control, makes a dormant defect reachable, or violates a newly changed contract. In `full_audit`, the current audited implementation contains or materially exposes the defect; no change-introduction proof is required.
 2. **Reachable:** a concrete actor, input, state, version combination, or workload reaches it.
 3. **Incorrect:** behavior conflicts with an invariant, requirement, security boundary, or established contract.
 4. **Consequential:** it has an observable impact beyond taste or theoretical purity.
-5. **Actionable:** the changed code contains a plausible place to fix or guard it.
+5. **Actionable:** the in-scope code or contract contains a plausible place to fix or guard it.
 6. **Supported:** evidence is Confirmed or Strong, or explicitly Conditional under the rule above.
 
 Do not report a concern merely because best practice is absent.
@@ -75,7 +75,7 @@ Typical impacts:
 
 ### HIGH
 
-A serious defect on a normal or plausible path that materially compromises security, data integrity, availability, or a core user workflow. Fix before merge.
+A serious defect on a normal or plausible path that materially compromises security, data integrity, availability, or a core user workflow. Block merge in `change_review`; prioritize remediation in `full_audit`.
 
 Typical impacts:
 
@@ -88,7 +88,7 @@ Typical impacts:
 
 ### MEDIUM
 
-A real defect under a specific but realistic condition, with limited blast radius or straightforward recovery. Usually fix before merge unless consciously accepted.
+A real defect under a specific but realistic condition, with limited blast radius or straightforward recovery. In `change_review`, usually fix before merge unless consciously accepted; in `full_audit`, schedule remediation according to impact.
 
 Typical impacts:
 
@@ -117,7 +117,7 @@ Assign `CRITICAL` only when every answer is yes:
 2. **Realistic trigger:** Can a normal operation or credible attacker trigger it without implausible access, timing, or resources?
 3. **Catastrophic impact:** Is the proven impact broad, systemic, highly sensitive, or irreversibly destructive?
 4. **No effective mitigation:** Have relevant authentication, authorization, isolation, validation, rollback, backup, rate limit, and platform controls been checked and found ineffective for this path?
-5. **Introduced by change:** Does the reviewed change create or materially expose the condition?
+5. **In-scope cause:** In `change_review`, does the reviewed change create or materially expose the condition? In `full_audit`, does the current audited implementation contain or materially expose it within the stated scope?
 6. **High confidence:** Is the finding Confirmed or Strong with no material unresolved premise?
 
 If any gate fails, use `HIGH` or lower. Do not use Critical to mean “important,” “security-related,” or “should block merge.”
@@ -144,18 +144,18 @@ Downgrade or reject when:
 - the path is test-only, dead, feature-disabled, or unreachable in the reviewed deployment
 - a caller, middleware, schema, type, database constraint, sandbox, or framework primitive enforces the claimed missing invariant
 - impact is confined, reversible, or requires several unlikely simultaneous failures
-- the issue predates the target and was not made reachable or worse by it
+- in `change_review`, the issue predates the target and was not made reachable or worse by it
 - the concern is missing defense in depth rather than violation of the current threat model
 - the behavior is explicitly required and safe under the repository's contract
 - the proposed “fix” would only express a preference
 
 Do not lower confidence and keep high severity. Uncertain evidence must affect reportability or severity.
 
-## Merge guidance
+## Merge and remediation guidance
 
-- Any Confirmed/Strong `CRITICAL` or `HIGH`: recommend blocking merge.
-- `MEDIUM`: normally request a fix or an explicit risk acceptance.
-- `LOW`: non-blocking unless repository policy says otherwise.
+- Any Confirmed/Strong `CRITICAL` or `HIGH`: recommend blocking merge in `change_review`; in `full_audit`, mark it as a priority remediation.
+- `MEDIUM`: normally request a fix or explicit risk acceptance in `change_review`, or prioritize remediation in `full_audit`.
+- `LOW`: non-blocking in `change_review` unless repository policy says otherwise; lower-priority remediation in `full_audit`.
 - Conditional items: request verification; do not present them as proven blockers.
 
 Severity describes impact and reachability. It is not a measure of reviewer enthusiasm or fix size.

@@ -109,7 +109,11 @@ Check platform-sensitive behavior such as:
 
 ## Iterate
 
-For every failed gate:
+In Audit/read-only mode, report each failed gate, its evidence, and the
+proposed repair in the response. Do not apply fixes or write process files,
+handoff updates, or staged changes without separate authorization.
+
+When repairs are authorized, for every failed gate:
 
 1. identify the root cause
 2. make the smallest coherent repair

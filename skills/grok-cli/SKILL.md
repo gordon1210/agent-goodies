@@ -2,11 +2,11 @@
 name: grok-cli
 description: Operate and orchestrate the xAI Grok Build CLI as a bounded coding collaborator. Use when invoking `grok`, especially `grok -p` for headless prompts, `grok agent` for ACP integrations, exact session continuation, delegated implementation or review, agent pairing, consulting, rubber-duck dialogue, structured output, or CLI configuration and diagnostics. Do not use for the Grok web app or direct xAI API integration unless Grok Build CLI behavior is involved.
 license: MIT
+compatibility: "Current stable Grok Build CLI only; update older installations before using this skill."
 metadata:
   version: "1.0.2"
   last-reviewed: "2026-09-04"
   tested-cli-version: "1.0.13"
-  compatibility: "Current stable Grok Build CLI only; update older installations before using this skill."
 ---
 
 # Grok CLI

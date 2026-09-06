@@ -5,7 +5,7 @@
 - Choose classic vibrancy or Liquid Glass
 - Configure dependencies and the window
 - Apply classic vibrancy at runtime
-- Use static Tauri effects when appropriate
+- Migrate static effect ownership
 - Handle Liquid Glass separately
 - Preserve readable theming
 - Configure overlay titlebars
@@ -105,27 +105,14 @@ scoped application tokens.
 Return the effect name only after `apply_vibrancy` succeeds. Let the shared
 frontend marker reveal the transparent WebView after that result.
 
-## Use static Tauri effects when appropriate
+## Migrate static effect ownership
 
-For an always-on effect on a guaranteed macOS target, Tauri can own the effect
-through the window configuration:
-
-```json
-{
-  "transparent": true,
-  "windowEffects": {
-    "effects": ["sidebar"]
-  }
-}
-```
-
-Merge this object into the real window entry. Remove the runtime
-`window-vibrancy` application path when using it. Do not configure both owners
-for the same window.
-
-Prefer the runtime path when the effect must be applied after WebView creation,
-can be cleared or switched, or needs a reliable activation result for an
-opaque fallback.
+Use the [shared static-owner migration](shared-transparency.md#migrate-an-existing-static-owner)
+when adopting this runtime recipe. Remove the target window's static
+`windowEffects` owner before runtime activation and preserve the opaque
+frontend until the command succeeds. A static setting cannot supply the
+activation marker or prove visible material; do not keep both application
+paths active.
 
 ## Handle Liquid Glass separately
 

@@ -14,7 +14,7 @@
 
 ## Contract and invariants
 
-State the changed behavior's invariant before looking for patterns.
+State the in-scope behavior's invariant before looking for patterns.
 
 Check whether the implementation:
 
@@ -41,7 +41,7 @@ Select reachable boundary classes:
 - exact threshold versus just below/above
 - normalized versus non-normalized representation
 
-Inspect changed defaults carefully:
+Inspect in-scope defaults carefully:
 
 - `false`, `0`, empty string, empty collection, and `null` may be valid values
 - `x || default` may differ from `x ?? default`
@@ -67,7 +67,7 @@ Look for:
 - initialization order and use before ready
 - shutdown order and work accepted after shutdown begins
 
-For state machines, compare every changed transition against allowed predecessor and successor states.
+For state machines, compare every in-scope transition against allowed predecessor and successor states.
 
 ## Errors and cleanup
 
@@ -152,8 +152,8 @@ Check:
 - boolean/string parsing and whitespace/case handling
 - feature flag behavior for on, off, missing, stale, and mixed-version states
 - configuration read at build time versus runtime
-- changed generated files matching their source/schema/template
-- source changed without regenerated artifact or vice versa
+- generated files matching their source/schema/template
+- source and generated artifacts being out of sync
 - stale caches or code generation not invalidated
 - debug/test configuration accidentally becoming production default
 
@@ -165,9 +165,9 @@ For each correctness candidate, provide:
 
 - the intended invariant
 - a concrete reachable input/state
-- the exact changed cause
+- the exact mode-appropriate cause: changed cause for `change_review`, current in-scope cause for `full_audit`
 - the resulting wrong value, state, side effect, or error
 - guards and callers checked
-- evidence that the base behavior did not have the defect, unless the change newly exposes it
+- for `change_review`, evidence that the base behavior did not have the defect or that the change newly exposes it; `full_audit` has no base-introduction requirement
 
 Prefer a focused existing test or small reproduction when safe. A failed broad test suite without a causal trace is not enough by itself.

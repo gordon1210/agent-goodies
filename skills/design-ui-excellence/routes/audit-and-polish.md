@@ -4,6 +4,11 @@ Use this route for visual review, UX review, conversion audit, accessibility rev
 
 Default to **audit-only** when the user asks for a review. Edit only when the user asks to fix or improve.
 
+Apply the entrypoint's read-only boundary through completion: no product
+repairs, process/report files, handoff updates, or staging without separate
+authorization. Use the audit-report template as response structure when file
+writes are not authorized.
+
 ## Load now
 
 - [`../guides/anti-generic-critique.md`](../guides/anti-generic-critique.md)

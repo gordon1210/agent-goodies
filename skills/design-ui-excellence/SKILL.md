@@ -40,6 +40,13 @@ Do **not** read every file in this skill.
 
 The mode changes the output, not the quality bar.
 
+Audit and other explicitly read-only tasks keep the working tree unchanged:
+do not repair product files, generate design-process files, update handoff
+state, or stage changes without separate authorization for those actions.
+Report findings and proposed changes in the response. This boundary applies
+to every route, persistence step, and completion check; authorized fixes and
+updates remain limited to the scope the user requested.
+
 ## Primary routes
 
 | Primary intent | Load |
@@ -109,7 +116,7 @@ These rules apply across every route:
 
 For a one-off component or small edit, keep decisions in the response and changed code. Do not create design-process files.
 
-For a multi-page, multi-screen, or multi-session project, persist only the artifacts that prevent drift:
+For a multi-page, multi-screen, or multi-session project with file writes authorized, persist only the artifacts that prevent drift:
 
 - a brief based on [`templates/design-brief.md`](templates/design-brief.md)
 - a style contract based on [`templates/style-contract.md`](templates/style-contract.md)
@@ -125,6 +132,6 @@ Before finishing:
 
 1. Re-read the user's request and list the applicable acceptance conditions.
 2. Verify each condition using the strongest available evidence.
-3. Repair failures and rerun affected checks.
+3. In Build/Improve mode with fixes authorized, repair failures and rerun affected checks. In Audit/read-only mode, report failures and proposed repairs without applying them or writing completion artifacts.
 4. State what was changed, what was verified, and what remains unverified.
 5. Keep the final explanation proportional to the work; do not bury the artifact in design theory.
