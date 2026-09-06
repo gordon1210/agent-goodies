@@ -1,0 +1,175 @@
+{
+  "schema_version": 1,
+  "status": "authored-not-executed",
+  "cases": [
+    {
+      "id": "painterly-rpg",
+      "prompt": "Design a Godot battle action selector with the expressive craft of Expedition 33, without copying its assets.",
+      "relevant_modules": [
+        "reference-analysis",
+        "art-direction",
+        "cinematic-rpg"
+      ],
+      "pass_criteria": [
+        "Separates inspected observations from proposals.",
+        "Creates a distinctive project grammar and native-text composition.",
+        "Plans unavailable/focus/target states and in-engine review.",
+        "Does not invent screenshots, fonts, measured game timings, or generation capabilities."
+      ]
+    },
+    {
+      "id": "dense-strategy",
+      "prompt": "Create a Frostpunk-2-quality resource inspector for a habitat management game.",
+      "relevant_modules": [
+        "strategy-management",
+        "interaction-information"
+      ],
+      "pass_criteria": [
+        "Separates stock, rate, causality, assumptions, and projected changes.",
+        "Uses a dense intentional hierarchy, not default dashboard cards.",
+        "Provides alternate-input access to explanations.",
+        "Plans realistic populated data and commit-time validation."
+      ]
+    },
+    {
+      "id": "small-repair",
+      "prompt": "Our existing UI style is approved. Fix the focused equipment row losing its marker after sorting.",
+      "relevant_modules": [
+        "component-states",
+        "inventory-buildcraft",
+        "godot-input"
+      ],
+      "pass_criteria": [
+        "Preserves the approved design.",
+        "Traces stable identity and focus/selection separately.",
+        "Does not start a mood-board or load the full reference library.",
+        "Targets the actual state-restoration defect."
+      ]
+    },
+    {
+      "id": "modal-leak",
+      "prompt": "A full-screen Control overlay disables the parent _input callback, but gameplay still responds and focus escapes.",
+      "relevant_modules": [
+        "godot-input"
+      ],
+      "pass_criteria": [
+        "Explains GUI dispatch and independent Input polling without claiming the parent flag blocks everything.",
+        "Inspects scope and nested restoration.",
+        "Checks exact version before recursive behavior APIs.",
+        "Tests press/release leakage and previous focus validity."
+      ]
+    },
+    {
+      "id": "safe-area",
+      "prompt": "Use get_display_safe_area directly as margin constants in a scaled windowed desktop game.",
+      "relevant_modules": [
+        "godot-layout"
+      ],
+      "pass_criteria": [
+        "Rejects coordinate-space mixing and desktop fallback assumptions.",
+        "Accounts for client/window/viewport/root transforms and intersection.",
+        "Separates OS cutouts from design comfort margins.",
+        "Does not claim a universal untested snippet solves every platform."
+      ]
+    },
+    {
+      "id": "motion-race",
+      "prompt": "Our container-managed menu drifts and disappears after fast open-close-open input.",
+      "relevant_modules": [
+        "godot-animation",
+        "motion-design"
+      ],
+      "pass_criteria": [
+        "Separates layout ownership from presentation transforms.",
+        "Replaces competing animation and invalidates stale callbacks.",
+        "Does not rely on an awaited killed tween completing.",
+        "Defines final state and reduced-motion tests."
+      ]
+    },
+    {
+      "id": "large-text",
+      "prompt": "Keep the premium style, but 200% text and long localized labels must remain usable.",
+      "relevant_modules": [
+        "typography",
+        "godot-text",
+        "accessibility"
+      ],
+      "pass_criteria": [
+        "Distinguishes nominal font size from rendered glyph height.",
+        "Reflows rather than shrinking critical text back down.",
+        "Tests actual languages and semantic navigation.",
+        "Does not claim a palette/font token automatically certifies accessibility."
+      ]
+    },
+    {
+      "id": "shader-overlap",
+      "prompt": "Make every overlapping inventory panel use frosted-glass blur, even on the low-end renderer.",
+      "relevant_modules": [
+        "godot-rendering",
+        "godot-data-performance"
+      ],
+      "pass_criteria": [
+        "Questions whether glass fits direction and cost.",
+        "Explains screen-buffer ordering and renderer verification.",
+        "Provides readable simpler fallback.",
+        "Does not promise performance without measurement."
+      ]
+    },
+    {
+      "id": "asset-limit",
+      "prompt": "The agent has no image generator or external network. Create a cohesive ornate UI.",
+      "relevant_modules": [
+        "asset-production",
+        "evidence-safety"
+      ],
+      "pass_criteria": [
+        "Uses authorized local assets or explicit placeholders.",
+        "Produces bounded art briefs and native structures.",
+        "Does not pretend art was generated.",
+        "Does not install or upload without permission."
+      ]
+    },
+    {
+      "id": "text-only-agent",
+      "prompt": "Only source files are available. Implement the design and confirm that it now looks AAA.",
+      "relevant_modules": [
+        "visual-validation",
+        "evidence-safety"
+      ],
+      "pass_criteria": [
+        "Makes useful bounded implementation progress.",
+        "Refuses to invent visual validation or a quality guarantee.",
+        "Lists exact missing evidence.",
+        "Keeps static checks distinct from runtime checks."
+      ]
+    },
+    {
+      "id": "version-preservation",
+      "prompt": "This project is Godot 4.3 with an approved C# UI architecture. Add better controller focus.",
+      "relevant_modules": [
+        "discovery",
+        "godot-input"
+      ],
+      "pass_criteria": [
+        "Preserves C# and project version.",
+        "Verifies older-version APIs rather than copying 4.7-only properties.",
+        "Does not upgrade engine or renderer.",
+        "Uses existing scope architecture when suitable."
+      ]
+    },
+    {
+      "id": "stale-preview",
+      "prompt": "Our inventory loads portraits asynchronously. Quickly moving focus shows the wrong character art.",
+      "relevant_modules": [
+        "godot-data-performance",
+        "godot-spatial-ui"
+      ],
+      "pass_criteria": [
+        "Uses stable identity/request ownership to reject stale results.",
+        "Preserves readable info while the preview is loading.",
+        "Does not add artificial loading delays.",
+        "Tests teardown and failure without assuming async eliminates all hitches."
+      ]
+    }
+  ]
+}

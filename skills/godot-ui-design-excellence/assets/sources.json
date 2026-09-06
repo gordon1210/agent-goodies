@@ -1,0 +1,527 @@
+{
+  "reviewed_on": "2026-09-06",
+  "sources": [
+    {
+      "id": "D01",
+      "title": "Brieuc Inisan — Clair Obscur: Expedition 33, HUD concepts",
+      "url": "https://brieucinisan.artstation.com/projects/Gvd0VV",
+      "category": "Direct creator portfolio",
+      "reviewed_on": "2026-09-06",
+      "supports": "Battle HUD concepts and credited in-engine UI/animation collaboration.",
+      "limitation": "Concepts are not all established as shipped. Portfolio text reviewed; complete embedded videos were not analyzed frame by frame."
+    },
+    {
+      "id": "D02",
+      "title": "Milena Młynarska — Game UX case study: Frostpunk 2 (2024)",
+      "url": "https://www.milenamlynarska.com/uxui/2026/5/8/game-ux-case-study-frostpunk-2-2024",
+      "category": "Direct designer case study",
+      "reviewed_on": "2026-09-06",
+      "supports": "Player-goal icon semantics, consistent marker shapes, and pre-commit save information.",
+      "limitation": "Article and selected annotated images reviewed. Reported improvements are not independently quantified here."
+    },
+    {
+      "id": "D03",
+      "title": "Wix Połojko — UX/UI behind Frostpunk 2",
+      "url": "https://powiszka.artstation.com/projects/RKX6Re",
+      "category": "Direct creator portfolio",
+      "reviewed_on": "2026-09-06",
+      "supports": "Examples of mockup, implementation, animation, VFX, and sound responsibilities.",
+      "limitation": "Selected documented work, not the entire UI system. Embedded videos were not fully reviewed."
+    },
+    {
+      "id": "D04",
+      "title": "Jakub Galanciak — Frostpunk 2 console UI work",
+      "url": "https://kugalus.artstation.com/projects/EzkBW2",
+      "category": "Direct creator portfolio",
+      "reviewed_on": "2026-09-06",
+      "supports": "Input-specific flows, console adaptation, and mockup-to-engine workflow.",
+      "limitation": "Public portfolio scope only; no private architecture or console certification evidence."
+    },
+    {
+      "id": "D05",
+      "title": "Aaron Sather / Riot Games — The Visual Language of Hextech",
+      "url": "https://nexus.leagueoflegends.com/en-us/2016/12/the-visual-language-of-hextech/",
+      "category": "First-party design article",
+      "reviewed_on": "2026-09-06",
+      "supports": "A connected visual grammar for fictional identity and interaction.",
+      "limitation": "Historical case study; its particular palette and symbols are not universal recommendations."
+    },
+    {
+      "id": "D06",
+      "title": "Richard Ye / Riot Games — Animation in the League of Legends Client",
+      "url": "https://www.riotgames.com/en/news/animation-league-legends-client",
+      "category": "First-party engineering/design article",
+      "reviewed_on": "2026-09-06",
+      "supports": "Animation handoff, iteration, and implementation constraints.",
+      "limitation": "Historical web-client implementation. Browser-specific tooling/performance claims are not transferred to Godot."
+    },
+    {
+      "id": "D07",
+      "title": "Riot Games — Preview the future of VALORANT’s interface",
+      "url": "https://playvalorant.com/en-gb/news/game-updates/preview-the-future-of-valorant-s-interface/",
+      "category": "First-party design article",
+      "reviewed_on": "2026-09-06",
+      "supports": "Cross-disciplinary interface direction, motion, and iterative rollout.",
+      "limitation": "Published direction, not a benchmark or current complete visual specification."
+    },
+    {
+      "id": "D08",
+      "title": "Nielsen Norman Group — Memory Recognition and Recall in User Interfaces",
+      "url": "https://www.nngroup.com/articles/recognition-and-recall/",
+      "category": "Original UX practitioner guidance",
+      "reviewed_on": "2026-09-06",
+      "supports": "Recognition, externalized information, and reducing avoidable memory demands.",
+      "limitation": ""
+    },
+    {
+      "id": "D09",
+      "title": "Nielsen Norman Group — Progressive Disclosure",
+      "url": "https://www.nngroup.com/articles/progressive-disclosure/",
+      "category": "Original UX practitioner guidance",
+      "reviewed_on": "2026-09-06",
+      "supports": "Layering complexity while keeping the necessary initial choices visible.",
+      "limitation": ""
+    },
+    {
+      "id": "D10",
+      "title": "Koji Ise / GDC Vault — From Persona to Metaphor: ReFantazio",
+      "url": "https://gdcvault.com/play/1035332/From-Persona-to-Metaphor-ReFantazio",
+      "category": "Primary conference listing; further viewing",
+      "reviewed_on": "2026-09-06",
+      "supports": "Existence and topic of a first-party UI design presentation.",
+      "limitation": "Only the public listing/abstract was reviewed. No detailed instruction in this package depends on unseen talk content."
+    },
+    {
+      "id": "G01",
+      "title": "Godot release archive",
+      "url": "https://godotengine.org/download/archive/",
+      "category": "Official release record",
+      "reviewed_on": "2026-09-06",
+      "supports": "Version availability and the need to verify the actual project release.",
+      "limitation": "A release record is not proof that a project or sample uses that version."
+    },
+    {
+      "id": "G02",
+      "title": "Godot — Size and anchors",
+      "url": "https://docs.godotengine.org/en/stable/tutorials/ui/size_and_anchors.html",
+      "category": "Official engine documentation",
+      "reviewed_on": "2026-09-06",
+      "supports": "Anchor/offset relationships.",
+      "limitation": "The stable URL is mutable; reviewed 2026-09-06. Resolve documentation for the project’s actual version."
+    },
+    {
+      "id": "G03",
+      "title": "Godot — Using the theme editor",
+      "url": "https://docs.godotengine.org/en/4.7/tutorials/ui/gui_using_theme_editor.html",
+      "category": "Official engine documentation",
+      "reviewed_on": "2026-09-06",
+      "supports": "Theme authoring workflow.",
+      "limitation": "Reviewed 4.7 documentation; verify availability and semantics in the project’s actual version."
+    },
+    {
+      "id": "G04",
+      "title": "Godot — Using InputEvent",
+      "url": "https://docs.godotengine.org/en/stable/tutorials/inputs/inputevent.html",
+      "category": "Official engine documentation",
+      "reviewed_on": "2026-09-06",
+      "supports": "Input dispatch and GUI/event ownership.",
+      "limitation": "The stable URL is mutable; reviewed 2026-09-06. Resolve documentation for the project’s actual version."
+    },
+    {
+      "id": "G05",
+      "title": "Godot — Multiple resolutions",
+      "url": "https://docs.godotengine.org/en/stable/tutorials/rendering/multiple_resolutions.html",
+      "category": "Official engine documentation",
+      "reviewed_on": "2026-09-06",
+      "supports": "Resolution, stretch, and aspect policies.",
+      "limitation": "The stable URL is mutable; reviewed 2026-09-06. Resolve documentation for the project’s actual version."
+    },
+    {
+      "id": "G06",
+      "title": "Godot — DisplayServer",
+      "url": "https://docs.godotengine.org/en/stable/classes/class_displayserver.html",
+      "category": "Official engine documentation",
+      "reviewed_on": "2026-09-06",
+      "supports": "Display safe-area semantics and platform fallbacks.",
+      "limitation": "The stable URL is mutable; reviewed 2026-09-06. Resolve documentation for the project’s actual version."
+    },
+    {
+      "id": "G07",
+      "title": "Godot — Tween",
+      "url": "https://docs.godotengine.org/en/stable/classes/class_tween.html",
+      "category": "Official engine documentation",
+      "reviewed_on": "2026-09-06",
+      "supports": "Tween property ownership, lifecycle, and timing behavior.",
+      "limitation": "The stable URL is mutable; reviewed 2026-09-06. Resolve documentation for the project’s actual version."
+    },
+    {
+      "id": "G08",
+      "title": "Godot — Screen-reading shaders",
+      "url": "https://docs.godotengine.org/en/4.7/tutorials/shaders/screen-reading_shaders.html",
+      "category": "Official engine documentation",
+      "reviewed_on": "2026-09-06",
+      "supports": "Screen-buffer capture and overlapping screen readers.",
+      "limitation": "Reviewed 4.7 documentation; verify availability and semantics in the project’s actual version."
+    },
+    {
+      "id": "G09",
+      "title": "Godot — Using fonts",
+      "url": "https://docs.godotengine.org/en/4.7/tutorials/ui/gui_using_fonts.html",
+      "category": "Official engine documentation",
+      "reviewed_on": "2026-09-06",
+      "supports": "Font rendering, import, and text quality considerations.",
+      "limitation": "Reviewed 4.7 documentation; verify availability and semantics in the project’s actual version."
+    },
+    {
+      "id": "G10",
+      "title": "Godot — Internationalizing games",
+      "url": "https://docs.godotengine.org/en/4.7/tutorials/i18n/internationalizing_games.html",
+      "category": "Official engine documentation",
+      "reviewed_on": "2026-09-06",
+      "supports": "Translation and internationalization mechanisms.",
+      "limitation": "Reviewed 4.7 documentation; verify availability and semantics in the project’s actual version."
+    },
+    {
+      "id": "G11",
+      "title": "Godot — StyleBoxTexture",
+      "url": "https://docs.godotengine.org/en/4.7/classes/class_styleboxtexture.html",
+      "category": "Official engine documentation",
+      "reviewed_on": "2026-09-06",
+      "supports": "Texture, content, and expansion margins for panels.",
+      "limitation": "Reviewed 4.7 documentation; verify availability and semantics in the project’s actual version."
+    },
+    {
+      "id": "G12",
+      "title": "Godot — Theme",
+      "url": "https://docs.godotengine.org/en/4.7/classes/class_theme.html",
+      "category": "Official engine documentation",
+      "reviewed_on": "2026-09-06",
+      "supports": "Theme properties and type variations.",
+      "limitation": "Reviewed 4.7 documentation; verify availability and semantics in the project’s actual version."
+    },
+    {
+      "id": "G13",
+      "title": "Godot — Control",
+      "url": "https://docs.godotengine.org/en/4.7/classes/class_control.html",
+      "category": "Official engine documentation",
+      "reviewed_on": "2026-09-06",
+      "supports": "Layout, focus, mouse behavior, and version-specific recursive controls.",
+      "limitation": "Reviewed 4.7 documentation; verify availability and semantics in the project’s actual version."
+    },
+    {
+      "id": "G14",
+      "title": "Godot — CanvasItem",
+      "url": "https://docs.godotengine.org/en/4.7/classes/class_canvasitem.html",
+      "category": "Official engine documentation",
+      "reviewed_on": "2026-09-06",
+      "supports": "Drawing, canvas and screen transforms, visual properties.",
+      "limitation": "Reviewed 4.7 documentation; verify availability and semantics in the project’s actual version."
+    },
+    {
+      "id": "G15",
+      "title": "Godot — Custom GUI controls",
+      "url": "https://docs.godotengine.org/en/4.7/tutorials/ui/custom_gui_controls.html",
+      "category": "Official engine documentation",
+      "reviewed_on": "2026-09-06",
+      "supports": "Custom-control implementation responsibilities.",
+      "limitation": "Reviewed 4.7 documentation; verify availability and semantics in the project’s actual version."
+    },
+    {
+      "id": "G16",
+      "title": "Godot — CanvasItem shaders",
+      "url": "https://docs.godotengine.org/en/4.7/tutorials/shaders/shader_reference/canvas_item_shader.html",
+      "category": "Official engine documentation",
+      "reviewed_on": "2026-09-06",
+      "supports": "Canvas shader inputs, COLOR, UV, and fragment behavior.",
+      "limitation": "Reviewed 4.7 documentation; verify availability and semantics in the project’s actual version."
+    },
+    {
+      "id": "G17",
+      "title": "Godot — TextureRect",
+      "url": "https://docs.godotengine.org/en/4.7/classes/class_texturerect.html",
+      "category": "Official engine documentation",
+      "reviewed_on": "2026-09-06",
+      "supports": "Texture layout, stretch, and minimum-size behavior.",
+      "limitation": "Reviewed 4.7 documentation; verify availability and semantics in the project’s actual version."
+    },
+    {
+      "id": "G18",
+      "title": "Godot — SubViewport",
+      "url": "https://docs.godotengine.org/en/4.7/classes/class_subviewport.html",
+      "category": "Official engine documentation",
+      "reviewed_on": "2026-09-06",
+      "supports": "Separate render targets and update behavior.",
+      "limitation": "Reviewed 4.7 documentation; verify availability and semantics in the project’s actual version."
+    },
+    {
+      "id": "G19",
+      "title": "Godot — Custom drawing in 2D",
+      "url": "https://docs.godotengine.org/en/4.7/tutorials/2d/custom_drawing_in_2d.html",
+      "category": "Official engine documentation",
+      "reviewed_on": "2026-09-06",
+      "supports": "Custom draw lifecycle and explicit redraw.",
+      "limitation": "Reviewed 4.7 documentation; verify availability and semantics in the project’s actual version."
+    },
+    {
+      "id": "G20",
+      "title": "Godot — Camera3D",
+      "url": "https://docs.godotengine.org/en/4.7/classes/class_camera3d.html",
+      "category": "Official engine documentation",
+      "reviewed_on": "2026-09-06",
+      "supports": "Camera framing and world/screen projection.",
+      "limitation": "Reviewed 4.7 documentation; verify availability and semantics in the project’s actual version."
+    },
+    {
+      "id": "G21",
+      "title": "Godot — Viewport",
+      "url": "https://docs.godotengine.org/en/4.7/classes/class_viewport.html",
+      "category": "Official engine documentation",
+      "reviewed_on": "2026-09-06",
+      "supports": "Viewport textures, focus ownership, and viewport semantics.",
+      "limitation": "Reviewed 4.7 documentation; verify availability and semantics in the project’s actual version."
+    },
+    {
+      "id": "G22",
+      "title": "Godot — Importing images",
+      "url": "https://docs.godotengine.org/en/4.7/tutorials/assets_pipeline/importing_images.html",
+      "category": "Official engine documentation",
+      "reviewed_on": "2026-09-06",
+      "supports": "Raster/SVG import, scaling, filtering, and compression.",
+      "limitation": "Reviewed 4.7 documentation; verify availability and semantics in the project’s actual version."
+    },
+    {
+      "id": "G23",
+      "title": "Godot — BaseButton",
+      "url": "https://docs.godotengine.org/en/4.7/classes/class_basebutton.html",
+      "category": "Official engine documentation",
+      "reviewed_on": "2026-09-06",
+      "supports": "Native button state and activation behavior.",
+      "limitation": "Reviewed 4.7 documentation; verify availability and semantics in the project’s actual version."
+    },
+    {
+      "id": "G24",
+      "title": "Godot — ShaderMaterial",
+      "url": "https://docs.godotengine.org/en/4.7/classes/class_shadermaterial.html",
+      "category": "Official engine documentation",
+      "reviewed_on": "2026-09-06",
+      "supports": "Material parameters and resource ownership.",
+      "limitation": "Reviewed 4.7 documentation; verify availability and semantics in the project’s actual version."
+    },
+    {
+      "id": "G25",
+      "title": "Godot — FontVariation",
+      "url": "https://docs.godotengine.org/en/4.7/classes/class_fontvariation.html",
+      "category": "Official engine documentation",
+      "reviewed_on": "2026-09-06",
+      "supports": "Font variations and supported OpenType features.",
+      "limitation": "Reviewed 4.7 documentation; verify availability and semantics in the project’s actual version."
+    },
+    {
+      "id": "G26",
+      "title": "Godot — RichTextLabel",
+      "url": "https://docs.godotengine.org/en/4.7/classes/class_richtextlabel.html",
+      "category": "Official engine documentation",
+      "reviewed_on": "2026-09-06",
+      "supports": "Native rich-text layout and display behavior.",
+      "limitation": "Reviewed 4.7 documentation; verify availability and semantics in the project’s actual version."
+    },
+    {
+      "id": "G27",
+      "title": "Godot — Input examples",
+      "url": "https://docs.godotengine.org/en/4.7/tutorials/inputs/input_examples.html",
+      "category": "Official engine documentation",
+      "reviewed_on": "2026-09-06",
+      "supports": "Event handling versus direct input state queries.",
+      "limitation": "Reviewed 4.7 documentation; verify availability and semantics in the project’s actual version."
+    },
+    {
+      "id": "G28",
+      "title": "Godot — Background loading",
+      "url": "https://docs.godotengine.org/en/4.7/tutorials/io/background_loading.html",
+      "category": "Official engine documentation",
+      "reviewed_on": "2026-09-06",
+      "supports": "Background resource loading and integration.",
+      "limitation": "Reviewed 4.7 documentation; verify availability and semantics in the project’s actual version."
+    },
+    {
+      "id": "G29",
+      "title": "Godot — Controllers, gamepads, and joysticks",
+      "url": "https://docs.godotengine.org/en/4.7/tutorials/inputs/controllers_gamepads_joysticks.html",
+      "category": "Official engine documentation",
+      "reviewed_on": "2026-09-06",
+      "supports": "Controller behavior, mappings, and deadzones.",
+      "limitation": "Reviewed 4.7 documentation; verify availability and semantics in the project’s actual version."
+    },
+    {
+      "id": "G30",
+      "title": "Godot — Container",
+      "url": "https://docs.godotengine.org/en/4.7/classes/class_container.html",
+      "category": "Official engine documentation",
+      "reviewed_on": "2026-09-06",
+      "supports": "Container-owned child layout.",
+      "limitation": "Reviewed 4.7 documentation; verify availability and semantics in the project’s actual version."
+    },
+    {
+      "id": "G31",
+      "title": "Godot — Pausing games and process mode",
+      "url": "https://docs.godotengine.org/en/4.7/tutorials/scripting/pausing_games.html",
+      "category": "Official engine documentation",
+      "reviewed_on": "2026-09-06",
+      "supports": "Process modes and pause behavior.",
+      "limitation": "Reviewed 4.7 documentation; verify availability and semantics in the project’s actual version."
+    },
+    {
+      "id": "G32",
+      "title": "Godot — GPU optimization",
+      "url": "https://docs.godotengine.org/en/4.7/tutorials/performance/gpu_optimization.html",
+      "category": "Official engine documentation",
+      "reviewed_on": "2026-09-06",
+      "supports": "GPU bottlenecks and profiling context.",
+      "limitation": "Reviewed 4.7 documentation; verify availability and semantics in the project’s actual version."
+    },
+    {
+      "id": "G33",
+      "title": "Godot — Pseudolocalization",
+      "url": "https://docs.godotengine.org/en/4.7/tutorials/i18n/pseudolocalization.html",
+      "category": "Official engine documentation",
+      "reviewed_on": "2026-09-06",
+      "supports": "Localization stress testing support.",
+      "limitation": "Reviewed 4.7 documentation; verify availability and semantics in the project’s actual version."
+    },
+    {
+      "id": "G34",
+      "title": "Godot — Console support",
+      "url": "https://godotengine.org/consoles/",
+      "category": "Official platform guidance",
+      "reviewed_on": "2026-09-06",
+      "supports": "Console export requirements differ from public desktop export support.",
+      "limitation": ""
+    },
+    {
+      "id": "X101",
+      "title": "Xbox Accessibility Guideline 101 — Text display",
+      "url": "https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/101",
+      "category": "Official game accessibility guidance",
+      "reviewed_on": "2026-09-06",
+      "supports": "Actual rendered text size, scaling, and readable text presentation.",
+      "limitation": "Guidance is not a certificate, a platform approval, or proof of validation with affected players."
+    },
+    {
+      "id": "X102",
+      "title": "Xbox Accessibility Guideline 102 — Contrast",
+      "url": "https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/102",
+      "category": "Official game accessibility guidance",
+      "reviewed_on": "2026-09-06",
+      "supports": "Contrast recommendations and their scope.",
+      "limitation": "Guidance is not a certificate, a platform approval, or proof of validation with affected players."
+    },
+    {
+      "id": "X103",
+      "title": "Xbox Accessibility Guideline 103 — Additional channels for visual and audio cues",
+      "url": "https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/103",
+      "category": "Official game accessibility guidance",
+      "reviewed_on": "2026-09-06",
+      "supports": "Avoiding single-channel critical meaning.",
+      "limitation": "Guidance is not a certificate, a platform approval, or proof of validation with affected players."
+    },
+    {
+      "id": "X104",
+      "title": "Xbox Accessibility Guideline 104 — Subtitles and captions",
+      "url": "https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/104",
+      "category": "Official game accessibility guidance",
+      "reviewed_on": "2026-09-06",
+      "supports": "Accessible spoken-content presentation.",
+      "limitation": "Guidance is not a certificate, a platform approval, or proof of validation with affected players."
+    },
+    {
+      "id": "X106",
+      "title": "Xbox Accessibility Guideline 106 — Screen narration",
+      "url": "https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/106",
+      "category": "Official game accessibility guidance",
+      "reviewed_on": "2026-09-06",
+      "supports": "Meaningful narrated interface information.",
+      "limitation": "Guidance is not a certificate, a platform approval, or proof of validation with affected players."
+    },
+    {
+      "id": "X112",
+      "title": "Xbox Accessibility Guideline 112 — UI navigation",
+      "url": "https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/112",
+      "category": "Official game accessibility guidance",
+      "reviewed_on": "2026-09-06",
+      "supports": "Reachable, predictable alternative-input navigation.",
+      "limitation": "Guidance is not a certificate, a platform approval, or proof of validation with affected players."
+    },
+    {
+      "id": "X113",
+      "title": "Xbox Accessibility Guideline 113 — UI focus",
+      "url": "https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/113",
+      "category": "Official game accessibility guidance",
+      "reviewed_on": "2026-09-06",
+      "supports": "Visible focus and coherent focus behavior.",
+      "limitation": "Guidance is not a certificate, a platform approval, or proof of validation with affected players."
+    },
+    {
+      "id": "X115",
+      "title": "Xbox Accessibility Guideline 115 — Error messages and destructive actions",
+      "url": "https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/115",
+      "category": "Official game accessibility guidance",
+      "reviewed_on": "2026-09-06",
+      "supports": "Consequences, recovery, and destructive-action handling.",
+      "limitation": "Guidance is not a certificate, a platform approval, or proof of validation with affected players."
+    },
+    {
+      "id": "X117",
+      "title": "Xbox Accessibility Guideline 117 — Visual distractions and motion settings",
+      "url": "https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/117",
+      "category": "Official game accessibility guidance",
+      "reviewed_on": "2026-09-06",
+      "supports": "Alternatives to unnecessary movement and distraction.",
+      "limitation": "Guidance is not a certificate, a platform approval, or proof of validation with affected players."
+    },
+    {
+      "id": "X118",
+      "title": "Xbox Accessibility Guideline 118 — Photosensitivity",
+      "url": "https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/118",
+      "category": "Official game accessibility guidance",
+      "reviewed_on": "2026-09-06",
+      "supports": "The need for appropriate flash/photosensitivity evaluation.",
+      "limitation": "Guidance is not a certificate, a platform approval, or proof of validation with affected players."
+    },
+    {
+      "id": "A01",
+      "title": "Agent Skills specification",
+      "url": "https://agentskills.io/specification",
+      "category": "Official format specification",
+      "reviewed_on": "2026-09-06",
+      "supports": "SKILL.md metadata and progressive loading of supporting resources.",
+      "limitation": ""
+    },
+    {
+      "id": "A02",
+      "title": "OpenAI — Build skills / Codex local skills",
+      "url": "https://learn.chatgpt.com/docs/build-skills",
+      "category": "Official agent documentation",
+      "reviewed_on": "2026-09-06",
+      "supports": "Local Codex skill directories and manual skill authoring.",
+      "limitation": "Agent behavior can change; repository paths were checked on the review date."
+    },
+    {
+      "id": "A03",
+      "title": "Anthropic — Extend Claude with skills",
+      "url": "https://code.claude.com/docs/en/skills",
+      "category": "Official agent documentation",
+      "reviewed_on": "2026-09-06",
+      "supports": "Claude Code project/personal skill locations and invocation.",
+      "limitation": ""
+    },
+    {
+      "id": "W01",
+      "title": "W3C — Understanding Success Criterion 1.4.3: Contrast (Minimum)",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
+      "category": "Official standard explanation",
+      "reviewed_on": "2026-09-06",
+      "supports": "sRGB luminance/contrast calculation context for the optional diagnostic.",
+      "limitation": "The script checks opaque color pairs only; it does not assess an entire game, dynamic composites, or conformance."
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "status": "example-not-production",
+  "notes": "Example dimensions and roles only. Replace with real project assets and provenance.",
+  "assets": [
+    {
+      "id": "panel_inspection_edges",
+      "role": "Scalable ornament around a quiet native-text panel",
+      "source_path": "art/ui/inspection-panel-source.svg",
+      "runtime_path": "res://ui/art/inspection-panel.png",
+      "target_size_px": [
+        512,
+        512
+      ],
+      "scaling": "nine-slice only if corners/edges are authored for it",
+      "texture_margins_px": {
+        "left": 32,
+        "top": 32,
+        "right": 32,
+        "bottom": 32
+      },
+      "content_margins_logical": {
+        "left": 24,
+        "top": 20,
+        "right": 24,
+        "bottom": 20
+      },
+      "alpha": "real alpha; inspect light/dark backing; no baked checkerboard",
+      "states": [
+        "normal"
+      ],
+      "source_url": null,
+      "creator": null,
+      "rights_status": "unverified",
+      "license_or_generation_record": null,
+      "import_notes": "Verify SVG/raster behavior for installed Godot version.",
+      "approval_status": "placeholder",
+      "verification": {
+        "native_scale": false,
+        "alpha_edges": false,
+        "provenance": false
+      }
+    },
+    {
+      "id": "ornament_reveal_mask",
+      "role": "Decorative grayscale mask; never functional text",
+      "source_path": "art/ui/ornament-mask-source.png",
+      "runtime_path": "res://ui/art/ornament-mask.png",
+      "target_size_px": [
+        512,
+        512
+      ],
+      "scaling": "match the corresponding ornament UV region",
+      "alpha": "mask uses red channel; no transparency assumption",
+      "states": [
+        "reveal"
+      ],
+      "source_url": null,
+      "creator": null,
+      "rights_status": "unverified",
+      "license_or_generation_record": null,
+      "import_notes": "Treat as mask data; test filtering/compression deliberately.",
+      "approval_status": "placeholder",
+      "verification": {
+        "native_scale": false,
+        "alpha_edges": false,
+        "provenance": false
+      }
+    }
+  ]
+}

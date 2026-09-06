@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "format": "project example; not a claimed external token standard",
+  "status": "original tuning hypotheses; not accessibility-certified or measured from a reference game",
+  "units": {
+    "spacing": "logical UI units",
+    "font_size": "nominal logical font size; measure actual rendered glyphs",
+    "duration": "milliseconds",
+    "color": "opaque sRGB hex"
+  },
+  "profiles": {
+    "ashen-atlas": {
+      "intent": "Painterly cartographic RPG; warm paper and restrained ink, not a copied game skin",
+      "colors": {
+        "surface_reading": "#172028",
+        "text_primary": "#F2E7D3",
+        "text_secondary": "#BBC2C4",
+        "focus": "#F0C97A",
+        "danger": "#FFB5B5",
+        "selection": "#354A59"
+      },
+      "spacing": {
+        "unit": 4,
+        "row_gap": 12,
+        "section_gap": 28,
+        "panel_inset": 24
+      },
+      "type": {
+        "display": 52,
+        "action": 30,
+        "body": 28,
+        "metadata": 24,
+        "number": 32
+      },
+      "motion_ms": {
+        "focus": 100,
+        "panel_enter": 220,
+        "panel_exit": 150,
+        "ornament": 340
+      }
+    },
+    "meridian-station": {
+      "intent": "Dense station operations; instrument hierarchy, calm aligned ledger",
+      "colors": {
+        "surface_reading": "#19252B",
+        "text_primary": "#EEF2ED",
+        "text_secondary": "#B6C9CB",
+        "focus": "#8FD9E4",
+        "danger": "#FFBAA7",
+        "selection": "#344B52"
+      },
+      "spacing": {
+        "unit": 4,
+        "row_gap": 8,
+        "section_gap": 20,
+        "panel_inset": 20
+      },
+      "type": {
+        "display": 40,
+        "action": 28,
+        "body": 28,
+        "metadata": 24,
+        "number": 30
+      },
+      "motion_ms": {
+        "focus": 90,
+        "panel_enter": 180,
+        "panel_exit": 130,
+        "ornament": 240
+      }
+    }
+  },
+  "requirements": [
+    "Measure contrast on the actual composite, not only these opaque pairs.",
+    "Choose licensed fonts with actual language coverage; no font files are included.",
+    "Design reflow for the agreed large-text range instead of mechanically scaling the entire screen.",
+    "Semantic focus, selection, unavailable, and domain status remain separate."
+  ]
+}

@@ -87,6 +87,25 @@ toolchain changes. Its canonical package lives at
 by the skills CLI while Claude Code's marketplace references that same
 directory directly.
 
+### Godot Engineering Suite
+
+`godot-engineering-suite` routes Godot 4 engineering tasks through focused
+guidance for scenes, resources, gameplay, scripting, networking, testing,
+performance, and platform exports. It includes project-inspection and validation
+helpers. Its canonical package lives at `skills/godot-engineering-suite`,
+discoverable by the skills CLI and referenced directly by Claude Code's
+marketplace.
+
+### Godot UI Design Excellence
+
+`godot-ui-design-excellence` guides game-interface art direction, HUDs, menus,
+inventories, typography, motion, controller navigation, accessibility, and
+in-engine visual review. It includes design templates, evaluation cases, and
+local package and contrast checks. Its canonical package lives at
+`skills/godot-ui-design-excellence`, discoverable by the skills CLI and referenced
+directly by Claude Code's marketplace. Use it for interface design and craft;
+the Engineering Suite covers broader engine and gameplay work.
+
 ### Idea Workbench
 
 `idea-workbench` turns a rough vision into a reviewed design and an
@@ -139,7 +158,11 @@ entry points.
     │   └── SKILL.md
     ├── react-codebase-excellence/
     │   └── SKILL.md
-    └── typescript-codebase-excellence/
+    ├── typescript-codebase-excellence/
+    │   └── SKILL.md
+    ├── godot-engineering-suite/
+    │   └── SKILL.md
+    └── godot-ui-design-excellence/
         └── SKILL.md
 ```
 
@@ -197,12 +220,15 @@ npx skills add gordon1210/agent-goodies --skill rust-codebase-excellence --globa
 npx skills add gordon1210/agent-goodies --skill design-ui-excellence --global
 npx skills add gordon1210/agent-goodies --skill react-codebase-excellence --global
 npx skills add gordon1210/agent-goodies --skill typescript-codebase-excellence --global
+npx skills add gordon1210/agent-goodies --skill godot-engineering-suite --global
+npx skills add gordon1210/agent-goodies --skill godot-ui-design-excellence --global
 ```
 
 Omit `--global` for a project-scoped installation. A bundled helper, when
 present, stays inside the installed skill and requires no `package.json` script
-or launcher configuration. Running the helper requires Python 3.9 or newer; it
-has no third-party Python dependencies.
+or launcher configuration. Handoff and Grok helpers require Python 3.9 or newer;
+the Godot helpers require Python 3.10 or newer. These helpers have no third-party
+Python dependencies.
 
 For Codex/ChatGPT:
 
@@ -226,6 +252,8 @@ claude plugin install rust-codebase-excellence@agent-goodies
 claude plugin install design-ui-excellence@agent-goodies
 claude plugin install react-codebase-excellence@agent-goodies
 claude plugin install typescript-codebase-excellence@agent-goodies
+claude plugin install godot-engineering-suite@agent-goodies
+claude plugin install godot-ui-design-excellence@agent-goodies
 ```
 
 ## Local development
@@ -249,6 +277,9 @@ Run the repository validator before committing:
 python3 scripts/validate_repo.py
 python3 -m unittest tests/test_handoff.py -v
 python3 -m unittest tests/test_grok_acp.py -v
+python3 skills/godot-engineering-suite/scripts/validate_skill_suite.py
+python3 skills/godot-ui-design-excellence/scripts/validate_package.py
+python3 -m unittest discover -s skills/godot-ui-design-excellence/tests -v
 ```
 
 ## Contributing and releases

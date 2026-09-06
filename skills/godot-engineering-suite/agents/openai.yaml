@@ -1,0 +1,6 @@
+interface:
+  display_name: "Godot Engineering Suite"
+  short_description: "Version-aware Godot 4 engineering router"
+  default_prompt: "Use $godot-engineering-suite for this task, detecting the project version and loading only the relevant references."
+policy:
+  allow_implicit_invocation: true

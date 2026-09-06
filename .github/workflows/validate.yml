@@ -26,3 +26,11 @@ jobs:
 
       - name: Run Grok ACP client tests
         run: python3 -m unittest tests/test_grok_acp.py -v
+
+      - name: Validate Godot skill packages
+        run: |
+          python3 skills/godot-engineering-suite/scripts/validate_skill_suite.py
+          python3 skills/godot-ui-design-excellence/scripts/validate_package.py
+
+      - name: Run Godot UI utility tests
+        run: python3 -m unittest discover -s skills/godot-ui-design-excellence/tests -v

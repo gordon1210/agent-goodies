@@ -117,6 +117,32 @@
         "name": "gordon1210"
       },
       "category": "Productivity"
+    },
+    {
+      "name": "godot-engineering-suite",
+      "source": "./skills/godot-engineering-suite",
+      "strict": false,
+      "skills": [
+        "./"
+      ],
+      "description": "Guide Godot 4 engineering across gameplay, scenes, resources, scripting, testing, performance, networking, and exports.",
+      "author": {
+        "name": "gordon1210"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "godot-ui-design-excellence",
+      "source": "./skills/godot-ui-design-excellence",
+      "strict": false,
+      "skills": [
+        "./"
+      ],
+      "description": "Design, implement, and review Godot game interfaces with distinctive art direction, accessible interactions, and visual validation.",
+      "author": {
+        "name": "gordon1210"
+      },
+      "category": "Productivity"
     }
   ]
 }
