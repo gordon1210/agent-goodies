@@ -5,6 +5,18 @@ implementation. Small entry point; **12 separate styles**, **14 opt-in technique
 page-specific routes, and explicit quality checks. No framework, font stack, color
 palette, animation library, or plugin is mandatory.
 
+## Choosing a design skill
+
+Use this skill for concrete web pages, components, charts, and visual refinement.
+When `design-ui-excellence` is also available, prefer it for strategy, messaging
+and SEO, content architecture, campaigns, brand and design systems, and UX planning
+across screens. An explicit skill choice takes precedence.
+
+Both packages work independently. Use the relevant guidance available in the
+selected skill; do not require the other package or load both full workflows.
+For mixed projects, carry the existing brief and decisions into the next phase
+without restarting discovery.
+
 ## Start here
 
 Install the entire `webdesign-excellence` directory, not just SKILL.md. Its relative
@@ -59,9 +71,9 @@ Selected work → relevant foundation / technique → implementation → verific
 ```
 
 The router recommends 2–4 reference files initially, with additional modules read
-when a phase needs them. All 45 reference modules are directly discoverable from
-[SKILL.md](SKILL.md); no multi-hop catalog traversal is required. The main file has
-92 lines in this edition. Reference count is not a request to load the full set.
+when a phase needs them. All reference modules are directly discoverable from
+[SKILL.md](SKILL.md); no multi-hop catalog traversal is required. Reference count
+is not a request to load the full set.
 
 Styles own the visual grammar. Techniques implement a specific mechanism. An
 editorial page can use a grid and a restrained image treatment without importing
@@ -75,6 +87,7 @@ geometry, imagery, and motion. Separate alternatives remain separate.
 | Styles | Editorial, technical, product-led, quiet luxury, organic, expressive graphic, neo-brutalist, cinematic, atmospheric, glass, retro-futurist, immersive spatial |
 | Techniques | Structural grids, motion systems, text reveals, scroll narratives, stacking cards, product demos, image treatments, texture, light/glass, pointer effects, view transitions, video, SVG/Canvas/3D, carousels |
 | Page types | Marketing/services, commerce, portfolios, publications/docs, working applications |
+| Data visualization | Chart selection, honest scales and data states, labeling, responsive composition, accessible interaction and alternatives |
 | Foundations | Brief, style selection, composition, typography, color, responsive behavior, assets, implementation |
 | Quality | Navigation/forms, accessibility, performance, critique, verification |
 | Optional handoff | Design contract, implementation handoff, review template |
@@ -115,7 +128,7 @@ reference reachability, Markdown fences, and evaluation fixture integrity. It is
 not a general Markdown/YAML parser or an agent-behavior test suite.
 
 See [VALIDATION.md](VALIDATION.md) for the actual checks performed at packaging time.
-The [28 behavioral fixtures](evals/README.md) are supplied for real agent evaluation;
+The [behavioral fixtures](evals/README.md) are supplied for real agent evaluation;
 they are not represented as executed model tests.
 
 ## Sources and limits

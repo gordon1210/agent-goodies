@@ -579,6 +579,166 @@
         "Diagnose hierarchy, type, spacing, and behavior instead of adding fashionable decorations.",
         "Separate preferences from defects; do not load all style dossiers."
       ]
+    },
+    {
+      "id": "coinstalled-concrete-page",
+      "prompt": "Implement this approved landing page and polish its mobile layout.",
+      "context": "Both webdesign-excellence and design-ui-excellence are available; approved copy, tokens, and flow are supplied.",
+      "scope": "existing-extension",
+      "should_trigger": true,
+      "style_mode": "preserve",
+      "allowed_styles": [],
+      "max_initial_reference_reads": 4,
+      "relevant_by_completion": [
+        "references/page-marketing.md",
+        "references/responsive.md",
+        "references/verification.md"
+      ],
+      "assertions": [
+        "Prefer webdesign-excellence for the concrete rendered deliverable; do not automatically load both skills.",
+        "Reuse supplied decisions without restarting discovery or inventing a brand direction."
+      ]
+    },
+    {
+      "id": "coinstalled-strategy",
+      "prompt": "Rewrite our positioning and plan search-oriented pages; do not implement them.",
+      "context": "Both webdesign-excellence and design-ui-excellence are available; neither is explicitly selected.",
+      "scope": "out-of-scope",
+      "should_trigger": false,
+      "style_mode": "none",
+      "allowed_styles": [],
+      "max_initial_reference_reads": 0,
+      "relevant_by_completion": [],
+      "assertions": [
+        "Prefer design-ui-excellence for messaging and content/SEO architecture.",
+        "Do not start a rendered-page implementation or load webdesign references."
+      ]
+    },
+    {
+      "id": "coinstalled-system-planning",
+      "prompt": "Define semantic tokens and reusable component rules for all our products.",
+      "context": "Both skills are available; this is a design-system specification, not a local rendered component fix.",
+      "scope": "out-of-scope",
+      "should_trigger": false,
+      "style_mode": "none",
+      "allowed_styles": [],
+      "max_initial_reference_reads": 0,
+      "relevant_by_completion": [],
+      "assertions": [
+        "Prefer design-ui-excellence for the reusable design system.",
+        "Do not route by isolated words such as color or component."
+      ]
+    },
+    {
+      "id": "coinstalled-explicit-other",
+      "prompt": "Use design-ui-excellence to implement this homepage.",
+      "context": "Both skills are available; the user explicitly selected design-ui-excellence.",
+      "scope": "out-of-scope",
+      "should_trigger": false,
+      "style_mode": "none",
+      "allowed_styles": [],
+      "max_initial_reference_reads": 0,
+      "relevant_by_completion": [],
+      "assertions": [
+        "Honor explicit selection despite the default split.",
+        "Do not activate webdesign-excellence as a second mandatory skill."
+      ]
+    },
+    {
+      "id": "explicit-webdesign-planning",
+      "prompt": "Use webdesign-excellence to plan the structure and reading order of our documentation site.",
+      "context": "Both skills are available; explicit selection overrides the planning default. Existing technical content and brand are supplied.",
+      "scope": "existing-extension",
+      "should_trigger": true,
+      "style_mode": "preserve",
+      "allowed_styles": [],
+      "max_initial_reference_reads": 4,
+      "relevant_by_completion": [
+        "references/brief.md",
+        "references/page-content.md"
+      ],
+      "assertions": [
+        "Honor explicit selection and use this skill without requiring another package.",
+        "Produce the requested plan only; do not treat planning as permission to implement."
+      ]
+    },
+    {
+      "id": "standalone-webdesign",
+      "prompt": "Improve this storefront product page with the supplied brand and product assets.",
+      "context": "Only webdesign-excellence is available.",
+      "scope": "existing-extension",
+      "should_trigger": true,
+      "style_mode": "preserve",
+      "allowed_styles": [],
+      "max_initial_reference_reads": 4,
+      "relevant_by_completion": [
+        "references/page-commerce.md",
+        "references/verification.md"
+      ],
+      "assertions": [
+        "Complete the work with local routes; do not require installation or discovery of another skill.",
+        "Preserve supplied product facts and brand."
+      ]
+    },
+    {
+      "id": "chart-scale-review",
+      "prompt": "Review these comparison and trend charts; report corrections without editing.",
+      "context": "Category values 96 and 100 use bars starting at 90. Two comparable panels use different axes. A line series ranges 96 to 100. A requested ordinary log view includes zero and negative observations.",
+      "scope": "review",
+      "should_trigger": true,
+      "style_mode": "preserve",
+      "allowed_styles": [],
+      "max_initial_reference_reads": 4,
+      "relevant_by_completion": [
+        "references/data-visualization.md",
+        "references/critique.md"
+      ],
+      "assertions": [
+        "Flag the truncated magnitude bars and misleading panel comparison; recommend a zero baseline and shared comparable scales.",
+        "Do not require every line domain to start at zero; permit a clearly labeled useful narrowed range.",
+        "Do not silently discard or replace zero/negative values to fit a log scale; explain the limitation and propose an appropriate representation.",
+        "Remain read-only; do not manufacture screenshot or data-correctness verification."
+      ]
+    },
+    {
+      "id": "chart-data-and-mobile-access",
+      "prompt": "Fix the revenue trend chart for mobile and keyboard users without changing its metric definitions.",
+      "context": "The chart has a zero observation, a missing day, stale data, a partial current month, supplied forecast intervals, and hover-only values. Existing data, units, timezone, aggregation, and filters are authoritative.",
+      "scope": "targeted-fix",
+      "should_trigger": true,
+      "style_mode": "preserve",
+      "allowed_styles": [],
+      "max_initial_reference_reads": 4,
+      "relevant_by_completion": [
+        "references/data-visualization.md",
+        "references/page-application.md",
+        "references/verification.md"
+      ],
+      "assertions": [
+        "Distinguish zero, missing, stale, and partial periods; do not fill missing observations or redefine revenue.",
+        "Keep forecast and supplied uncertainty distinct from observations; do not invent confidence claims.",
+        "Provide readable narrow-screen labels and essential values for keyboard/touch users with an equivalent semantic alternative synchronized to filters.",
+        "Validate representative values and units against supplied input, not only screenshots."
+      ]
+    },
+    {
+      "id": "dashboard-without-charts",
+      "prompt": "Fix spacing and labels in our account settings dashboard.",
+      "context": "The dashboard contains forms and a table, no charts; both skills are available.",
+      "scope": "targeted-fix",
+      "should_trigger": true,
+      "style_mode": "preserve",
+      "allowed_styles": [],
+      "max_initial_reference_reads": 4,
+      "relevant_by_completion": [
+        "references/page-application.md",
+        "references/forms.md",
+        "references/verification.md"
+      ],
+      "assertions": [
+        "Prefer webdesign-excellence for the concrete interface fix.",
+        "Do not load data-visualization or add charts merely because the prompt says dashboard."
+      ]
     }
   ]
 }

@@ -1,16 +1,31 @@
 ---
 name: webdesign-excellence
 description: >-
-  Design, implement, refine, or review distinctive, coherent websites and web
-  interfaces. Use for web art direction, landing pages, portfolios, ecommerce,
-  editorial sites, product UI, typography, responsive layout, visual polish,
-  and purposeful motion. Routes to one style and only the relevant techniques.
+  Design, implement, refine, or visually review concrete web pages and components:
+  landing pages, portfolios, ecommerce, editorial sites, product UI, charts,
+  typography, responsive layout, visual polish, and purposeful motion. When
+  design-ui-excellence is also available, prefer this skill for rendered web work;
+  prefer that skill for strategy, messaging/SEO/content architecture, campaigns,
+  brand/design systems, and cross-screen UX planning. Honor explicit skill selection.
   Not for backend-only work, native game UI, or indiscriminate visual restyling.
 ---
 # Webdesign Excellence
 
 Make the user's intended experience specific, usable, and visually coherent.
 “Modern” is not a palette, font, effect, or license to replace an existing brand.
+
+## Selection alongside other skills
+
+When both skills are available and the user has not selected one, use this skill
+for concrete web pages, components, charts, and rendered visual refinement. Use
+`design-ui-excellence` for strategy, messaging/SEO/content architecture, campaigns,
+brand or design systems, and cross-screen UX planning. Route by the requested
+deliverable: polishing a chart is web work; defining the product's information
+architecture is planning. Explicit selection takes precedence.
+
+This skill remains self-contained when used alone. Do not require another package
+or load both automatically. In mixed work, carry approved content, tokens, flows,
+and decisions into the next phase without restarting discovery.
 
 ## Work contract
 
@@ -41,6 +56,7 @@ Do not fetch paid/private material without authorization. Use only available too
 | Studio, personal work, case studies | [Portfolio](references/page-portfolio.md) |
 | Publication, documentation, long-form | [Content](references/page-content.md) |
 | Dashboard, settings, working application | [Application](references/page-application.md) |
+| Charts, metric comparisons, data visualization | [Data visualization](references/data-visualization.md) |
 | Visual critique or “make it modern” | [Critique](references/critique.md) |
 | Layout / type / palette / breakpoints | [Composition](references/composition.md) / [typography](references/typography.md) / [color](references/color.md) / [responsive](references/responsive.md) |
 | Images, fonts, icons, rights | [Assets](references/assets.md) |

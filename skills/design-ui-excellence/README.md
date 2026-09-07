@@ -4,6 +4,18 @@ A single routed agent skill for website creation, marketing strategy, conversion
 
 It is designed for progressive disclosure: the root `SKILL.md` selects one primary route, and that route loads only the small set of specialist guides needed for the current phase. The full library does not need to enter the context window.
 
+## Choosing a design skill
+
+When both this skill and `webdesign-excellence` are available, use this skill for
+strategy, messaging and SEO, content architecture, campaigns, brand and design
+systems, and UX planning across screens. Use `webdesign-excellence` for concrete
+web pages, components, charts, and visual refinement.
+
+An explicit skill choice takes precedence. This skill retains its page and product
+routes for standalone use and explicit selection; it does not require the other
+package. Mixed projects can hand off the brief, content, constraints, and decisions
+between phases without loading both workflows or restarting discovery.
+
 ## What it covers
 
 - Greenfield websites and existing-site redesigns

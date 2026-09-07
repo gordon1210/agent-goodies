@@ -61,9 +61,10 @@ directly.
 
 ### Design & UI Excellence
 
-`design-ui-excellence` routes website, landing-page, marketing, product UI,
-design-system, content, prototyping, and audit work through focused workflows,
-guides, and reusable templates. Its canonical package lives at
+`design-ui-excellence` guides design strategy, messaging and SEO, campaigns,
+brand and design systems, and UX planning across screens. It also supports
+website and product-interface delivery when used on its own or explicitly
+selected. Its canonical package lives at
 `skills/design-ui-excellence`, which makes it directly discoverable by the
 skills CLI while Claude Code's marketplace references that same directory
 directly.
@@ -110,11 +111,18 @@ the Engineering Suite covers broader engine and gameplay work.
 
 `webdesign-excellence` guides website and web-interface design, implementation,
 refinement, and review through focused page routes, 12 visual styles, and 14
-optional techniques. It includes guidance for responsive layouts, accessibility,
-performance, and verification, plus handoff templates and a local package
-validator. Its canonical package lives at `skills/webdesign-excellence`,
-discoverable by the skills CLI and referenced directly by Claude Code's
-marketplace.
+optional techniques. It includes guidance for data visualization, responsive
+layouts, accessibility, performance, and verification, plus handoff templates
+and a local package validator. Its canonical package lives at
+`skills/webdesign-excellence`, discoverable by the skills CLI and referenced
+directly by Claude Code's marketplace.
+
+When both design skills are available, use `webdesign-excellence` for concrete
+web pages, components, charts, and visual refinement. Use `design-ui-excellence`
+for strategy, content, campaigns, systems, and UX planning across screens.
+An explicit skill choice takes precedence. Both work independently; mixed
+projects can pass existing decisions between phases without loading both full
+workflows or repeating discovery.
 
 ### Idea Workbench
 

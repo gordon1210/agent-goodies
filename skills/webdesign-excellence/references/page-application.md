@@ -13,6 +13,10 @@ and density. Comparable values should remain comparable; tables are not obsolete
 because cards look more decorative. Charts need labels, units, context, and truthful
 data. Distinguish zero, missing, stale, loading, and error rather than showing all as a dash.
 
+When creating or changing charts, load [data visualization](data-visualization.md)
+for chart choice, scales, labels, and equivalent access. A dashboard without charts
+does not need that module, and a dashboard request is not a reason to add charts.
+
 ## States and information architecture
 
 Design empty, loading, partial, error, unauthorized, unavailable, and success states

@@ -7,7 +7,8 @@ open a browser, or judge design quality.
 ## Files and interpretation
 
 [routing-cases.json](routing-cases.json) contains positive triggers, negative triggers,
-minimal fixes, style choices, explicit hybrids, and safety/quality edge cases.
+minimal fixes, style choices, explicit hybrids, skill-selection boundaries,
+data-visualization decisions, and safety/quality edge cases.
 Each case includes the prompt, relevant context, and observable expectations.
 
 `relevant_by_completion` lists modules expected to inform the task as it progresses;
@@ -27,6 +28,9 @@ Use a disposable project/worktree and a supported agent host. Present one case w
 its context, the skill installed, and realistic project files. For negative-trigger
 tests, do not explicitly invoke the skill in the prompt. Capture the agent version,
 model, instructions, available tools, loaded references, changes, and final claims.
+For skill-selection cases, reproduce the installed-skill inventory in `context`;
+include both descriptions for shared-selection cases and only the named package
+for standalone cases. Honor explicit skill names in positive prompts.
 Do not grant production credentials or run uninspected upstream demo scripts.
 
 Start with routing-only runs, then implement representative cases with browser

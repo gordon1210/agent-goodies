@@ -1,6 +1,12 @@
 ---
 name: design-ui-excellence
-description: Use when creating, redesigning, implementing, reviewing, or polishing websites, landing pages, campaign experiences, product interfaces, design systems, brand directions, conversion copy, content architecture, responsive layouts, or web motion. This skill routes each task to focused Markdown guidance so the agent can turn a user's vision into a coherent, modern, distinctive, accessible, and verified result without loading an entire design handbook.
+description: >-
+  Plan, design, or review digital strategy, messaging and conversion copy, SEO and
+  content architecture, campaigns, brand directions, design systems, and cross-screen
+  UX flows. When webdesign-excellence is also available, prefer that skill for
+  concrete web pages, components, charts, and rendered visual refinement. Honor
+  explicit skill selection; when used alone, this skill also supports website and
+  product-interface implementation through its existing routes.
 license: MIT
 metadata:
   version: "1.0.0"
@@ -11,6 +17,20 @@ metadata:
 A context-efficient router for website, marketing, and digital product design work.
 
 The goal is not to decorate a generic template. The goal is to understand the user's intent, make defensible decisions, implement a coherent experience, and verify that the result works.
+
+## Selection alongside other skills
+
+When both skills are available and the user has not selected one, use this skill
+for strategy, messaging/SEO/content architecture, campaigns, brand or design systems,
+and cross-screen UX planning. Use `webdesign-excellence` for concrete web pages,
+components, charts, and rendered visual refinement. Route by the requested
+deliverable: a reusable token system belongs here; polishing a rendered button
+belongs there. Explicit selection takes precedence.
+
+All routes below remain available when this skill is selected explicitly or used
+alone. Do not require another package or load both automatically. For mixed work,
+carry approved content, tokens, flows, and decisions into the next phase without
+repeating discovery. A phase handoff does not authorize additional work.
 
 ## Authority and safety
 

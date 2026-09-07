@@ -72,6 +72,16 @@ being reachable does not make every example production-ready.
 - [Carbon: Typography style strategies](https://carbondesignsystem.com/elements/typography/style-strategies/) — Task versus expressive typography roles.
 - [Ahmad Shadeed: Responsive Design](https://ishadeed.com/article/responsive-design/) — Content- and component-aware responsive thinking.
 
+## Data visualization
+
+Checked 2026-09-07 for the chart module. These sources support encoding and
+equivalent-access guidance; metric definitions and business data remain project-owned.
+
+- [Carbon: Chart types](https://carbondesignsystem.com/data-visualization/chart-types/) — Select charts by the question; no Carbon dependency implied.
+- [ONS: Axes and gridlines](https://service-manual.ons.gov.uk/data-visualisation/guidance/axes-and-gridlines) — Zero baselines for magnitude encodings, explicit line domains, comparable scales, and nonlinear/dual-axis cautions.
+- [ONS: Showing uncertainty in charts](https://service-manual.ons.gov.uk/data-visualisation/guidance/showing-uncertainty-in-charts) — Make interpretation-relevant ranges understandable; preserve the supplied statistical meaning.
+- [WAI: Complex images](https://www.w3.org/WAI/tutorials/images/complex/) — Chart identification and detailed semantic alternatives.
+
 ## Inspected inspiration, not production endorsement
 
 - [claude-directory README](https://github.com/pulkitxm/claude-directory/blob/f3d7e12f34bf7d90130dce3ec3b26cf69c29794e/README.md) — Inspiration inventory, not production verification.

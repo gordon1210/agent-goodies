@@ -2,6 +2,10 @@
 
 **Load when:** a diagram, generative visual, shader, particle field, or 3D scene is under consideration.
 
+For quantitative charts, establish the encoding with
+[data visualization](data-visualization.md) before choosing a renderer. Keep an
+existing adequate chart implementation; this module is not a library mandate.
+
 ## Pick the least expensive adequate representation
 
 | Need | Candidate | Why not automatically use the next tier? |

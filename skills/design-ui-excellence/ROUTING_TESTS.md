@@ -2,7 +2,27 @@
 
 These examples document the intended dispatcher behavior. They are not additional instructions to load during normal skill use.
 
+## Skill selection when both are available
+
+These are intended behaviors, not claims of executed agent evaluations. Unless
+the user selects a skill, choose by the deliverable before dispatching a route.
+
+| Prompt and context | Expected selection and boundary |
+| --- | --- |
+| Both available: “Implement this approved landing page.” | `webdesign-excellence`; reuse the supplied brief and tokens; do not load both. |
+| Both available: “Fix the chart labels and mobile layout.” | `webdesign-excellence`; preserve metrics and data definitions. |
+| Both available: “Rewrite our positioning and plan search-oriented pages.” | `design-ui-excellence`, `content-and-seo`; no automatic visual implementation. |
+| Both available: “Define reusable semantic tokens and component rules.” | `design-ui-excellence`, `design-system`; distinguish a system from a local styling fix. |
+| Both available: “Plan onboarding across account creation, invitation, and setup.” | `design-ui-excellence`, `product-interface` in Plan mode; no automatic build. |
+| Both available: “Use design-ui-excellence to implement this homepage.” | Honor explicit selection and use `website`; do not redirect to the default skill. |
+| Only this skill available: “Implement this homepage.” | Use `website` locally; no dependency on another skill. |
+| Both available: “Plan the brand, then implement the approved website.” | Start here with `brand-direction`; pass approved decisions to `webdesign-excellence` for the build phase without repeated discovery or concurrent full-library loading. |
+
 ## Primary routing cases
+
+The following route cases assume this skill has been selected explicitly or is
+used alone. When both skills are available without explicit selection, apply the
+selection cases above first.
 
 | Prompt shape | Primary route | Initial companions |
 | --- | --- | --- |
