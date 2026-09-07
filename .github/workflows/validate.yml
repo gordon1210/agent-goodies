@@ -34,3 +34,6 @@ jobs:
 
       - name: Run Godot UI utility tests
         run: python3 -m unittest discover -s skills/godot-ui-design-excellence/tests -v
+
+      - name: Validate Webdesign skill package
+        run: python3 skills/webdesign-excellence/scripts/validate_package.py

@@ -106,6 +106,16 @@ local package and contrast checks. Its canonical package lives at
 directly by Claude Code's marketplace. Use it for interface design and craft;
 the Engineering Suite covers broader engine and gameplay work.
 
+### Webdesign Excellence
+
+`webdesign-excellence` guides website and web-interface design, implementation,
+refinement, and review through focused page routes, 12 visual styles, and 14
+optional techniques. It includes guidance for responsive layouts, accessibility,
+performance, and verification, plus handoff templates and a local package
+validator. Its canonical package lives at `skills/webdesign-excellence`,
+discoverable by the skills CLI and referenced directly by Claude Code's
+marketplace.
+
 ### Idea Workbench
 
 `idea-workbench` turns a rough vision into a reviewed design and an
@@ -162,7 +172,9 @@ entry points.
     │   └── SKILL.md
     ├── godot-engineering-suite/
     │   └── SKILL.md
-    └── godot-ui-design-excellence/
+    ├── godot-ui-design-excellence/
+    │   └── SKILL.md
+    └── webdesign-excellence/
         └── SKILL.md
 ```
 
@@ -222,13 +234,14 @@ npx skills add gordon1210/agent-goodies --skill react-codebase-excellence --glob
 npx skills add gordon1210/agent-goodies --skill typescript-codebase-excellence --global
 npx skills add gordon1210/agent-goodies --skill godot-engineering-suite --global
 npx skills add gordon1210/agent-goodies --skill godot-ui-design-excellence --global
+npx skills add gordon1210/agent-goodies --skill webdesign-excellence --global
 ```
 
 Omit `--global` for a project-scoped installation. A bundled helper, when
 present, stays inside the installed skill and requires no `package.json` script
 or launcher configuration. Handoff and Grok helpers require Python 3.9 or newer;
-the Godot helpers require Python 3.10 or newer. These helpers have no third-party
-Python dependencies.
+the Godot helpers and Webdesign package validator require Python 3.10 or newer.
+These helpers have no third-party Python dependencies.
 
 Handoff writes additionally require directory-relative, no-follow filesystem
 operations and POSIX file locking. Hosts without these primitives (including
@@ -260,6 +273,7 @@ claude plugin install react-codebase-excellence@agent-goodies
 claude plugin install typescript-codebase-excellence@agent-goodies
 claude plugin install godot-engineering-suite@agent-goodies
 claude plugin install godot-ui-design-excellence@agent-goodies
+claude plugin install webdesign-excellence@agent-goodies
 ```
 
 ## Local development
@@ -286,6 +300,7 @@ python3 -m unittest tests/test_grok_acp.py -v
 python3 skills/godot-engineering-suite/scripts/validate_skill_suite.py
 python3 skills/godot-ui-design-excellence/scripts/validate_package.py
 python3 -m unittest discover -s skills/godot-ui-design-excellence/tests -v
+python3 skills/webdesign-excellence/scripts/validate_package.py
 ```
 
 ## Contributing and releases

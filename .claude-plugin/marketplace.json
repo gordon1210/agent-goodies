@@ -143,6 +143,19 @@
         "name": "gordon1210"
       },
       "category": "Productivity"
+    },
+    {
+      "name": "webdesign-excellence",
+      "source": "./skills/webdesign-excellence",
+      "strict": false,
+      "skills": [
+        "./"
+      ],
+      "description": "Design, implement, refine, and review coherent websites and web interfaces with focused style and technique guidance.",
+      "author": {
+        "name": "gordon1210"
+      },
+      "category": "Productivity"
     }
   ]
 }
