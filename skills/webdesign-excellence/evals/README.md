@@ -8,7 +8,9 @@ open a browser, or judge design quality.
 
 [routing-cases.json](routing-cases.json) contains positive triggers, negative triggers,
 minimal fixes, style choices, explicit hybrids, skill-selection boundaries,
-data-visualization decisions, and safety/quality edge cases.
+data-visualization decisions, choreography, 2.5D versus mesh-based 3D,
+targeted imported-scene diagnosis, existing-video integration versus reference
+reconstruction, and safety/quality edge cases.
 Each case includes the prompt, relevant context, and observable expectations.
 
 `relevant_by_completion` lists modules expected to inform the task as it progresses;
@@ -59,10 +61,30 @@ Compare a baseline agent run without the skill against a skill-assisted run usin
 the same prompt, tools, assets, and evaluation conditions. Use repeated runs before
 claiming improvement; aesthetics and stochastic behavior make one sample inadequate.
 Record what improved, what regressed, and context usage where the host exposes it.
+For an upgrade, also compare the previous and updated skill with fresh agents and
+the same held-out briefs, tools, assets, and budgets. Keep decision-only probes
+separate from completed implementations and rendered-quality comparisons. The
+bounded 2026-09-09 baseline/updated probes are recorded in [validation](../VALIDATION.md).
 
 When adding a style, route it directly from SKILL.md and add a positive and a
 conflicting-context case. When adding a technique, specify fallback, lifecycle,
 accessibility, and performance boundaries. Re-run affected cases; do not merely
 update expected outputs to match a regression.
+
+## Package and runtime checks are separate
+
+Run the package validator and its rejection tests from the repository root:
+
+```sh
+python3 skills/webdesign-excellence/scripts/validate_package.py
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s skills/webdesign-excellence/tests -v
+```
+
+The tests retain small mutated copies under the system temporary directory for
+inspection; they never mutate the real package or recursively clean user data.
+They check malformed package additions, not agent behavior. The separately loaded
+[example harness](../examples/README.md) documents browser assertions, rendered
+evidence, dependency versions, and exact test commands. Neither suite executes the
+49 routing briefs as model-in-the-loop implementations.
 
 Reference: [OpenAI: Testing Agent Skills Systematically](https://developers.openai.com/blog/eval-skills).

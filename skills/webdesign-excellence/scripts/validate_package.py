@@ -9,11 +9,37 @@ from __future__ import annotations
 
 import argparse
 import ast
+import base64
+import binascii
 import json
 import re
 import sys
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
+
+
+PACKAGE_FILE_EXTENSIONS = {".md", ".json", ".py"}
+# The examples are an optional, self-contained harness. Keep its allowlist
+# narrow so adding a runnable example cannot silently broaden the package into
+# a binary asset or build-output archive.
+EXAMPLE_FILE_EXTENSIONS = {".html", ".css", ".js", ".mjs", ".gltf"}
+# Generated/vendor trees make an example non-reproducible and can smuggle a
+# dependency archive into the distributed skill even when individual files use
+# an allowed extension.
+EXAMPLE_FORBIDDEN_DIRECTORIES = {
+    ".cache",
+    ".mypy_cache",
+    ".pytest_cache",
+    "__pycache__",
+    "build",
+    "coverage",
+    "dist",
+    "node_modules",
+    "playwright-report",
+    "test-results",
+}
+EXPECTED_STYLE_COUNT = 12
+EXPECTED_TECHNIQUE_COUNT = 18
 
 
 def prose_without_fences(text: str, label: str, errors: list[str]) -> str:
@@ -39,6 +65,128 @@ def prose_without_fences(text: str, label: str, errors: list[str]) -> str:
     return "\n".join(output)
 
 
+def is_in_examples(path: Path, root: Path) -> bool:
+    """Return whether path is contained by the optional examples directory."""
+    try:
+        return path.relative_to(root / "examples") is not None
+    except ValueError:
+        return False
+
+
+def validate_gltf(path: Path, root: Path, errors: list[str]) -> None:
+    """Validate JSON GLTF fixtures and keep their resource URIs package-local.
+
+    GLB is intentionally not accepted by the package extension allowlist. A
+    GLTF with data URIs exercises the same browser loading path while keeping
+    the fixture inspectable and self-contained. This is a focused fixture
+    check, not a complete Khronos schema validator.
+    """
+    label = path.relative_to(root).as_posix()
+    try:
+        document = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+        errors.append(f"{label}: invalid GLTF JSON: {exc}")
+        return
+    if not isinstance(document, dict):
+        errors.append(f"{label}: GLTF document must be an object")
+        return
+    asset = document.get("asset")
+    if not isinstance(asset, dict) or asset.get("version") != "2.0":
+        errors.append(f"{label}: GLTF asset.version must be '2.0'")
+    for collection_name in ("buffers", "images"):
+        collection = document.get(collection_name, [])
+        if not isinstance(collection, list):
+            errors.append(f"{label}: GLTF {collection_name} must be a list")
+            continue
+        for index, item in enumerate(collection):
+            if not isinstance(item, dict):
+                errors.append(f"{label}: GLTF {collection_name}[{index}] must be an object")
+                continue
+            if collection_name == "buffers":
+                byte_length = item.get("byteLength")
+                if not isinstance(byte_length, int) or isinstance(byte_length, bool) or byte_length < 0:
+                    errors.append(f"{label}: GLTF buffers[{index}] has an invalid byteLength")
+            uri = item.get("uri")
+            if uri is None:
+                if collection_name == "buffers":
+                    errors.append(f"{label}: GLTF buffers[{index}] must have an embedded or local URI")
+                continue
+            if not isinstance(uri, str) or not uri:
+                errors.append(f"{label}: GLTF {collection_name}[{index}] has an invalid URI")
+                continue
+            try:
+                parsed = urlsplit(uri)
+            except ValueError as exc:
+                errors.append(f"{label}: GLTF {collection_name}[{index}] has an invalid URI: {exc}")
+                continue
+            # Data URIs are embedded content and therefore do not create an
+            # external request. Every other URI must be a relative package
+            # path; protocol-relative and absolute URLs are rejected.
+            if parsed.scheme == "data":
+                if collection_name == "buffers":
+                    header, separator, encoded = uri.partition(",")
+                    if separator == "" or not header.lower().endswith(";base64"):
+                        errors.append(f"{label}: GLTF buffers[{index}] must use a base64 data URI")
+                        continue
+                    try:
+                        decoded_buffer = base64.b64decode(encoded, validate=True)
+                    except (binascii.Error, ValueError):
+                        errors.append(f"{label}: GLTF buffers[{index}] contains invalid base64")
+                        continue
+                    if len(decoded_buffer) != item.get("byteLength"):
+                        errors.append(
+                            f"{label}: GLTF buffers[{index}] byteLength does not match embedded data"
+                        )
+                continue
+            if parsed.scheme or parsed.netloc or parsed.path.startswith("/"):
+                errors.append(f"{label}: GLTF {collection_name}[{index}] uses an external URI: {uri}")
+                continue
+            decoded = unquote(parsed.path)
+            destination = (path.parent / decoded).resolve()
+            if not destination.is_relative_to(root):
+                errors.append(f"{label}: GLTF resource escapes package: {uri}")
+            elif not destination.is_file():
+                errors.append(f"{label}: missing GLTF resource: {uri}")
+
+
+def validate_example_references(path: Path, root: Path, errors: list[str]) -> int:
+    """Check local HTML/CSS resource references used by the optional harness."""
+    if path.suffix not in {".html", ".css"}:
+        return 0
+    label = path.relative_to(root).as_posix()
+    try:
+        text = path.read_text(encoding="utf-8")
+    except (OSError, UnicodeError) as exc:
+        errors.append(f"{label}: cannot read example source: {exc}")
+        return 0
+    if "\ufffd" in text or "\x00" in text:
+        errors.append(f"{label}: broken encoding")
+    if path.suffix == ".html":
+        values = re.findall(r"\b(?:src|href|poster)\s*=\s*[\"']([^\"']+)[\"']", text, re.IGNORECASE)
+    else:
+        values = re.findall(r"url\(\s*[\"']?([^\"')]+)[\"']?\s*\)", text, re.IGNORECASE)
+    checked = 0
+    for value in values:
+        value = value.strip()
+        try:
+            parsed = urlsplit(value)
+        except ValueError as exc:
+            errors.append(f"{label}: malformed local asset reference: {value}: {exc}")
+            continue
+        if not value or parsed.scheme or parsed.netloc or value.startswith("#"):
+            continue
+        decoded = unquote(parsed.path)
+        if not decoded:
+            continue
+        destination = (path.parent / decoded).resolve()
+        checked += 1
+        if not destination.is_relative_to(root):
+            errors.append(f"{label}: local asset reference escapes package: {value}")
+        elif not destination.is_file():
+            errors.append(f"{label}: missing local asset reference: {value}")
+    return checked
+
+
 def validate(root: Path) -> dict[str, object]:
     errors: list[str] = []
     if not root.is_dir():
@@ -49,8 +197,18 @@ def validate(root: Path) -> dict[str, object]:
     for entry in entries:
         if entry.is_symlink():
             errors.append(f"Symlinks are not part of this distribution: {entry.relative_to(root)}")
+        if entry.is_dir() and is_in_examples(entry, root):
+            relative_parts = entry.relative_to(root).parts
+            for index, part in enumerate(relative_parts):
+                if part in EXAMPLE_FORBIDDEN_DIRECTORIES and not any(
+                    previous in EXAMPLE_FORBIDDEN_DIRECTORIES for previous in relative_parts[:index]
+                ):
+                    errors.append(f"Forbidden generated/vendor directory in examples: {part}")
+                    break
     for path in files:
-        if path.suffix not in {".md", ".json", ".py"}:
+        allowed = path.suffix in PACKAGE_FILE_EXTENSIONS
+        allowed = allowed or (is_in_examples(path, root) and path.suffix in EXAMPLE_FILE_EXTENSIONS)
+        if not allowed:
             errors.append(f"Unexpected file type: {path.relative_to(root)}")
     skill_path = root / "SKILL.md"
     if not skill_path.is_file():
@@ -86,7 +244,11 @@ def validate(root: Path) -> dict[str, object]:
             errors.append(f"{label}: broken encoding or chat-only citation marker")
         prose = prose_without_fences(text, label, errors)
         for target in re.findall(r"\[[^\]\n]*\]\(([^\s)]+)\)", prose):
-            parsed = urlsplit(target)
+            try:
+                parsed = urlsplit(target)
+            except ValueError as exc:
+                errors.append(f"{label}: malformed link target: {target}: {exc}")
+                continue
             if parsed.scheme or parsed.netloc or target.startswith("#"):
                 continue
             decoded = unquote(parsed.path)
@@ -112,15 +274,30 @@ def validate(root: Path) -> dict[str, object]:
     style_paths = [p for p in references if p.stem.startswith("style-") and p.stem != "style-selection"]
     styles = {p.stem.removeprefix("style-") for p in style_paths}
     techniques = [p for p in references if p.stem.startswith("technique-")]
-    if len(styles) != 12 or len(techniques) != 14:
-        errors.append("Update the documented inventory: expected 12 styles and 14 techniques")
+    if len(styles) != EXPECTED_STYLE_COUNT or len(techniques) != EXPECTED_TECHNIQUE_COUNT:
+        errors.append(
+            "Update the documented inventory: expected "
+            f"{EXPECTED_STYLE_COUNT} styles and {EXPECTED_TECHNIQUE_COUNT} techniques"
+        )
+
+    example_files = [path for path in files if is_in_examples(path, root)]
+    example_local_links = 0
+    for path in example_files:
+        if path.suffix == ".gltf":
+            validate_gltf(path, root, errors)
+        elif path.suffix in {".html", ".css"}:
+            example_local_links += validate_example_references(path, root, errors)
 
     fixture_path = root / "evals" / "routing-cases.json"
     case_count = 0
     if not fixture_path.is_file():
         errors.append("Missing behavioral evaluation fixtures")
     else:
-        fixture = json.loads(fixture_path.read_text(encoding="utf-8"))
+        try:
+            fixture = json.loads(fixture_path.read_text(encoding="utf-8"))
+        except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+            errors.append(f"Evaluation fixture is not valid JSON: {exc}")
+            fixture = None
         if not isinstance(fixture, dict) or fixture.get("schema_version") != 1:
             errors.append("Unsupported evaluation fixture schema")
         elif not isinstance(fixture.get("cases"), list):
@@ -191,6 +368,9 @@ def validate(root: Path) -> dict[str, object]:
         "reference_modules": len(references),
         "styles": len(styles),
         "techniques": len(techniques),
+        "example_files": len(example_files),
+        "example_local_links_checked": example_local_links,
+        "gltf_fixtures": sum(path.suffix == ".gltf" for path in example_files),
         "local_links_checked": local_links,
         "behavioral_fixtures": case_count,
         "agent_evaluations_executed": 0,

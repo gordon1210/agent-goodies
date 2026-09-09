@@ -2,6 +2,9 @@
 
 **Load when:** a short display phrase genuinely benefits from a reveal or controlled text transformation.
 
+When type changes composition across several beats, use
+[choreography](technique-choreography.md); a simple heading reveal stays here.
+
 ## Keep the sentence intact
 
 Treat text as content first. Use line or word motion for short display copy, not

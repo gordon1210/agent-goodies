@@ -38,6 +38,10 @@ Avoid framework state updates on every visual frame. Scope listeners and observe
 stop idle rendering, and release resources. Do not add `will-change` globally or
 permanently promote every card. Test cleanup through repeated navigation.
 
+For a selected renderer, use the [3D profiling and diagnosis procedure](technique-3d-production.md)
+to distinguish transfer/decode, main-thread, draw-call, fill-rate, and resource costs.
+For supplied media, use [existing video](technique-video.md) before choosing scrubbing.
+
 ## Decision rule
 
 Compare the effect on and off under realistic conditions. Keep it only if its

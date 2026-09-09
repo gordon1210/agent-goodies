@@ -43,6 +43,13 @@ Compare source order with the accessibility tree for split text, duplicated marq
 responsive reordering, dialogs, and custom controls. Test rapid interruption for
 animated state changes. Revisit the final state after back navigation and resize.
 
+For authored sequences, sample starts, transitions, holds, endings, direct jumps,
+and reverse where meaningful; then inspect continuous playback. For selected 3D,
+use [rendered diagnosis](technique-3d-production.md): inspect silhouette, material
+response, framing, occlusion, and label placement. A functioning canvas is not an
+art-direction pass, and a pleasing still does not verify movement. Keep structural
+checks, runtime tests, visual review, and agent evaluations separate.
+
 ## Completion gates
 
 No known blocked primary flow, hidden required content, fabricated success, or

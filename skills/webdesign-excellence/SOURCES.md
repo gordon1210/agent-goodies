@@ -90,3 +90,36 @@ equivalent-access guidance; metric definitions and business data remain project-
 - [claude-directory: superdesign-modern-atmospheric](https://github.com/pulkitxm/claude-directory/blob/f3d7e12f34bf7d90130dce3ec3b26cf69c29794e/templates/superdesign-modern-atmospheric/prompt.md) — Prompt inspected; original site fidelity and runtime quality not verified.
 
 Repository references are pinned to an inspected commit. See [research scope](RESEARCH-NOTES.md) for the exact limits of the review.
+
+## Motion extension — primary documentation reviewed 2026-09-09
+
+These sources establish supported mechanisms, not creative quality. Their pages
+were opened during this update; browser targets still require project-specific tests.
+
+- [GSAP Timeline](https://gsap.com/docs/v3/GSAP/Timeline/) — Coordinated child timing, labels, seeking, pause/resume and reverse; callbacks are not business-state replay.
+- [WAAPI Animation.currentTime](https://developer.mozilla.org/en-US/docs/Web/API/Animation/currentTime) — Explicit sampling of an initialized native animation.
+- [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame) — Timestamp-based playback and scheduling; refresh rate must not determine sequence duration.
+- [WAI Pause, Stop, Hide](https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html) — Conditions for control over automatic motion; interpretation remains separate from an accessibility audit.
+- [motion-design comparison README](https://github.com/cth9191/motion-design) — Conceptual comparison only. No source media, prompts, templates, or generated output were imported or verified. See the update's [research scope](RESEARCH-NOTES.md).
+
+## 3D, CSS depth, and media — reviewed 2026-09-09
+
+- [MDN transform-style](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/transform-style) — Descendant depth and grouping properties that flatten CSS 3D; distinct from mesh geometry.
+- [Three.js GLTFLoader](https://threejs.org/docs/pages/GLTFLoader.html) — glTF loading, extension/decoder configuration, and ImageBitmap lifetime considerations.
+- [Three.js PerspectiveCamera](https://threejs.org/docs/pages/PerspectiveCamera.html) — Frustum parameters and projection updates.
+- [Three.js OrbitControls](https://threejs.org/docs/pages/OrbitControls.html) — Update/damping behavior and delta-seconds auto-rotation.
+- [Three.js Texture](https://threejs.org/docs/pages/Texture.html) — Color-space annotations and texture disposal.
+- [Three.js WebGLRenderer](https://threejs.org/docs/pages/WebGLRenderer.html) — Renderer lifecycle, sizing, output configuration and information counters.
+- [Khronos glTF](https://www.khronos.org/gltf/) and [glTF 2.0 specification source](https://raw.githubusercontent.com/KhronosGroup/glTF/main/specification/2.0/Specification.adoc) — Core mesh/material/animation representation; extension support is a separate question.
+- [Official Blender glTF exporter](https://github.com/KhronosGroup/glTF-Blender-IO) — Exporter scope and maintenance; its [README source](https://raw.githubusercontent.com/KhronosGroup/glTF-Blender-IO/main/README.md) was inspected.
+- [Blender development manual: glTF](https://docs.blender.org/manual/en/dev/addons/scene_gltf2.html) — Search-indexed primary text inspected for material/animation channels, triangulation and export options. Direct manual retrieval returned 402; development docs are not proof of installed-version support. No Blender executable or export was tested.
+- [R3F scaling performance](https://r3f.docs.pmnd.rs/advanced/scaling-performance) and [official source](https://raw.githubusercontent.com/pmndrs/react-three-fiber/master/docs/advanced/scaling-performance.mdx) — Demand rendering and invalidation; source inspected after the public page could not be fetched.
+- [R3F pitfalls](https://r3f.docs.pmnd.rs/advanced/pitfalls) and [official source](https://raw.githubusercontent.com/pmndrs/react-three-fiber/master/docs/advanced/pitfalls.mdx) — Per-frame mutation, allocation, resource and mounting concerns; source inspected. No R3F dependency or execution is implied.
+- [MDN requestVideoFrameCallback](https://developer.mozilla.org/en-US/docs/Web/API/HTMLVideoElement/requestVideoFrameCallback) — Media metadata, scheduling limits and callback cancellation; not frame-exact DOM compositing.
+- [MDN seeked event](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/seeked_event) — Seek completion signal; not a promise of smooth interactive decoding.
+
+Three.js manual entry/tree inspection found its current `manual/pages/` structure;
+old `manual/en/` URLs returned 404 and direct article retrieval was unavailable.
+The successfully opened API pages above support the applicable guidance. Re-resolve
+manual locations when maintaining links. Optional Blender operations and material/
+light starting ranges are original, tunable procedures, not measured example results.

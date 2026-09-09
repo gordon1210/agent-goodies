@@ -1,0 +1,4 @@
+interface:
+  display_name: "Claude CLI"
+  short_description: "Consult Claude Code through bounded headless calls."
+  default_prompt: "Use $claude-cli to get a bounded, tool-free second opinion from the installed Claude Code CLI, then verify its claims."

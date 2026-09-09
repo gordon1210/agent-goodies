@@ -156,6 +156,32 @@
         "name": "gordon1210"
       },
       "category": "Productivity"
+    },
+    {
+      "name": "agent-council",
+      "source": "./skills/agent-council",
+      "strict": false,
+      "skills": [
+        "./"
+      ],
+      "description": "Coordinate a bounded discussion between the host, Grok Build, and Claude Code with shared history, exact sessions, and recovery.",
+      "author": {
+        "name": "gordon1210"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "claude-cli",
+      "source": "./skills/claude-cli",
+      "strict": false,
+      "skills": [
+        "./"
+      ],
+      "description": "Consult Claude Code through bounded headless calls, structured results, and exact-session follow-ups.",
+      "author": {
+        "name": "gordon1210"
+      },
+      "category": "Productivity"
     }
   ]
 }

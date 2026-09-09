@@ -110,10 +110,11 @@ the Engineering Suite covers broader engine and gameplay work.
 ### Webdesign Excellence
 
 `webdesign-excellence` guides website and web-interface design, implementation,
-refinement, and review through focused page routes, 12 visual styles, and 14
-optional techniques. It includes guidance for data visualization, responsive
-layouts, accessibility, performance, and verification, plus handoff templates
-and a local package validator. Its canonical package lives at
+refinement, and review through focused page routes, 12 visual styles, and 18
+optional techniques. It includes choreography, 3D art direction and production,
+existing-video integration, data visualization, responsive layouts, accessibility,
+and verification, plus original runnable examples and a local package validator.
+Its canonical package lives at
 `skills/webdesign-excellence`, discoverable by the skills CLI and referenced
 directly by Claude Code's marketplace.
 
@@ -123,6 +124,25 @@ for strategy, content, campaigns, systems, and UX planning across screens.
 An explicit skill choice takes precedence. Both work independently; mixed
 projects can pass existing decisions between phases without loading both full
 workflows or repeating discovery.
+
+### Agent Council
+
+`agent-council` coordinates a bounded discussion between the current host agent,
+Grok Build CLI, and Claude Code CLI. It preserves full shared history, exact peer
+sessions, host participation, final assessments, and crash-recovery artifacts.
+Its self-contained Python helpers support tool-free discussion; live provider
+calls require authorization and installed, authenticated CLIs. Its canonical
+package lives at `skills/agent-council`, discoverable by the skills CLI and
+referenced directly by Claude Code's marketplace.
+
+### Claude CLI
+
+`claude-cli` provides a standard-library Python wrapper for bounded Claude Code
+headless consultations, structured results, stdin prompts, and exact-session
+follow-ups. It defaults to tool-free consultation and retains call artifacts for
+host-side verification. Its canonical package lives at `skills/claude-cli`,
+discoverable by the skills CLI and referenced directly by Claude Code's
+marketplace. Use Agent Council for a discussion involving both Claude and Grok.
 
 ### Idea Workbench
 
@@ -182,7 +202,11 @@ entry points.
     │   └── SKILL.md
     ├── godot-ui-design-excellence/
     │   └── SKILL.md
-    └── webdesign-excellence/
+    ├── webdesign-excellence/
+    │   └── SKILL.md
+    ├── agent-council/
+    │   └── SKILL.md
+    └── claude-cli/
         └── SKILL.md
 ```
 
@@ -243,12 +267,15 @@ npx skills add gordon1210/agent-goodies --skill typescript-codebase-excellence -
 npx skills add gordon1210/agent-goodies --skill godot-engineering-suite --global
 npx skills add gordon1210/agent-goodies --skill godot-ui-design-excellence --global
 npx skills add gordon1210/agent-goodies --skill webdesign-excellence --global
+npx skills add gordon1210/agent-goodies --skill agent-council --global
+npx skills add gordon1210/agent-goodies --skill claude-cli --global
 ```
 
 Omit `--global` for a project-scoped installation. A bundled helper, when
 present, stays inside the installed skill and requires no `package.json` script
 or launcher configuration. Handoff and Grok helpers require Python 3.9 or newer;
-the Godot helpers and Webdesign package validator require Python 3.10 or newer.
+the Godot helpers, Webdesign package validator, Agent Council, and Claude CLI
+helpers require Python 3.10 or newer.
 These helpers have no third-party Python dependencies.
 
 Handoff writes additionally require directory-relative, no-follow filesystem
@@ -282,6 +309,8 @@ claude plugin install typescript-codebase-excellence@agent-goodies
 claude plugin install godot-engineering-suite@agent-goodies
 claude plugin install godot-ui-design-excellence@agent-goodies
 claude plugin install webdesign-excellence@agent-goodies
+claude plugin install agent-council@agent-goodies
+claude plugin install claude-cli@agent-goodies
 ```
 
 ## Local development
@@ -309,7 +338,15 @@ python3 skills/godot-engineering-suite/scripts/validate_skill_suite.py
 python3 skills/godot-ui-design-excellence/scripts/validate_package.py
 python3 -m unittest discover -s skills/godot-ui-design-excellence/tests -v
 python3 skills/webdesign-excellence/scripts/validate_package.py
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s skills/webdesign-excellence/tests -v
+python3 -m unittest discover -s skills/agent-council/tests -v
+python3 -m unittest discover -s skills/claude-cli/tests -v
+cmp skills/agent-council/scripts/cli_runtime.py skills/claude-cli/scripts/cli_runtime.py
 ```
+
+Run the two CLI helper suites in separate Python processes: each standalone skill
+packages its own `cli_runtime` module. Their executable fixtures are offline and
+consume no provider quota. Live CLI smoke tests are separate opt-in checks.
 
 ## Contributing and releases
 

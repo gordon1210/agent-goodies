@@ -463,7 +463,7 @@
       "allowed_styles": [],
       "max_initial_reference_reads": 4,
       "relevant_by_completion": [
-        "references/technique-transitions.md",
+        "references/technique-motion.md",
         "references/implementation.md",
         "references/verification.md"
       ],
@@ -738,6 +738,261 @@
       "assertions": [
         "Prefer webdesign-excellence for the concrete interface fix.",
         "Do not load data-visualization or add charts merely because the prompt says dashboard."
+      ]
+    },
+    {
+      "id": "micro-transition-no-library",
+      "prompt": "Fix the selected state transition on this existing filter button; keep the change small.",
+      "context": "The application already has CSS tokens and no motion library is installed.",
+      "scope": "targeted-fix",
+      "should_trigger": true,
+      "style_mode": "preserve",
+      "allowed_styles": [],
+      "max_initial_reference_reads": 4,
+      "relevant_by_completion": [
+        "references/technique-transitions.md",
+        "references/implementation.md",
+        "references/verification.md"
+      ],
+      "assertions": [
+        "Use the existing CSS or native animation path when it meets the interaction; do not add a full motion library for one transition.",
+        "Keep the selected state immediate, keyboard-visible, and correct when interrupted.",
+        "Do not load choreography or 3D/video modules for this small fix."
+      ]
+    },
+    {
+      "id": "ordinary-page-no-spatial-deps",
+      "prompt": "Build an accessible long-form article page from the supplied copy and images.",
+      "context": "The page is editorial and static; no spatial interaction or video role has been requested.",
+      "scope": "new-direction",
+      "should_trigger": true,
+      "style_mode": "single",
+      "allowed_styles": [
+        "editorial"
+      ],
+      "max_initial_reference_reads": 4,
+      "relevant_by_completion": [
+        "references/page-content.md",
+        "references/style-editorial.md",
+        "references/typography.md",
+        "references/verification.md"
+      ],
+      "assertions": [
+        "Prioritize reading order, type, images, and responsive layout over spatial effects.",
+        "Do not add 3D or video dependencies when the brief has no spatial or media requirement.",
+        "Keep all supplied copy and image facts intact."
+      ]
+    },
+    {
+      "id": "kinetic-beat-map",
+      "prompt": "Create a kinetic launch composition where the headline resolves into three product benefits and a clear call to action.",
+      "context": "The graphic and copy are approved, but no animation library or 3D asset is available.",
+      "scope": "new-direction",
+      "should_trigger": true,
+      "style_mode": "single",
+      "allowed_styles": [
+        "graphic"
+      ],
+      "max_initial_reference_reads": 4,
+      "relevant_by_completion": [
+        "references/technique-choreography.md",
+        "references/technique-motion.md",
+        "references/technique-text.md",
+        "references/verification.md"
+      ],
+      "assertions": [
+        "Define a compact beat map with a persistent anchor, focal transfer, entry, transition, settled state, readable hold, and acceptance checks before choosing an implementation.",
+        "Coordinate type and graphic movement around the communication instead of animating every element at once.",
+        "Provide replay, pause, interruption, reduced-motion, and semantic static states without inventing product behavior or adding 3D."
+      ]
+    },
+    {
+      "id": "branded-single-3d-section",
+      "prompt": "Add one interactive 3D product section to our established editorial brand page.",
+      "context": "The existing type, palette, navigation, and content hierarchy are approved and must remain the site's primary style.",
+      "scope": "existing-extension",
+      "should_trigger": true,
+      "style_mode": "preserve",
+      "allowed_styles": [],
+      "max_initial_reference_reads": 4,
+      "relevant_by_completion": [
+        "references/technique-3d-art-direction.md",
+        "references/technique-3d-production.md",
+        "references/technique-rendering.md",
+        "references/verification.md"
+      ],
+      "assertions": [
+        "Contain the 3D scene to the requested section and preserve the existing editorial style and safe areas.",
+        "Define silhouette, materials, lighting, camera, and motion purpose before polishing effects.",
+        "Keep the section's labels, controls, and useful non-renderer fallback in HTML."
+      ]
+    },
+    {
+      "id": "explicit-interactive-3d",
+      "prompt": "Implement an interactive 3D configurator for this supplied multi-part appliance model; users must inspect and expand its components.",
+      "context": "The request explicitly requires real mesh-based interaction and the source asset is available.",
+      "scope": "existing-extension",
+      "should_trigger": true,
+      "style_mode": "preserve",
+      "allowed_styles": [],
+      "max_initial_reference_reads": 4,
+      "relevant_by_completion": [
+        "references/technique-3d-art-direction.md",
+        "references/technique-3d-production.md",
+        "references/technique-rendering.md",
+        "references/performance.md"
+      ],
+      "assertions": [
+        "Honor the explicit interactive 3D requirement with a real loaded mesh path; do not silently downgrade the experience to a flat image or rotating card.",
+        "Preserve component identity, pivots, materials, camera framing, touch/keyboard access, and a useful failure fallback.",
+        "Measure runtime costs and dispose only resources owned by the scene."
+      ]
+    },
+    {
+      "id": "layered-2-5d-no-webgl",
+      "prompt": "Make the supplied dashboard mockup feel dimensional with layered panels and a restrained parallax tilt, but keep it a regular DOM page.",
+      "context": "No free camera, volumetric occlusion, or mesh interaction is required; the project has no renderer dependency.",
+      "scope": "existing-extension",
+      "should_trigger": true,
+      "style_mode": "preserve",
+      "allowed_styles": [],
+      "max_initial_reference_reads": 4,
+      "relevant_by_completion": [
+        "references/technique-rendering.md",
+        "references/technique-3d-art-direction.md",
+        "references/responsive.md",
+        "references/verification.md"
+      ],
+      "assertions": [
+        "Use CSS/DOM 2.5D with readable semantic layers, perspective, transform origin, and safe flattening behavior where it satisfies the brief.",
+        "Do not install or initialize a WebGL/WebGPU renderer for this request.",
+        "Keep the effect optional, keyboard-safe, reduced-motion friendly, and understandable as ordinary content."
+      ]
+    },
+    {
+      "id": "imported-geometry-diagnosis",
+      "prompt": "The imported product model renders flat, the exploded parts drift, and the labels miss their components. Diagnose and repair the scene.",
+      "context": "A supplied GLTF loads without a blank canvas, but its material response, pivots, camera framing, and annotations are visibly wrong.",
+      "scope": "targeted-fix",
+      "should_trigger": true,
+      "style_mode": "preserve",
+      "allowed_styles": [],
+      "max_initial_reference_reads": 4,
+      "relevant_by_completion": [
+        "references/technique-3d-production.md",
+        "references/technique-3d-art-direction.md",
+        "references/technique-rendering.md",
+        "references/verification.md"
+      ],
+      "assertions": [
+        "Inspect geometry dimensions, axes, hierarchy, pivots, normals, materials, lights, camera, and world-to-screen annotation coordinates before broad changes.",
+        "Apply targeted remedies for flat lighting, incorrect colors, drift, clipping, or label occlusion while retaining canonical transforms for reversible states.",
+        "Verify a rendered still and the key interaction states; a functioning canvas alone is not sufficient evidence."
+      ]
+    },
+    {
+      "id": "reduced-motion-spatial",
+      "prompt": "Make this 3D reveal usable with reduced motion and on narrow, short viewports without losing the product explanation.",
+      "context": "The product section is already branded and its labels and purchase CTA are required content.",
+      "scope": "targeted-fix",
+      "should_trigger": true,
+      "style_mode": "preserve",
+      "allowed_styles": [],
+      "max_initial_reference_reads": 4,
+      "relevant_by_completion": [
+        "references/technique-3d-art-direction.md",
+        "references/technique-3d-production.md",
+        "references/responsive.md",
+        "references/accessibility.md"
+      ],
+      "assertions": [
+        "Use a designed still or immediate annotated state when reduced motion is requested, while preserving the explanation and controls.",
+        "Adapt camera, layout, labels, and sequence for narrow and short viewports instead of only shrinking the canvas.",
+        "Keep the CTA and semantic content usable if the renderer fails or is unavailable."
+      ]
+    },
+    {
+      "id": "supplied-video-integration",
+      "prompt": "Use my supplied demo.mp4 as an inline product demonstration on this page.",
+      "context": "The local video asset is available and its source audio and product claims are authoritative.",
+      "scope": "existing-extension",
+      "should_trigger": true,
+      "style_mode": "preserve",
+      "allowed_styles": [],
+      "max_initial_reference_reads": 4,
+      "relevant_by_completion": [
+        "references/technique-video.md",
+        "references/implementation.md",
+        "references/accessibility.md",
+        "references/performance.md"
+      ],
+      "assertions": [
+        "Inspect the supplied file and integrate it as media with reserved layout space, an intentional poster, responsive sizing, controls, and text alternatives.",
+        "Keep primary content independent of playback and preserve meaningful source audio and explicit user pause.",
+        "Use the existing video only; do not generate footage, reconstruct its sequence, upload it, or add a provider/player dependency."
+      ]
+    },
+    {
+      "id": "reference-motion-reconstruction",
+      "prompt": "Study the supplied screen recording and recreate its useful selection-to-result transition in our DOM product page; do not embed the recording.",
+      "context": "The recording is accessible for inspection. The new page has no video playback requirement and its backend data is fixture-labeled.",
+      "scope": "existing-extension",
+      "should_trigger": true,
+      "style_mode": "preserve",
+      "allowed_styles": [],
+      "max_initial_reference_reads": 4,
+      "relevant_by_completion": [
+        "references/technique-motion-reference.md",
+        "references/technique-choreography.md",
+        "references/technique-product-demo.md",
+        "references/verification.md"
+      ],
+      "assertions": [
+        "Inspect accessible media and sample around transitions, recording observed anchors, framing, movement, holds, and inferred timing separately.",
+        "Reconstruct only the agreed behavior with truthful fixture data and a causal state transition; do not embed or replay the source video.",
+        "Document preserved invariants, intentional adaptations, responsive/reduced-motion behavior, and acceptance evidence."
+      ]
+    },
+    {
+      "id": "missing-3d-capability",
+      "prompt": "Build the requested interactive 3D product presentation, but the identity-critical model is missing and no local renderer is available.",
+      "context": "The user has delegated art-direction choices but has not supplied a product asset or approved substitute.",
+      "scope": "review",
+      "should_trigger": true,
+      "style_mode": "preserve",
+      "allowed_styles": [],
+      "max_initial_reference_reads": 4,
+      "relevant_by_completion": [
+        "references/technique-3d-art-direction.md",
+        "references/technique-3d-production.md",
+        "references/technique-rendering.md",
+        "references/assets.md"
+      ],
+      "assertions": [
+        "Identify the missing identity-critical asset and unavailable renderer as blockers to the requested result.",
+        "Ask for the necessary asset or clearly label a bounded static planning/prototype path; do not invent product geometry or claim an inspected render.",
+        "Do not silently replace explicit interactive 3D with a stock image, generated asset, or provider workflow."
+      ]
+    },
+    {
+      "id": "presentation-pause-truth",
+      "prompt": "Add a replayable product workflow demo from selection to result, keeping the result illustrative and the pause control reliable.",
+      "context": "No backend is connected; the result must be labeled as fixture data and the page already has an existing product style.",
+      "scope": "existing-extension",
+      "should_trigger": true,
+      "style_mode": "preserve",
+      "allowed_styles": [],
+      "max_initial_reference_reads": 4,
+      "relevant_by_completion": [
+        "references/technique-choreography.md",
+        "references/technique-product-demo.md",
+        "references/technique-motion.md",
+        "references/verification.md"
+      ],
+      "assertions": [
+        "Keep business state separate from decorative playback and show a visible action before the meaningful illustrative result.",
+        "Pause, replay, seek or restart, interruption, and reduced-motion states remain usable without duplicating side effects or overriding explicit pause.",
+        "Label fixture data honestly and never display a successful backend outcome when no request occurred."
       ]
     }
   ]

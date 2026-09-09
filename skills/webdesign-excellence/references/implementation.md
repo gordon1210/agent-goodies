@@ -42,6 +42,10 @@ interrupted transitions, and back navigation. Functional content should not depe
 on a canvas renderer. If a product inherently needs JavaScript, offer a clear usable
 failure state rather than claiming an impossible full no-JS replica.
 
+Use [choreography](technique-choreography.md) for coordinated playback ownership and
+repeatable sampling, or [3D production](technique-3d-production.md) for scene resource
+lifetimes. These specialized routes extend the shared lifecycle rules above.
+
 ## Stack-specific checks, only when selected
 
 Motion's reduced-motion configuration does not make every media or opacity effect

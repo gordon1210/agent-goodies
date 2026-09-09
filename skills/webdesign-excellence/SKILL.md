@@ -78,6 +78,8 @@ Do not fetch paid/private material without authorization. Use only available too
 |---|---|
 | Grid, hairlines, asymmetry, bento | [Structural grids](references/technique-grids.md) |
 | Timing, state transitions, springs | [Motion system](references/technique-motion.md) |
+| Multi-phase sequence, coordinated type/object motion | [Choreography](references/technique-choreography.md) |
+| Analyze supplied motion before web reconstruction or inspiration | [Motion reference](references/technique-motion-reference.md) |
 | Clipped words, kinetic display, stagger | [Text motion](references/technique-text.md) |
 | Scroll narrative, active section, pinned story | [Scroll](references/technique-scroll.md) |
 | Sticky card deck | [Stacking](references/technique-stacking.md) |
@@ -87,14 +89,36 @@ Do not fetch paid/private material without authorization. Use only available too
 | Blur, translucent chrome, glows | [Light and glass](references/technique-light.md) |
 | Pointer tilt, magnetic attraction, spotlight | [Pointer effects](references/technique-pointer.md) |
 | Shared elements, route transitions | [View transitions](references/technique-transitions.md) |
-| Video hero and moving media | [Video](references/technique-video.md) |
+| Integrate an available, existing video (optional route) | [Existing video](references/technique-video.md) |
 | SVG, Canvas, shaders, 3D | [Rendering](references/technique-rendering.md) |
+| 3D silhouette, materials, lighting, camera, composition | [3D art direction](references/technique-3d-art-direction.md) |
+| 3D assets, export, runtime ownership, diagnosis | [3D production](references/technique-3d-production.md) |
 | Carousel, marquee, horizontal sequence | [Carousels](references/technique-carousel.md) |
 
 Load [motion](references/technique-motion.md) before introducing a new motion system;
 reuse existing motion tokens for a small fix. Multiple low-salience techniques can
 coexist. Default to **zero or one signature effect per view**; add another only
 when it serves a distinct purpose and survives review.
+
+One signature scene can coordinate type, masks, light, and object motion around
+one attention path. Avoid competing attention systems, not cooperating techniques.
+An existing editorial or branded page can contain one 3D section while retaining
+its primary style; neither a renderer nor video selects a new site style.
+
+For substantial sequences, establish the message, driver, persistent anchors,
+beats, readable holds, adaptations, and observable acceptance criteria before
+choosing tools. Small hover/disclosure fixes need no beat map. Load specialized
+modules only as that phase needs them; ordinary pages acquire no 3D/video dependencies.
+Meet explicit interactive-3D requirements; explain missing essential assets or
+unavailable capabilities without silently substituting flat imagery.
+
+Existing-video integration is separately selectable within this skill: “Use
+webdesign-excellence to integrate my supplied demo.mp4 as an inline player.”
+An attachment alone does not choose embedding, web reconstruction, or inspiration;
+resolve the requested operation from context, asking only if it remains unclear.
+This route never starts video generation and requires no provider or hosted service.
+Optional [runnable examples](examples/README.md) demonstrate mechanisms; their
+harness dependencies are not requirements for using the skill.
 
 ## Deliver proportionately
 

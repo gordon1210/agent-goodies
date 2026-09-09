@@ -14,6 +14,9 @@ and requirements differ; check the exact API and target browsers at implementati
 time. Do not infer support for every transition feature from the existence of one
 method. The fallback is normal successful navigation.
 
+For transitions within an authored scene, see
+[choreography](technique-choreography.md) for semantic handoffs and property ownership.
+
 ## Implementation decisions
 
 Let the router or page architecture own navigation and data. Wrap only the relevant

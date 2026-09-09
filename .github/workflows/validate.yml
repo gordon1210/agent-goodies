@@ -37,3 +37,15 @@ jobs:
 
       - name: Validate Webdesign skill package
         run: python3 skills/webdesign-excellence/scripts/validate_package.py
+
+      - name: Run Webdesign package validator tests
+        run: PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s skills/webdesign-excellence/tests -v
+
+      - name: Run Agent Council offline tests
+        run: python3 -m unittest discover -s skills/agent-council/tests -v
+
+      - name: Run Claude CLI offline tests
+        run: python3 -m unittest discover -s skills/claude-cli/tests -v
+
+      - name: Check shared CLI runtime copies
+        run: cmp skills/agent-council/scripts/cli_runtime.py skills/claude-cli/scripts/cli_runtime.py

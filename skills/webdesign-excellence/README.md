@@ -1,7 +1,7 @@
 # webdesign-excellence
 
 A portable, English-language agent skill for coherent web art direction and
-implementation. Small entry point; **12 separate styles**, **14 opt-in techniques**,
+implementation. Small entry point; **12 separate styles**, **18 opt-in techniques**,
 page-specific routes, and explicit quality checks. No framework, font stack, color
 palette, animation library, or plugin is mandatory.
 
@@ -85,7 +85,7 @@ geometry, imagery, and motion. Separate alternatives remain separate.
 | Area | Included |
 |---|---|
 | Styles | Editorial, technical, product-led, quiet luxury, organic, expressive graphic, neo-brutalist, cinematic, atmospheric, glass, retro-futurist, immersive spatial |
-| Techniques | Structural grids, motion systems, text reveals, scroll narratives, stacking cards, product demos, image treatments, texture, light/glass, pointer effects, view transitions, video, SVG/Canvas/3D, carousels |
+| Techniques | Structural grids, motion systems, text reveals, scroll narratives, stacking cards, product demos, image treatments, texture, light/glass, pointer effects, view transitions, existing video, SVG/Canvas/3D, carousels, choreography, motion-reference analysis, 3D art direction, 3D production |
 | Page types | Marketing/services, commerce, portfolios, publications/docs, working applications |
 | Data visualization | Chart selection, honest scales and data states, labeling, responsive composition, accessible interaction and alternatives |
 | Foundations | Brief, style selection, composition, typography, color, responsive behavior, assets, implementation |
@@ -109,10 +109,38 @@ Conversely, the skill does **not** ban cards, gradients, rounded corners, color,
 symmetry, or familiar typefaces. Their suitability follows the brief. “Modern”
 means a coherent solution to the job, not an obligatory collection of effects.
 
+## Optional motion, 3D, and existing-video routes
+
+Use choreography for substantial multi-phase sequences; a hover or disclosure fix
+needs no beat map. 3D art direction and production are techniques: an editorial
+page with one interactive product section retains its editorial primary style.
+Explicit interactive 3D must be implemented as requested, with a useful failure
+alternative and missing capabilities reported honestly.
+
+To select existing-video integration within this skill, say:
+
+```text
+Use webdesign-excellence to integrate my supplied product-demo.mp4 as an
+inline player. Preserve its meaningful audio and use the existing page design.
+```
+
+This separately selectable route is documented in [existing video](references/technique-video.md),
+not a nested skill or a new slash command. It never generates video. Embedding the
+actual clip, reconstructing selected behavior in web code, and taking loose inspiration
+are different requests; an attachment alone does not select one.
+
+The [original examples](examples/README.md) cover kinetic composition, a truthful
+local workflow, loaded mesh-based 3D, and a minimal synthetic-media test specimen.
+Load their source only when useful for implementation. They are mechanisms to adapt,
+not a mandatory site template or evidence of general agent quality.
+
 ## Package and verification
 
-This package contains no runtime dependencies, hooks, MCP server, downloaded fonts,
-third-party media, or bundled upstream prompts. The optional Python validator is
+Normal skill activation requires no runtime dependencies, hooks, MCP server,
+renderer, or media tooling. The optional [example harness](examples/README.md) uses
+an existing compatible Three.js installation for its 3D specimen; those dependencies
+belong to examples only. No downloaded fonts, third-party media, or upstream prompts
+are bundled. The optional Python validator is
 for maintainers; agents do not need to execute it for design work. It uses only the
 Python 3.10+ standard library and does not access the network or write project files.
 
@@ -136,5 +164,5 @@ they are not represented as executed model tests.
 [Research notes](RESEARCH-NOTES.md) document what was inspected and what was not.
 [Sources](SOURCES.md) includes normal clickable URLs, pinned repository references,
 and maintenance guidance. The skill is original synthesis, not a redistribution
-of the gallery or its paid inspirations. No browser-rendered website or cross-host
-agent run is claimed as part of this delivery.
+of the gallery or its paid inspirations. Historical packaging claims remain dated. See [current validation](VALIDATION.md)
+for the exact runtime, visual, and agent checks performed for this update.

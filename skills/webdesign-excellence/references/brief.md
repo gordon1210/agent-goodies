@@ -34,6 +34,10 @@ Reference A may provide composition and B motion behavior, but do not copy both
 brands into one design. Preserve original content, distinctive assets, and source
 rights. Explicit recreation tasks still require honest asset provenance.
 
+For a recording or live motion reference, use
+[motion reference](technique-motion-reference.md) to separate observed behavior
+from reconstruction, inspiration, or integration of the actual media.
+
 ## Lock a small contract
 
 Record the audience/action, one primary style, type roles, palette roles, shape and

@@ -14,6 +14,11 @@ change, and the useful output. A smaller legible interaction is usually better t
 a complete miniature dashboard with unreadable text. Browser chrome is optional,
 not required proof that something is software.
 
+For a coordinated input-to-result sequence, use
+[choreography](technique-choreography.md). If the subject requires mesh-based
+inspection, add [3D art direction](technique-3d-art-direction.md) and then
+[3D production](technique-3d-production.md) when implementing.
+
 ## Compose the micro-product
 
 Use realistic content lengths, credible relationships, and the actual domain's

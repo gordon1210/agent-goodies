@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agent Council"
+  short_description: "Discuss with Grok and Claude using full shared history."
+  default_prompt: "Use $agent-council to discuss this topic with Grok and Claude for four rounds, contribute your own position each round, then synthesize the evidence and remaining disagreements."

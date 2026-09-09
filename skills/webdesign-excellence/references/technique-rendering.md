@@ -19,6 +19,13 @@ Do not create a full rendering engine for a radial gradient. Conversely, do not
 force thousands of animated DOM nodes into an effect whose actual job is a particle
 field. A visually spatial style can still be delivered with static renders.
 
+Explicit interactive 3D needs a real implementation of the requested geometry and
+interaction; a still is a fallback, not silent fulfillment. For 2.5D versus mesh
+decisions and image-making procedures, read
+[3D art direction](technique-3d-art-direction.md). For assets, runtime integration,
+and symptom-led diagnosis, add [3D production](technique-3d-production.md).
+These techniques do not require selecting the immersive-spatial style.
+
 ## Rendering contract
 
 Specify the effect's purpose, visible area, quality tiers, frame budget, resource

@@ -14,6 +14,9 @@ chapters can preserve context without replacing browser scroll behavior. Keep ea
 chapter's content in the DOM in meaningful order. A changing decorative side title
 must not become the only accessible copy of the chapter.
 
+For multi-phase explanations, establish the beat map and directly seekable state
+with [choreography](technique-choreography.md) before connecting scroll progress.
+
 ## Implementation sequence
 
 First build a readable vertical story. Add sticky context only when the viewport

@@ -2,6 +2,9 @@
 
 **Load when:** introducing animation, changing interaction timing, or reviewing motion quality.
 
+For a coordinated multi-phase scene, load [choreography](technique-choreography.md).
+A local transition fix stays here and reuses existing tokens.
+
 ## Classify the job
 
 Use motion to acknowledge input, explain a state or spatial relationship, guide

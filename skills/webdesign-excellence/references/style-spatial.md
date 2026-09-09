@@ -1,6 +1,6 @@
 # Style: immersive spatial design
 
-**Load when:** the selected story genuinely benefits from objects, depth, or camera-space composition.
+**Load when:** immersive spatial design is the selected primary style; one 3D section alone does not select it.
 
 ## Design thesis
 
@@ -24,7 +24,8 @@ marketing. Do not require fine pointer control to understand or purchase anythin
 For a physical product, begin with a legible object view and clear proposition.
 Offer optional rotation or a detail selection, then connect each selected detail to
 plain-language content. Keep specifications and the primary action outside the
-renderer. A static set of views may be a better implementation than real-time 3D.
+renderer. A static set of views may be a better implementation than real-time 3D
+when the brief does not require interactive 3D.
 
 ## Optional techniques and boundaries
 
